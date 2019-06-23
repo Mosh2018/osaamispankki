@@ -1,6 +1,7 @@
 package com.netum.osaamispankki.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,7 +42,9 @@ public class Profile {
     @NotBlank(message = "First name is required")
     private String phoneNo;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
+    @PrimaryKeyJoinColumn
+    @JsonIgnore
     private User user;
 
     private String town;

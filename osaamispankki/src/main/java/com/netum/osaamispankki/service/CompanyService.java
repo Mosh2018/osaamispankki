@@ -1,5 +1,6 @@
 package com.netum.osaamispankki.service;
 
+import com.netum.osaamispankki.common.UtilsMethods;
 import com.netum.osaamispankki.domain.Company;
 import com.netum.osaamispankki.exceptions.OsaamispankkiException;
 import com.netum.osaamispankki.repository.CompanyRepository;
@@ -9,6 +10,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Map;
+
+import static com.netum.osaamispankki.common.UtilsMethods.setExceptionMessage;
 
 @Service
 public class CompanyService {
@@ -34,7 +37,7 @@ public class CompanyService {
             companyRepository.save(company);
 
         } catch (Exception ex) {
-            throw new OsaamispankkiException("Some thing goes wrong with Business fetching");
+            throw new OsaamispankkiException(setExceptionMessage("osaamispankki_error","Some thing goes wrong with Business fetching"));
         }
         return company;
     }
@@ -51,8 +54,10 @@ public class CompanyService {
                 return (String) ((Map<String, Object>) ((List<Object>) object.get(keys[0])).get(i)).get(keys[1]);
             }
         } catch (Exception ex) {
-            throw new OsaamispankkiException("Some thing goes wrong with Business fetching 2");
+            throw new OsaamispankkiException(setExceptionMessage("osaamispankki_error","Some thing goes wrong with Business fetching 2"));
+
         }
-        throw new OsaamispankkiException("Some thing goes wrong with Business fetching 3");
+        throw new OsaamispankkiException(setExceptionMessage("osaamispankki_error","Some thing goes wrong with Business fetching 3"));
+
     }
 }

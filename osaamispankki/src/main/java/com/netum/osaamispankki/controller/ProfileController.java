@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -24,14 +21,28 @@ public class ProfileController {
     @Autowired
     private ErrorResponseService errorResponseService;
 
-    @PostMapping("")
-    public ResponseEntity<?> createNewProfile(@Valid @RequestBody Profile newProfile, BindingResult bindingResult) {
-
-        if (bindingResult.getFieldErrors().size() != 0){
+    @PostMapping("/{username}")
+    public ResponseEntity<?> addUserProfile(@PathVariable("username") String username,
+                                            @Valid @RequestBody Profile newProfile, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
           return errorResponseService.getErrorResponse(bindingResult);
         }
-        Profile profile = this.profileService.createOrUpdateProfile(newProfile);
-        return new ResponseEntity<>(profile, HttpStatus.CREATED);
+        return new ResponseEntity<>(this.profileService.createProfile(newProfile, username), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{username}")
+    public ResponseEntity<?> updateUserProfile(@PathVariable("username") String username,
+                                               @Valid @RequestBody Profile newProfile, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            return errorResponseService.getErrorResponse(bindingResult);
+        }
+        return new ResponseEntity<>(this.profileService.updateProfile(newProfile, username), HttpStatus.CREATED);
+    }
+
+
+    @GetMapping("/{username}")
+    public ResponseEntity<?> getProfileByUsername(@PathVariable("username") String username) {
+        return new ResponseEntity<>(profileService.getProfileByUsename(username), HttpStatus.OK);
     }
 
 }

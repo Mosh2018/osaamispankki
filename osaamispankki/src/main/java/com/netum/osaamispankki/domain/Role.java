@@ -19,10 +19,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user_user;
-
+    @Enumerated(EnumType.STRING)
     private Roles role;
 
     private Boolean confirmed;

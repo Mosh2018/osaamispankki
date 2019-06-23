@@ -9,5 +9,4 @@ public interface ProfileRepository extends CrudRepository<Profile, Long> {
 
     boolean existsByEmail(String email);
     boolean existsByPhoneNo(String phone);
-
 }
