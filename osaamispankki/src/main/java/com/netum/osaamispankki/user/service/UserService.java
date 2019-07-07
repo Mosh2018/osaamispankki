@@ -5,13 +5,13 @@ import com.netum.osaamispankki.user.domain.CompanyConformation;
 import com.netum.osaamispankki.user.domain.Role;
 import com.netum.osaamispankki.user.domain.User;
 import com.netum.osaamispankki.user.exceptions.OsaamispankkiException;
-import com.netum.osaamispankki.user.exceptions.PasswordsDoesNotMatch;
-import com.netum.osaamispankki.user.exceptions.UserFoundCanNotAddAsNewUser;
 import com.netum.osaamispankki.user.repository.CompanyConformationRepository;
 import com.netum.osaamispankki.user.repository.UserRepository;
+import com.netum.osaamispankki.user.validation.UserValidations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import static com.netum.osaamispankki.user.common.GenericHelper.*;
 import static com.netum.osaamispankki.user.common.ReadyMadeExceptions.userNotFoundException;
@@ -36,9 +36,6 @@ public class UserService {
     public User save(User user) {
         return userRepository.save(user);
     }
-    public User createNewUser(User user) {
-        return save(addNewUser(user));
-    }
 
     public User saveNewCompany(String username, String companyName) {
         return save(addCompanyToUser(username,companyName));
@@ -60,22 +57,11 @@ public class UserService {
         return get(username);
     }
 
-    protected User  addNewUser(User newUser) {
-        if (isNull(newUser.getId())) {
-            if (userRepository.existsByUsername(newUser.getUsername())) {
-                throw new UserFoundCanNotAddAsNewUser(setExceptionMessage("username", "username has been used"));
-            }
-            if(calculatePasswordStrength(newUser.getPassword()) < 8) {
-                throw new PasswordsDoesNotMatch(setExceptionMessage("password", "weak password"));
-            }
-            if (newUser.getPassword().equals(newUser.getPassword2()) == false) {
-                throw new PasswordsDoesNotMatch(setExceptionMessage("password2", "passwords does not match"));
-            }
-            newUser.setPassword(cryptPasswordEncoder.encode(newUser.getPassword()));
-            addCompanyToNewUser(newUser);
-            addNewRoleToNewUser(newUser);
-        }
-        return newUser;
+    public User createUser(User user) {
+        user.setPassword(cryptPasswordEncoder.encode(user.getPassword()));
+        addCompanyToNewUser(user);
+        addNewRoleToNewUser(user);
+        return save(user);
     }
 
     protected User addCompanyToUser(String username, String companyName) {

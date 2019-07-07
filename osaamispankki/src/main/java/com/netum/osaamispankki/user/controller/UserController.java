@@ -3,6 +3,7 @@ package com.netum.osaamispankki.user.controller;
 import com.netum.osaamispankki.user.domain.User;
 import com.netum.osaamispankki.user.service.ErrorResponseService;
 import com.netum.osaamispankki.user.service.UserService;
+import com.netum.osaamispankki.user.validation.UserValidations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +22,16 @@ public class UserController {
     @Autowired
     private ErrorResponseService errorResponseService;
 
+    @Autowired
+    private UserValidations userValidations;
+
     @PostMapping("/add_new_user")
     public ResponseEntity<?> addingNewUser(@Valid @RequestBody User newUser, BindingResult bindingResult) {
+        userValidations.validate(newUser, bindingResult);
         if (bindingResult.hasErrors()) {
             return errorResponseService.getErrorResponse(bindingResult);
         }
-        return new ResponseEntity<>(userService.createNewUser(newUser), HttpStatus.OK);
+        return new ResponseEntity<>(userService.createUser(newUser), HttpStatus.OK);
     }
 
     @GetMapping("/{username}")
