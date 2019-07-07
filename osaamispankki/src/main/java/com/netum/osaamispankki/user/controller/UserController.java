@@ -35,7 +35,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/addCompanyToUser/{username}")
+    @PostMapping("/addCompanyToUser/{username}") // todo move this to company controller
     public ResponseEntity<?> addCompanyToUser(@PathVariable String username, @RequestBody String companyName) {
         return new ResponseEntity<>(userService.saveNewCompany(username, companyName), HttpStatus.OK);
     }

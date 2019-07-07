@@ -10,6 +10,7 @@ import com.netum.osaamispankki.user.exceptions.UserFoundCanNotAddAsNewUser;
 import com.netum.osaamispankki.user.repository.CompanyConformationRepository;
 import com.netum.osaamispankki.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import static com.netum.osaamispankki.user.common.GenericHelper.*;
@@ -28,6 +29,9 @@ public class UserService {
 
     @Autowired
     private CompanyConformationRepository companyConformationRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder cryptPasswordEncoder;
 
     public User save(User user) {
         return userRepository.save(user);
@@ -56,14 +60,18 @@ public class UserService {
         return get(username);
     }
 
-    protected User addNewUser(User newUser) {
+    protected User  addNewUser(User newUser) {
         if (isNull(newUser.getId())) {
             if (userRepository.existsByUsername(newUser.getUsername())) {
                 throw new UserFoundCanNotAddAsNewUser(setExceptionMessage("username", "username has been used"));
             }
+            if(calculatePasswordStrength(newUser.getPassword()) < 8) {
+                throw new PasswordsDoesNotMatch(setExceptionMessage("password", "weak password"));
+            }
             if (newUser.getPassword().equals(newUser.getPassword2()) == false) {
                 throw new PasswordsDoesNotMatch(setExceptionMessage("password2", "passwords does not match"));
             }
+            newUser.setPassword(cryptPasswordEncoder.encode(newUser.getPassword()));
             addCompanyToNewUser(newUser);
             addNewRoleToNewUser(newUser);
         }
