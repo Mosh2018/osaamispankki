@@ -1,5 +1,9 @@
 package com.netum.osaamispankki.user.service;
 
+import com.netum.osaamispankki.security.JWTProvider;
+import com.netum.osaamispankki.security.JWTRsponseToFrontend;
+import com.netum.osaamispankki.security.SecurityConstants;
+import com.netum.osaamispankki.security.UserLoginRequest;
 import com.netum.osaamispankki.user.domain.Company;
 import com.netum.osaamispankki.user.domain.CompanyConformation;
 import com.netum.osaamispankki.user.domain.Role;
@@ -9,10 +13,15 @@ import com.netum.osaamispankki.user.repository.CompanyConformationRepository;
 import com.netum.osaamispankki.user.repository.UserRepository;
 import com.netum.osaamispankki.user.validation.UserValidations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
+import static com.netum.osaamispankki.security.SecurityConstants.TOKEN_PERFIX;
 import static com.netum.osaamispankki.user.common.GenericHelper.*;
 import static com.netum.osaamispankki.user.common.ReadyMadeExceptions.userNotFoundException;
 import static com.netum.osaamispankki.user.common.UtilsMethods.*;
@@ -33,6 +42,12 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder cryptPasswordEncoder;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JWTProvider jwtProvider;
+
     public User save(User user) {
         return userRepository.save(user);
     }
@@ -45,6 +60,10 @@ public class UserService {
         return userRepository.existsByUsername(username);
     }
 
+    public boolean isExist(Long id) {
+        return userRepository.existsById(id);
+    }
+
     public User get(String username) {
         return userRepository.findByUsername(username);
     }
@@ -55,6 +74,24 @@ public class UserService {
             throw userNotFoundException();
         }
         return get(username);
+    }
+
+    public User getUser(Long id) {
+        if (isNull(id) || !isExist(id)) {
+            throw userNotFoundException();
+        }
+        return userRepository.findById(id).get();
+    }
+
+    public JWTRsponseToFrontend loginJwt(UserLoginRequest loginRequest) {
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(
+                        loginRequest.getUsername(),
+                        loginRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        return new JWTRsponseToFrontend(TOKEN_PERFIX + jwtProvider.generateToken(authentication), true);
     }
 
     public User createUser(User user) {

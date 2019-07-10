@@ -1,5 +1,6 @@
 package com.netum.osaamispankki.user.controller;
 
+import com.netum.osaamispankki.security.UserLoginRequest;
 import com.netum.osaamispankki.user.domain.User;
 import com.netum.osaamispankki.user.service.ErrorResponseService;
 import com.netum.osaamispankki.user.service.UserService;
@@ -32,6 +33,14 @@ public class UserController {
             return errorResponseService.getErrorResponse(bindingResult);
         }
         return new ResponseEntity<>(userService.createUser(newUser), HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@Valid @RequestBody UserLoginRequest loginRequest, BindingResult result) {
+        if (result.hasErrors()) {
+            return errorResponseService.getErrorResponse(result);
+        }
+        return new ResponseEntity<>(userService.loginJwt(loginRequest), HttpStatus.OK);
     }
 
     @GetMapping("/{username}")
