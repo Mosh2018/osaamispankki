@@ -1,8 +1,7 @@
 package com.netum.osaamispankki.security;
 
 import com.netum.osaamispankki.user.domain.User;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -42,5 +41,27 @@ public class JWTProvider {
                 .compact();
 
         return jwt;
+    }
+
+    public boolean validateJWT(String token) {
+        try {
+            Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token);
+            return true;
+        } catch (MalformedJwtException ex) {
+            System.out.println("Invalid JWT exception");
+        } catch (ExpiredJwtException ex) {
+            System.out.println("expired JWT exception");
+        } catch (UnsupportedJwtException ex) {
+            System.out.println("unsupported JWT exception");
+        } catch (IllegalArgumentException ex) {
+            System.out.println("JWT claims string is empty");
+        }
+        return false;
+    }
+
+    public Long getUserIdFromToken(String token ) {
+        Claims  claims = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
+        String idAsString = claims.get("id").toString();
+        return Long.parseLong(idAsString);
     }
 }

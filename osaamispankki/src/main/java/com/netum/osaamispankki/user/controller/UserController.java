@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
@@ -41,16 +44,5 @@ public class UserController {
             return errorResponseService.getErrorResponse(result);
         }
         return new ResponseEntity<>(userService.loginJwt(loginRequest), HttpStatus.OK);
-    }
-
-    @GetMapping("/{username}")
-    public ResponseEntity<?> getUser(@PathVariable("username") String username) {
-        return new ResponseEntity<>(userService.getUser(username), HttpStatus.OK);
-    }
-
-
-    @PostMapping("/addCompanyToUser/{username}") // todo move this to company controller
-    public ResponseEntity<?> addCompanyToUser(@PathVariable String username, @RequestBody String companyName) {
-        return new ResponseEntity<>(userService.saveNewCompany(username, companyName), HttpStatus.OK);
     }
 }

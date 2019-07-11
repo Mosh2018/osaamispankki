@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static com.netum.osaamispankki.security.SecurityConstants.H2_URL;
 import static com.netum.osaamispankki.security.SecurityConstants.SIGN_UP_URLS;
@@ -28,7 +29,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private JwtAuthenticateEntryPoint unauthorizedHandler;
 
     @Autowired
-    private CustomUserDetailService customUserDetailService;
+    private CustomUserDetailService  customUserDetailService;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -42,6 +43,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
     protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
+    }
+
+    @Bean
+    public JWTAuthenticationFilter jwtAuthenticationFilter() throws Exception {
+        return new JWTAuthenticationFilter();
     }
 
     @Override
@@ -68,6 +74,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/**/*.js").permitAll()
                 .antMatchers(SIGN_UP_URLS).permitAll()
                 .antMatchers(H2_URL).permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+                .and()
+                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

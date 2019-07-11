@@ -2,6 +2,7 @@ package com.netum.osaamispankki.user.service;
 
 import com.netum.osaamispankki.user.domain.Company;
 import com.netum.osaamispankki.user.domain.CompanyConformation;
+import com.netum.osaamispankki.user.domain.User;
 import com.netum.osaamispankki.user.exceptions.OsaamispankkiException;
 import com.netum.osaamispankki.user.modals.CompanyUser;
 import com.netum.osaamispankki.user.repository.CompanyConformationRepository;
@@ -27,6 +28,9 @@ public class CompanyService {
 
     @Autowired
     private CompanyConformationRepository companyConformationRepository;
+
+    @Autowired
+    private UserService userService;
 
     public Company getCompanyDataFromExternalSource(String businessId) {
         Boolean isExist = companyRepository.existsByBusinessId(businessId);
@@ -89,6 +93,10 @@ public class CompanyService {
         return companyRepository.findByCompanyName(companyName);
     }
 
+    public User saveNewCompany(String username, String companyName) {
+        return userService.saveNewCompany(username, companyName);
+    }
+
     private String getDateFromRestTemplate(Map<String, Object> object, String... keys) {
 
         try {
@@ -107,4 +115,6 @@ public class CompanyService {
         throw new OsaamispankkiException(setExceptionMessage("osaamispankki_error","Some thing goes wrong with Business fetching 3"));
 
     }
+
+
 }

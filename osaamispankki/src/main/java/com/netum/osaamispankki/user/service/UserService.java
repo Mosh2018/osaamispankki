@@ -2,7 +2,6 @@ package com.netum.osaamispankki.user.service;
 
 import com.netum.osaamispankki.security.JWTProvider;
 import com.netum.osaamispankki.security.JWTRsponseToFrontend;
-import com.netum.osaamispankki.security.SecurityConstants;
 import com.netum.osaamispankki.security.UserLoginRequest;
 import com.netum.osaamispankki.user.domain.Company;
 import com.netum.osaamispankki.user.domain.CompanyConformation;
@@ -11,7 +10,6 @@ import com.netum.osaamispankki.user.domain.User;
 import com.netum.osaamispankki.user.exceptions.OsaamispankkiException;
 import com.netum.osaamispankki.user.repository.CompanyConformationRepository;
 import com.netum.osaamispankki.user.repository.UserRepository;
-import com.netum.osaamispankki.user.validation.UserValidations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,7 +17,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 
 import static com.netum.osaamispankki.security.SecurityConstants.TOKEN_PERFIX;
 import static com.netum.osaamispankki.user.common.GenericHelper.*;
@@ -114,7 +111,9 @@ public class UserService {
         Company company = companyService.getCompany(user.getCompanyName());
         if (notNull(company)) {
             boolean hasRoleInThisCompany = user.getRoles()
-                    .stream().anyMatch(role -> role.getCompanyId().equals(company.getId()));
+                    .stream()
+                    .anyMatch(role ->
+                            role.getCompanyId() == company.getId());
             if (_false(hasRoleInThisCompany)) {
                 CompanyConformation conformation = user.getCompanyConformations().stream().findFirst().get();
                 Role role = new Role();
