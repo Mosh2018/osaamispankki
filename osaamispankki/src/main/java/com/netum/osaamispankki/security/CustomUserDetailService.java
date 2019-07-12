@@ -2,7 +2,6 @@ package com.netum.osaamispankki.security;
 
 import com.netum.osaamispankki.user.domain.User;
 import com.netum.osaamispankki.user.repository.UserRepository;
-import com.netum.osaamispankki.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

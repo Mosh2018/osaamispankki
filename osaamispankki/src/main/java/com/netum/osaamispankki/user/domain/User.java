@@ -11,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Collection;
@@ -33,28 +34,43 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String username;
 
+    @NotBlank(message = "First name is required")
+    private String firstName;
+
+    @NotBlank(message = "Last name is required")
+    private String surname;
+
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "dd.MM.yyyy")
+    private Date birthday;
+
+    @Column(unique = true)
+    @Email(message = "Input a valid email")
+    @NotBlank(message = "Email is required")
+    private String email;
+
+    @Column(unique = true)
+    @NotBlank(message = "First name is required")
+    private String phoneNo;
+
     @NotBlank
     @Size(min = 8, message = "Password most be 8 digits long or longer")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password2;
 
     private boolean enabled;
 
     private boolean tokenExpired;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Role> roles;
 
-    @OneToOne(fetch = FetchType.LAZY,
-            cascade =  CascadeType.ALL,
-            mappedBy = "user")
-    private Profile profile;
-
     @ManyToMany(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
             name = "user_company",

@@ -2,6 +2,7 @@ package com.netum.osaamispankki.user.controller;
 
 import com.netum.osaamispankki.security.UserLoginRequest;
 import com.netum.osaamispankki.user.domain.User;
+import com.netum.osaamispankki.user.exceptions.OsaamispankkiException;
 import com.netum.osaamispankki.user.service.ErrorResponseService;
 import com.netum.osaamispankki.user.service.UserService;
 import com.netum.osaamispankki.user.validation.UserValidations;
@@ -9,12 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import static com.netum.osaamispankki.user.common.UtilsMethods.isBlank;
+import static com.netum.osaamispankki.user.common.UtilsMethods.setExceptionMessage;
 
 @RestController
 @RequestMapping("/api/user")
@@ -44,5 +45,14 @@ public class UserController {
             return errorResponseService.getErrorResponse(result);
         }
         return new ResponseEntity<>(userService.loginJwt(loginRequest), HttpStatus.OK);
+    }
+
+    @GetMapping("/get/{username}")
+    public ResponseEntity<?> getUserByUsername(@PathVariable String username) {
+        if (isBlank(username)) {
+            throw new OsaamispankkiException(setExceptionMessage("username", "username can not by null"));
+        }
+
+        return new ResponseEntity<>(userService.getUser(username), HttpStatus.OK);
     }
 }

@@ -23,8 +23,8 @@ public class JWTProvider {
         Date now = new Date();
         Date expirationTime = new Date(now.getTime() + EXPIRATION_TIME);
         String userFullName = "No profile!";
-        if (notNull(user.getProfile())) {
-            userFullName = user.getProfile().getFirstName() + " " + user.getProfile().getSurname();
+        if (notNull(user.getFirstName()) || notNull(user.getSurname())) {
+            userFullName = user.getFirstName() + " " + user.getSurname();
         }
         Map<String, Object> claims = new HashMap<>();
         claims.put("id", userId);

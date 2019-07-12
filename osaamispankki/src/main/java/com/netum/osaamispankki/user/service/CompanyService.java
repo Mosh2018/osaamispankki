@@ -8,6 +8,7 @@ import com.netum.osaamispankki.user.modals.CompanyUser;
 import com.netum.osaamispankki.user.repository.CompanyConformationRepository;
 import com.netum.osaamispankki.user.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -49,7 +50,8 @@ public class CompanyService {
             String code = getDateFromRestTemplate(object, "businessLines", "code");
             String companyForms = getDateFromRestTemplate(object, "companyForms", "name");
 
-            Company company = new Company(null, businessId, name, businessLine, code, companyForms);
+            User user = userService.getUser();
+            Company company = new Company(null, businessId, name, businessLine, code, companyForms, user.getUsername(), null, null);
             try {
                 company = companyRepository.save(company);
             } catch (Exception e ) {
@@ -93,8 +95,8 @@ public class CompanyService {
         return companyRepository.findByCompanyName(companyName);
     }
 
-    public User saveNewCompany(String username, String companyName) {
-        return userService.saveNewCompany(username, companyName);
+    public User saveNewCompany(String companyName) {
+        return userService.addCompanyToUser(companyName);
     }
 
     private String getDateFromRestTemplate(Map<String, Object> object, String... keys) {

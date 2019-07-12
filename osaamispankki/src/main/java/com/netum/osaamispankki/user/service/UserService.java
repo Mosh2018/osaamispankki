@@ -8,6 +8,7 @@ import com.netum.osaamispankki.user.domain.CompanyConformation;
 import com.netum.osaamispankki.user.domain.Role;
 import com.netum.osaamispankki.user.domain.User;
 import com.netum.osaamispankki.user.exceptions.OsaamispankkiException;
+import com.netum.osaamispankki.user.modals.PublicUser;
 import com.netum.osaamispankki.user.repository.CompanyConformationRepository;
 import com.netum.osaamispankki.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,10 +50,6 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User saveNewCompany(String username, String companyName) {
-        return save(addCompanyToUser(username,companyName));
-    }
-
     public boolean isExist(String username) {
         return userRepository.existsByUsername(username);
     }
@@ -66,14 +63,16 @@ public class UserService {
     }
     // Ends
 
-    public User getUser(String username) {
+    public PublicUser getUser(String username) {
         if (username == null || !isExist(username)) {
             throw userNotFoundException();
         }
-        return get(username);
+        User user = get(username);
+        return new PublicUser(user.getFirstName(), user.getSurname(), user.isEnabled());
     }
 
-    public User getUser(Long id) {
+    public User getUser() {
+        Long id = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         if (isNull(id) || !isExist(id)) {
             throw userNotFoundException();
         }
@@ -98,12 +97,12 @@ public class UserService {
         return save(user);
     }
 
-    protected User addCompanyToUser(String username, String companyName) {
-        User user = getUser(username);
+    protected User addCompanyToUser(String companyName) {
+        User user = getUser();
         user.setCompanyName(companyName);
         addCompanyToExistUser(user);
         addRoleToExistUser(user);
-        return user;
+        return save(user);
     }
 
     private void addRoleToExistUser(User user) {

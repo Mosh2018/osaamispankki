@@ -1,5 +1,6 @@
 package com.netum.osaamispankki.user.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -32,4 +34,22 @@ public class Company {
     private String code;
 
     private String companyForm;
+
+    private String createdBy;
+
+    @JsonFormat(pattern = "dd.MM.yyyy")
+    private Date created_At;
+
+    @JsonFormat(pattern = "dd.MM.yyyy")
+    private Date update_At;
+
+    @PrePersist
+    public void onCreated() {
+        this.created_At = new Date();
+    }
+
+    @PreUpdate
+    public void onUpdated() {
+        this.update_At = new Date();
+    }
 }
