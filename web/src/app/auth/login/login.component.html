@@ -1,0 +1,42 @@
+<section [className]="errors ? 'login-form' : ''">
+  <h1>future is here</h1>
+  <form fxLayout="column"
+        fxLayoutAlign="center center"
+        [formGroup]="loginForm"
+        (ngSubmit)="onSubmit()">
+    <mat-form-field color="green">
+      <input
+        formControlName="username"
+        matInput
+        (focusin)="formSetting.input1 = true"
+        (focusout)="formSetting.input1 = false"
+        placeholder="username"
+        type="text">
+    </mat-form-field>
+    <span *ngIf="formSetting.input1" class="triangle-up"></span>
+    <mat-form-field color="#292729">
+      <input
+        formControlName="password"
+        matInput
+        (focusin)="formSetting.input2 = true"
+        (focusout)="formSetting.input2 = false"
+        placeholder="password"
+        type="password" >
+    </mat-form-field>
+    <span *ngIf="formSetting.input2 && this.loginForm.invalid" class="triangle-up"></span>
+    <ng-container *ngIf="loginForm.valid && formSetting.submit">
+      <button mat-button color="#FD403C">LOGIN</button>
+      <span class="triangle-up"></span>
+    </ng-container>
+    <ng-container *ngIf="loginForm.invalid && formSetting.reset">
+      <br>
+      <span>DO YOU HAVE LOGIN PROBLEMS?</span>
+      <button mat-button color="#FD403C" (click)="resolveIssue()">YES</button>
+      <span class="triangle-up"></span>
+    </ng-container>
+    <ng-container *ngIf="formSetting.progressing">
+      <p>PROGRESSING ...</p>
+      <mat-progress-bar mode="determinate" [value]="formSetting.progressValue"></mat-progress-bar>
+    </ng-container>
+  </form>
+</section>

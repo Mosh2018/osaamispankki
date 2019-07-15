@@ -18,6 +18,7 @@ import static com.netum.osaamispankki.user.common.UtilsMethods.isBlank;
 import static com.netum.osaamispankki.user.common.UtilsMethods.setExceptionMessage;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/user")
 public class UserController {
 
