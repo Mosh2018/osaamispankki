@@ -1,54 +1,46 @@
-
-mat-form-field {
-  color: #292729;
-  font-size: 1.5em;
-  width: 300px;
-  font-family: 'Play', sans-serif;
+::ng-deep .mat-tab-labels {
+  height: 75px!important;
 }
-mat-progress-bar {
-  width: 300px;
-}
-button {
-  color: #292729;
-  height: 50px;
-  padding: 10px;
-  font-size: 1.5em ;
-  font-family: 'Play', sans-serif;
-  margin-bottom: 10px;
+::ng-deep .mat-tab-label{
+  color: #292729 !important;
+  height: 50px !important;
+  padding: 10px !important;
+  font-size: 1.5em !important;
+  font-family: 'Play', sans-serif !important;
+  margin-bottom: 10px !important;
 }
 
-.triangle-up {
-  width: 0;
-  height: 0;
-  margin-top: -25px;
+::ng-deep .mat-tab-label-content {
+  margin-bottom: 20px !important;
+}
+
+::ng-deep .mat-tab-label-active{
+  color: #7f1a21 !important;
+  height: 50px !important;
+  padding: 0px !important;
+  font-size: 1.5em !important;
+  font-family: 'Play', sans-serif !important;
+  margin-bottom: 10px !important;
+
+}
+
+@media screen and (max-width:  550px ) {
+  ::ng-deep .mat-ink-bar {
+    margin-left: 50px!important;
+  }
+}
+
+::ng-deep .mat-ink-bar {
+  margin-left: 70px!important;
+  width: 0px !important;
+  height: 0px;
+  background-color: #FFFAF5 !important;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
   border-bottom: 20px solid #e42c35;
   -webkit-animation-name: blackWhite;
   -webkit-animation-iteration-count: infinite;
   -webkit-animation-duration: 5s;
-
-}
-
-
-.login-form:before, .login-form:after {
-  position: absolute;
-  content: '';
-  background: #e42c35;
-  display: block;
-  width: 30%;
-  height: 5px;
-  -webkit-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: 200px auto auto  auto;
-}
-.login-form:after {
-  -webkit-transform: rotate(45deg);
-  transform: rotate(45deg);
 }
 
 @-webkit-keyframes blackWhite {

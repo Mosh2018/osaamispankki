@@ -1,6 +1,5 @@
 package com.netum.osaamispankki.security;
 
-import com.netum.osaamispankki.user.domain.User;
 import com.netum.osaamispankki.user.exceptions.OsaamispankkiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,7 +17,7 @@ import java.io.IOException;
 import java.util.Collections;
 
 import static com.netum.osaamispankki.security.SecurityConstants.HEADER_OF_JWT;
-import static com.netum.osaamispankki.security.SecurityConstants.TOKEN_PERFIX;
+import static com.netum.osaamispankki.security.SecurityConstants.TOKEN_PREFIX;
 import static com.netum.osaamispankki.user.common.UtilsMethods.notBlank;
 import static com.netum.osaamispankki.user.common.UtilsMethods.setExceptionMessage;
 
@@ -38,8 +37,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         try {
             String token = httpServletRequest.getHeader(HEADER_OF_JWT);
             String jwt = "";
-            if (StringUtils.hasText(token) && token.startsWith(TOKEN_PERFIX)) {
-                jwt = token.replace(TOKEN_PERFIX, "");
+            if (StringUtils.hasText(token) && token.startsWith(TOKEN_PREFIX)) {
+                jwt = token.replace(TOKEN_PREFIX, "");
             }
             if (notBlank(jwt) && jwtProvider.validateJWT(jwt)) {
                 Long userId = jwtProvider.getUserIdFromToken(jwt);

@@ -1,13 +1,32 @@
-
 mat-form-field {
   color: #292729;
   font-size: 1.5em;
-  width: 300px;
+  width: 40%;
   font-family: 'Play', sans-serif;
 }
+
 mat-progress-bar {
-  width: 300px;
+  width: 40%;
 }
+
+@media screen and (max-width:  750px ) {
+  mat-form-field {
+    width: 60%;
+  }
+  mat-progress-bar {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 376px ) {
+  mat-form-field {
+    width: 80%;
+  }
+  mat-progress-bar {
+    width: 80%;
+  }
+}
+
 button {
   color: #292729;
   height: 50px;
@@ -30,26 +49,6 @@ button {
 
 }
 
-
-.login-form:before, .login-form:after {
-  position: absolute;
-  content: '';
-  background: #e42c35;
-  display: block;
-  width: 30%;
-  height: 5px;
-  -webkit-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: 200px auto auto  auto;
-}
-.login-form:after {
-  -webkit-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
 
 @-webkit-keyframes blackWhite {
   0% { border-bottom: 20px solid #e41a2f;opacity: random(0.3, 1)}

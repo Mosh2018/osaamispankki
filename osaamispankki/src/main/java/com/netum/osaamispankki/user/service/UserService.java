@@ -19,7 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static com.netum.osaamispankki.security.SecurityConstants.TOKEN_PERFIX;
+import static com.netum.osaamispankki.security.SecurityConstants.TOKEN_PREFIX;
 import static com.netum.osaamispankki.user.common.GenericHelper.*;
 import static com.netum.osaamispankki.user.common.ReadyMadeExceptions.userNotFoundException;
 import static com.netum.osaamispankki.user.common.UtilsMethods.*;
@@ -87,7 +87,7 @@ public class UserService {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return new JWTRsponseToFrontend(TOKEN_PERFIX + jwtProvider.generateToken(authentication), true);
+        return new JWTRsponseToFrontend(TOKEN_PREFIX + jwtProvider.generateToken(authentication), true);
     }
 
     public User createUser(User user) {

@@ -1,0 +1,103 @@
+<section >
+  <h1>Netum Oy</h1>
+  <form fxLayout="column"
+        fxLayoutAlign="center center"
+        [formGroup]="signUpForm"
+        (ngSubmit)="register()">
+    <mat-form-field>
+      <input
+        formControlName="username"
+        matInput
+        (focusin)="isFocus('username')"
+        placeholder="username"
+        type="text">
+      <mat-error *ngIf="errors">{{getError('username')}}</mat-error>
+    </mat-form-field>
+    <span *ngIf="formSettings.username && this.signUpForm.invalid" class="triangle-up"></span>
+
+    <mat-form-field>
+      <input
+        formControlName="firstName"
+        matInput
+        placeholder="first name"
+        (focusin)="isFocus('firstName')"
+        type="text" >
+      <mat-error *ngIf="errors">{{getError('firstName')}}</mat-error>
+    </mat-form-field>
+    <span *ngIf="formSettings.firstName && this.signUpForm.invalid" class="triangle-up"></span>
+
+    <mat-form-field>
+      <input
+        formControlName="surname"
+        matInput
+        placeholder="last name"
+        (focusin)="isFocus('surname')"
+        type="text">
+    </mat-form-field>
+    <span *ngIf="formSettings.surname && this.signUpForm.invalid" class="triangle-up"></span>
+
+    <mat-form-field>
+      <input
+        formControlName="email"
+        matInput
+        placeholder="email"
+        (focusin)="isFocus('email')"
+        type="email">
+      <mat-error *ngIf="errors">{{getError('email')}}</mat-error>
+    </mat-form-field>
+    <span *ngIf="formSettings.email && this.signUpForm.invalid" class="triangle-up"></span>
+
+    <mat-form-field>
+      <input
+        formControlName="phoneNo"
+        matInput
+        placeholder="phone number"
+        (focusin)="isFocus('phoneNo')"
+        type="tel" required>
+      <mat-error *ngIf="errors">{{getError('phoneNo')}}</mat-error>
+    </mat-form-field>
+    <span *ngIf="formSettings.phoneNo && this.signUpForm.invalid" class="triangle-up"></span>
+
+    <mat-form-field>
+      <input
+        formControlName="password"
+        matInput
+        placeholder="password"
+        (focusin)="isFocus('password')"
+        type="password" required>
+      <mat-error *ngIf="errors">{{getError('password')}}</mat-error>
+    </mat-form-field>
+    <span *ngIf="formSettings.password && this.signUpForm.invalid" class="triangle-up"></span>
+
+    <mat-form-field>
+      <input
+        formControlName="password2"
+        matInput
+        placeholder="confirm password"
+        (focusin)="isFocus('password2')"
+        type="password" required>
+      <mat-error *ngIf="errors">{{getError('password2')}}</mat-error>
+    </mat-form-field>
+    <span *ngIf="formSettings.password2 && this.signUpForm.invalid" class="triangle-up"></span>
+
+    <mat-form-field>
+      <input
+        formControlName="company"
+        matInput
+        placeholder="company"
+        (focusin)="isFocus('company')"
+        type="text">
+    </mat-form-field>
+    <span *ngIf="formSettings.company && this.signUpForm.invalid" class="triangle-up"></span>
+
+    <ng-container *ngIf="formSettings.submit && signUpForm.valid">
+      <button mat-button color="#FD403C">REGISTER</button>
+      <span class="triangle-up"></span>
+    </ng-container>
+    <ng-container *ngIf="formSettings.progressing">
+      <p>PROGRESSING ...</p>
+      <mat-progress-bar mode="determinate" [value]="formSettings.progressValue"></mat-progress-bar>
+    </ng-container>
+
+  </form>
+</section>

@@ -1,15 +1,18 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './auth/login/login.component';
-import {SignupComponent} from './auth/signup/signup.component';
 import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
 import {HomeComponent} from './components/home/home.component';
+import {AuthGuard} from './helpers/auth-guard';
+import {MainPageComponent} from './auth/main-page/main-page.component';
+import {SignComponent} from './auth/sign/sign.component';
 
 
 const routes: Routes = [
-  {path: '', component: LoginComponent},
-  {path: 'sign-up', component: SignupComponent},
-  {path: 'home', component: HomeComponent},
+  {path: '', component: MainPageComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'sign', component: SignComponent},
+  {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
   {path: '**', component: PageNotFoundComponent}
 ];
 

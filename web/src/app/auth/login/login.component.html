@@ -1,10 +1,10 @@
-<section [className]="errors ? 'login-form' : ''">
-  <h1>future is here</h1>
+<section [className]="formSetting.errorCross ? 'login-form' : ''">
+  <h1>Netum Oy</h1>
   <form fxLayout="column"
         fxLayoutAlign="center center"
         [formGroup]="loginForm"
         (ngSubmit)="onSubmit()">
-    <mat-form-field color="green">
+    <mat-form-field>
       <input
         formControlName="username"
         matInput
@@ -12,9 +12,10 @@
         (focusout)="formSetting.input1 = false"
         placeholder="username"
         type="text">
+      <mat-error *ngIf="errors">{{getError('username')}}</mat-error>
     </mat-form-field>
     <span *ngIf="formSetting.input1" class="triangle-up"></span>
-    <mat-form-field color="#292729">
+    <mat-form-field>
       <input
         formControlName="password"
         matInput
@@ -22,6 +23,7 @@
         (focusout)="formSetting.input2 = false"
         placeholder="password"
         type="password" >
+      <mat-error *ngIf="errors">{{getError('password')}}</mat-error>
     </mat-form-field>
     <span *ngIf="formSetting.input2 && this.loginForm.invalid" class="triangle-up"></span>
     <ng-container *ngIf="loginForm.valid && formSetting.submit">

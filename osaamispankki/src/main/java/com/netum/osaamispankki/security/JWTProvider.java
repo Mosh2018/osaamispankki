@@ -1,5 +1,6 @@
 package com.netum.osaamispankki.security;
 
+import com.netum.osaamispankki.user.domain.Role;
 import com.netum.osaamispankki.user.domain.User;
 import io.jsonwebtoken.*;
 import org.springframework.security.core.Authentication;
@@ -30,6 +31,7 @@ public class JWTProvider {
         claims.put("id", userId);
         claims.put("username", user.getUsername());
         claims.put("name", userFullName);
+        claims.put("roles", user.getRoles());
 
         String jwt = Jwts
                 .builder()

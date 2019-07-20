@@ -50,7 +50,7 @@ public class User implements UserDetails {
     private String email;
 
     @Column(unique = true)
-    @NotBlank(message = "First name is required")
+    @NotBlank(message = "Phone number is required")
     private String phoneNo;
 
     @NotBlank
