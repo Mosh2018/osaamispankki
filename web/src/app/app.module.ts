@@ -19,6 +19,7 @@ import {ErrorInterceptor} from './helpers/error-interceptor';
 import {GlobalErrorHandler} from './helpers/global-error-handler';
 import {MainPageComponent} from './auth/main-page/main-page.component';
 import {SignComponent} from './auth/sign/sign.component';
+import { RegistrationSuccessComponent } from './auth/registration-success/registration-success.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {SignComponent} from './auth/sign/sign.component';
     HomeComponent,
     PageNotFoundComponent,
     MainPageComponent,
-    SignComponent
+    SignComponent,
+    RegistrationSuccessComponent
   ],
   imports: [
     BrowserModule,

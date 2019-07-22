@@ -3,10 +3,7 @@ package com.netum.osaamispankki.user.service;
 import com.netum.osaamispankki.security.JWTProvider;
 import com.netum.osaamispankki.security.JWTRsponseToFrontend;
 import com.netum.osaamispankki.security.UserLoginRequest;
-import com.netum.osaamispankki.user.domain.Company;
-import com.netum.osaamispankki.user.domain.CompanyConformation;
-import com.netum.osaamispankki.user.domain.Role;
-import com.netum.osaamispankki.user.domain.User;
+import com.netum.osaamispankki.user.domain.*;
 import com.netum.osaamispankki.user.exceptions.OsaamispankkiException;
 import com.netum.osaamispankki.user.modals.PublicUser;
 import com.netum.osaamispankki.user.repository.CompanyConformationRepository;
@@ -45,6 +42,9 @@ public class UserService {
 
     @Autowired
     private JWTProvider jwtProvider;
+
+    @Autowired
+    private EmailSenderService emailSenderService;
 
     public User save(User user) {
         return userRepository.save(user);
@@ -90,11 +90,33 @@ public class UserService {
         return new JWTRsponseToFrontend(TOKEN_PREFIX + jwtProvider.generateToken(authentication), true);
     }
 
-    public User createUser(User user) {
+    public JWTRsponseToFrontend createUser(User user) {
         user.setPassword(cryptPasswordEncoder.encode(user.getPassword()));
         addCompanyToNewUser(user);
         addNewRoleToNewUser(user);
-        return save(user);
+        try {
+            save(user);
+        } catch (Exception e) {
+            throw new OsaamispankkiException(setExceptionMessage("user", e.getMessage()));
+        }
+
+        TokenConfirmation tokenConfirmation = emailSenderService.sendConfirmationEmail(save(user));
+        user.setTokenConfirmation(tokenConfirmation);
+        save(user);
+        return new JWTRsponseToFrontend(tokenConfirmation.getToken(), true);
+    }
+
+    public JWTRsponseToFrontend confirmUserAccount(String confirmId) {
+        TokenConfirmation confirmation = emailSenderService.confirmUser(confirmId);
+        try {
+            User user = confirmation.getUser();
+            user.setEnabled(true);
+            save(user);
+
+            return new JWTRsponseToFrontend("Account gas been confirmed", true);
+        } catch (Exception e){
+            throw new OsaamispankkiException(setExceptionMessage("confirmation_id", e.getMessage()));
+        }
     }
 
     protected User addCompanyToUser(String companyName) {

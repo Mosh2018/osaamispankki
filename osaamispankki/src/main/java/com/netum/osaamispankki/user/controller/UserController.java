@@ -56,4 +56,14 @@ public class UserController {
 
         return new ResponseEntity<>(userService.getUser(username), HttpStatus.OK);
     }
+
+
+    @GetMapping("/confirm-account")
+    public ResponseEntity<?> confirmUserAccount(@RequestParam("token") String confirmId) {
+        if(isBlank(confirmId)) {
+            throw new OsaamispankkiException(setExceptionMessage("confirmation_id", "The link is invalid or broken!"));
+        }
+
+        return new ResponseEntity<>(userService.confirmUserAccount(confirmId),HttpStatus.OK);
+    }
 }

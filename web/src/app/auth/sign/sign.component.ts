@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../services/authentication.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-sign',
@@ -36,7 +37,8 @@ export class SignComponent {
 
   errors = null;
   constructor(private fb: FormBuilder,
-              private auth: AuthenticationService) { }
+              private auth: AuthenticationService,
+              private router: Router) { }
 
   register() {
     this.formSettings.submit = false;
@@ -47,16 +49,21 @@ export class SignComponent {
         setInterval(()  => {
           this.formSettings.progressValue = this.formSettings.progressValue + 5;
           if (this.formSettings.progressValue > 99) {
-            location.reload();
+            this.router.navigate(['success-registration']);
           }
         }, 100);
       }, error1 => {
         console.log('erroooooooo',  error1)
         this.errors = error1;
-        this.formSettings.submit = true;
-        this.formSettings.progressing = false;
 
-        console.log('errors', error1);
+        setTimeout(() => {
+          // tslint:disable-next-line:forin
+          for (const error1Key in error1) {
+            this.signUpForm.controls[error1Key].reset();
+          }
+          this.formSettings.submit = true;
+          this.formSettings.progressing = false;
+        }, 2000);
       });
   }
 
@@ -79,7 +86,6 @@ export class SignComponent {
   getError(filed: string) {
 
     if (this.errors && this.errors[filed]) {
-      console.log(filed, this.errors[filed]);
       return this.errors[filed];
     }
     return null;

@@ -6,12 +6,14 @@ import {HomeComponent} from './components/home/home.component';
 import {AuthGuard} from './helpers/auth-guard';
 import {MainPageComponent} from './auth/main-page/main-page.component';
 import {SignComponent} from './auth/sign/sign.component';
+import {RegistrationSuccessComponent} from './auth/registration-success/registration-success.component';
 
 
 const routes: Routes = [
   {path: '', component: MainPageComponent},
   {path: 'login', component: LoginComponent},
   {path: 'sign', component: SignComponent},
+  {path: 'success-registration', component: RegistrationSuccessComponent},
   {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
   {path: '**', component: PageNotFoundComponent}
 ];

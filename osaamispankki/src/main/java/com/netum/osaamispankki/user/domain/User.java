@@ -78,6 +78,10 @@ public class User implements UserDetails {
             inverseJoinColumns = { @JoinColumn(name = "conformation_id")})
         private Set<CompanyConformation> companyConformations = new HashSet<>();
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(referencedColumnName = "id")
+    private TokenConfirmation tokenConfirmation;
+
     @JsonFormat(pattern = "dd.MM.yyyy")
     private Date created_At;
 

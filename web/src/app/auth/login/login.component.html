@@ -27,13 +27,13 @@
     </mat-form-field>
     <span *ngIf="formSetting.input2 && this.loginForm.invalid" class="triangle-up"></span>
     <ng-container *ngIf="loginForm.valid && formSetting.submit">
-      <button mat-button color="#FD403C">LOGIN</button>
+      <button mat-stroked-button color="#FD403C">LOGIN</button>
       <span class="triangle-up"></span>
     </ng-container>
     <ng-container *ngIf="loginForm.invalid && formSetting.reset">
       <br>
       <span>DO YOU HAVE LOGIN PROBLEMS?</span>
-      <button mat-button color="#FD403C" (click)="resolveIssue()">YES</button>
+      <button mat-stroked-button color="#FD403C" (click)="resolveIssue()">YES</button>
       <span class="triangle-up"></span>
     </ng-container>
     <ng-container *ngIf="formSetting.progressing">
