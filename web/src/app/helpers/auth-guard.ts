@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
     if (this.auth.currentUserValue && !this.auth.isExpired()) {
       return true;
     }
-    this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+    this.router.navigate(['/'], { queryParams: { returnUrl: state.url } });
     return false;
   }
 }

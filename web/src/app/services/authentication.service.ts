@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {UserService} from './user.service';
-import {catchError, map} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {JwtResponse} from '../../models/jwtResponse';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {error} from 'util';
 
 @Injectable({
   providedIn: 'root'

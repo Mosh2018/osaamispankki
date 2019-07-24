@@ -11,8 +11,6 @@ import {RegistrationSuccessComponent} from './auth/registration-success/registra
 
 const routes: Routes = [
   {path: '', component: MainPageComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'sign', component: SignComponent},
   {path: 'success-registration', component: RegistrationSuccessComponent},
   {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
   {path: '**', component: PageNotFoundComponent}
