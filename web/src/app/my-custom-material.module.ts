@@ -8,7 +8,12 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatTableModule,
-  MatCardModule
+  MatCardModule,
+  MatSelectModule,
+  MatStepperModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatDialogModule
 } from '@angular/material';
 
 @NgModule({
@@ -21,7 +26,12 @@ import {
     MatTabsModule,
     MatToolbarModule,
     MatTableModule,
-    MatCardModule
+    MatCardModule,
+    MatSelectModule,
+    MatStepperModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatDialogModule
   ],
   exports: [
     MatButtonModule,
@@ -32,7 +42,12 @@ import {
     MatTabsModule,
     MatToolbarModule,
     MatTableModule,
-    MatCardModule
+    MatCardModule,
+    MatSelectModule,
+    MatStepperModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatDialogModule
   ]
 })
 export class MyCustomMaterialModule {}

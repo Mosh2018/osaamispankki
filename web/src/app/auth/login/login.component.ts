@@ -46,7 +46,7 @@ export class LoginComponent {
           setInterval(()  => {
             this.formSetting.progressValue = this.formSetting.progressValue + 5;
             if (this.formSetting.progressValue > 99) {
-              this.router.navigate(['/home']);
+              location.reload();
             }
           }, 100);
         },

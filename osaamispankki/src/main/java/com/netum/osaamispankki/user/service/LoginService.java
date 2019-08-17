@@ -8,6 +8,8 @@ import com.netum.osaamispankki.user.exceptions.OsaamispankkiException;
 import com.netum.osaamispankki.user.modals.PublicUser;
 import com.netum.osaamispankki.user.repository.CompanyConformationRepository;
 import com.netum.osaamispankki.user.repository.UserRepository;
+import com.netum.osaamispankki.user.services.EmailSenderService;
+import com.netum.osaamispankki.user.services.HeadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,7 +25,7 @@ import static com.netum.osaamispankki.user.common.UtilsMethods.*;
 import static com.netum.osaamispankki.user.modals.Roles.COMPANY_WORKER;
 
 @Service
-public class UserService {
+public class LoginService {
 
     @Autowired
     private UserRepository userRepository;
@@ -45,6 +47,9 @@ public class UserService {
 
     @Autowired
     private EmailSenderService emailSenderService;
+
+    @Autowired
+    private HeadService headService;
 
     public User save(User user) {
         return userRepository.save(user);
@@ -90,22 +95,6 @@ public class UserService {
         return new JWTRsponseToFrontend(TOKEN_PREFIX + jwtProvider.generateToken(authentication), true);
     }
 
-    public JWTRsponseToFrontend createUser(User user) {
-        user.setPassword(cryptPasswordEncoder.encode(user.getPassword()));
-        addCompanyToNewUser(user);
-        addNewRoleToNewUser(user);
-        try {
-            save(user);
-        } catch (Exception e) {
-            throw new OsaamispankkiException(setExceptionMessage("user", e.getMessage()));
-        }
-
-        TokenConfirmation tokenConfirmation = emailSenderService.sendConfirmationEmail(save(user));
-        user.setTokenConfirmation(tokenConfirmation);
-        save(user);
-        return new JWTRsponseToFrontend(tokenConfirmation.getToken(), true);
-    }
-
     public JWTRsponseToFrontend confirmUserAccount(String confirmId) {
         TokenConfirmation confirmation = emailSenderService.confirmUser(confirmId);
         try {
@@ -120,7 +109,7 @@ public class UserService {
     }
 
     protected User addCompanyToUser(String companyName) {
-        User user = getUser();
+        User user = headService.getUser();
         user.setCompanyName(companyName);
         addCompanyToExistUser(user);
         addRoleToExistUser(user);
@@ -159,32 +148,5 @@ public class UserService {
             }
         }
 
-    }
-
-    private void addCompanyToNewUser(User user) {
-        if (notBlank(user.getCompanyName())) {
-            Company company = companyService.getCompany(user.getCompanyName());
-            if (!isNull(company)) {
-                CompanyConformation companyConformation = companyConformationRepository.findByCompanyId(company.getId());
-                companyConformation.setCompanyUsers(tSet(user));
-                user.setCompanyConformations(tSet(companyConformation));
-            }
-        }
-    }
-
-    private void addNewRoleToNewUser(User user) {
-        if (notNull(user.getId())) {
-            throw new OsaamispankkiException(setExceptionMessage("System_error", "Can not add role to existed user use another function for that"));
-        }
-        if (user.getCompanyConformations().isEmpty()) {
-            user.setRoles(tSet(new Role()));
-        } else {
-            CompanyConformation conformation = user.getCompanyConformations().stream().findFirst().get();
-
-            Role role = new Role();
-            role.setRole(COMPANY_WORKER);
-            role.setCompanyId(conformation.getCompanyId());
-            user.setRoles(tSet(role));
-        }
     }
 }

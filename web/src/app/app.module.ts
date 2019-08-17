@@ -19,7 +19,8 @@ import {ErrorInterceptor} from './helpers/error-interceptor';
 import {GlobalErrorHandler} from './helpers/global-error-handler';
 import {MainPageComponent} from './auth/main-page/main-page.component';
 import {SignComponent} from './auth/sign/sign.component';
-import { RegistrationSuccessComponent } from './auth/registration-success/registration-success.component';
+import {RegistrationSuccessComponent} from './auth/registration-success/registration-success.component';
+import { EducationComponent } from './components/cv/educations/education/education.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { RegistrationSuccessComponent } from './auth/registration-success/regist
     PageNotFoundComponent,
     MainPageComponent,
     SignComponent,
-    RegistrationSuccessComponent
+    RegistrationSuccessComponent,
+    EducationComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +48,7 @@ import { RegistrationSuccessComponent } from './auth/registration-success/regist
         tokenGetter: () => {
           return localStorage.getItem('currentUser');
         },
-        whitelistedDomains: ['localhost:4200'],
+        whitelistedDomains: ['localhost:4200/'],
         blacklistedRoutes: ['http://localhost:4200/login', 'http://localhost:4200/sign']
       }
     })

@@ -14,7 +14,7 @@ export class MainPageComponent implements OnInit {
 
   ngOnInit() {
     if (this.auth.getJWT() && !this.auth.isExpired()) {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/']);
     }
   }
 

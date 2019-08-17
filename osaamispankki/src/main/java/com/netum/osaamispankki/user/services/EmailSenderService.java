@@ -1,4 +1,4 @@
-package com.netum.osaamispankki.user.service;
+package com.netum.osaamispankki.user.services;
 
 import com.netum.osaamispankki.security.JWTRsponseToFrontend;
 import com.netum.osaamispankki.user.domain.TokenConfirmation;

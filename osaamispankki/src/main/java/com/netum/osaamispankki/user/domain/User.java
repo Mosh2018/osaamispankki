@@ -82,6 +82,10 @@ public class User implements UserDetails {
     @JoinColumn(referencedColumnName = "id")
     private TokenConfirmation tokenConfirmation;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(referencedColumnName = "id")
+    private HomeAddress homeAddress;
+
     @JsonFormat(pattern = "dd.MM.yyyy")
     private Date created_At;
 

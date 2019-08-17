@@ -1,23 +1,29 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot} from '@angular/router';
 import {AuthenticationService} from '../services/authentication.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanActivate, CanActivateChild {
 
   constructor(private auth: AuthenticationService,
               private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    console.log(this.auth)
-    console.log(this.auth.getExpirationDay())
-    console.log(this.auth.getUserFullInformation())
-    if (this.auth.currentUserValue && !this.auth.isExpired()) {
+
+    if (this.auth.currentUserValue !== null && !this.auth.isExpired()) {
       return true;
     }
-    this.router.navigate(['/'], { queryParams: { returnUrl: state.url } });
+    this.router.navigate(['/log']);
+    return false;
+  }
+
+  canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    if (this.auth.currentUserValue !== null && !this.auth.isExpired()) {
+      return true;
+    }
+    this.router.navigate(['/log']);
     return false;
   }
 }

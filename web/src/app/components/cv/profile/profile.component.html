@@ -1,0 +1,86 @@
+<form [formGroup]="personalInformationForm" (ngSubmit)="addProfile()" xmlns:date="http://www.w3.org/1999/xhtml">
+  <mat-horizontal-stepper #stepper>
+
+
+    <mat-step>
+      <ng-template matStepLabel>personal information</ng-template>
+
+      <mat-form-field fxLayout="column">
+        <input matInput placeholder="first name" formControlName="firstName" required>
+      </mat-form-field>
+
+      <mat-form-field fxLayout="column">
+        <input matInput placeholder="last name" formControlName="surname" required>
+      </mat-form-field>
+
+      <mat-form-field fxLayout="column">
+        <input matInput [matDatepicker]="picker" formControlName="birthday" placeholder="birthday">
+        <mat-datepicker-toggle matSuffix [for]="picker">
+          <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field fxLayout="column">
+        <input matInput placeholder="phone number" formControlName="phoneNo" required>
+      </mat-form-field>
+
+      <div>
+        <button type="button" mat-stroked-button matStepperNext fxFlexAlign="flex-end">Next</button>
+      </div>
+
+    </mat-step>
+
+
+    <mat-step>
+      <ng-container formGroupName="address">
+        <ng-template matStepLabel>Fill out your address</ng-template>
+
+        <mat-form-field fxLayout="column">
+          <input matInput placeholder="street" formControlName="street" required>
+        </mat-form-field>
+
+        <mat-form-field fxLayout="column">
+          <input matInput placeholder="post code" formControlName="postcode" required>
+        </mat-form-field>
+
+        <mat-form-field fxLayout="column">
+          <input matInput placeholder="city" formControlName="city" required>
+        </mat-form-field>
+        <mat-form-field fxLayout="column">
+          <input matInput placeholder="country" formControlName="country" required>
+        </mat-form-field>
+
+        <div fxLayoutGap="20px">
+          <button type="button" mat-stroked-button matStepperPrevious>Back</button>
+          <button type="button" mat-stroked-button matStepperNext>Next</button>
+        </div>
+      </ng-container>
+    </mat-step>
+
+
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+
+      <div fxLayoutGap="20px">
+        <button type="button" mat-stroked-button matStepperPrevious>Back</button>
+        <ng-container *ngIf="personalInformationForm.valid && personalInformationForm.touched; else elseBlock">
+          <button type="submit" mat-stroked-button>save</button>
+        </ng-container>
+        <br>
+        <ng-template #elseBlock>
+          <ng-container *ngIf="personalInformationForm.valid; else elseFill">
+            your information is up to date!
+          </ng-container>
+          <ng-template #elseFill>
+            fill all required fields to save
+          </ng-template>
+        </ng-template>
+
+      </div>
+
+    </mat-step>
+
+  </mat-horizontal-stepper>
+
+</form>

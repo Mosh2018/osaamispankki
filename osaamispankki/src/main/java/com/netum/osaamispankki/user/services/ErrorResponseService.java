@@ -1,4 +1,4 @@
-package com.netum.osaamispankki.user.service;
+package com.netum.osaamispankki.user.services;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

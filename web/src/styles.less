@@ -15,7 +15,6 @@
 
 }
 
-
 @-webkit-keyframes blackWhite {
   0% { border-bottom: 20px solid #e41a2f;opacity: 0.2}
   10% { border-bottom: 20px solid #a6202a; opacity: 0.8}
@@ -27,4 +26,72 @@
   70% { border-bottom: 20px solid #e42c35;opacity: random(0.5, 1)}
   80% { border-bottom: 20px solid #9f2d26;opacity: random(0.3, 1)}
   90% { border-bottom: 20px solid #e42c35;opacity: random(0.3, 1)}
+}
+
+.triangle-left {
+   width: 0;
+   height: 0;
+   margin-top: 0;
+   margin-left: 10px;
+   border-top: 8px solid transparent;
+   border-bottom: 8px solid transparent;
+   border-right: 20px solid #e42c35;
+   -webkit-animation-name: blackWhite-left;
+   -webkit-animation-iteration-count: infinite;
+   -webkit-animation-duration: 5s;
+
+ }
+
+@-webkit-keyframes blackWhite-left {
+  0% { border-right: 20px solid #e41a2f;opacity: 0.2}
+  10% { border-right: 20px solid #a6202a; opacity: 0.8}
+  20% { border-right: 20px solid #c5382c;opacity: random(0.3, 1)}
+  30% { border-right: 20px solid #a6202a;opacity: random(0.5, 1)}
+  40% { border-right: 20px solid #7f1a21;opacity: random(0.3, 1)}
+  50% { border-right: 20px solid #732124;opacity: random(0.5, 1)}
+  60% { border-right: 20px solid #a6202a;opacity: random(0.3, 1)}
+  70% { border-right: 20px solid #e42c35;opacity: random(0.5, 1)}
+  80% { border-right: 20px solid #9f2d26;opacity: random(0.3, 1)}
+  90% { border-right: 20px solid #e42c35;opacity: random(0.3, 1)}
+}
+
+.triangle-right {
+   width: 0;
+   height: 0;
+   margin-top: 0;
+   margin-right: 5px;
+   border-top: 8px solid transparent;
+   border-bottom: 8px solid transparent;
+   border-left: 20px solid #e42c35;
+   -webkit-animation-name: blackWhite-right;
+   -webkit-animation-iteration-count: infinite;
+   -webkit-animation-duration: 5s;
+
+ }
+
+@-webkit-keyframes blackWhite-right {
+  0% { border-left: 20px solid #9f0b1d;opacity: 0.2}
+  10% { border-left: 20px solid #a6202a; opacity: 0.8}
+  20% { border-left: 20px solid #c5382c;opacity: random(0.3, 1)}
+  30% { border-left: 20px solid #a6202a;opacity: random(0.5, 1)}
+  40% { border-left: 20px solid #7f1a21;opacity: random(0.3, 1)}
+  50% { border-left: 20px solid #732124;opacity: random(0.5, 1)}
+  60% { border-left: 20px solid #a6202a;opacity: random(0.3, 1)}
+  70% { border-left: 20px solid #7f1a21;opacity: random(0.5, 1)}
+  80% { border-left: 20px solid #9f2d26;opacity: random(0.3, 1)}
+  90% { border-left: 20px solid #e42c35;opacity: random(0.3, 1)}
+}
+
+@-webkit-keyframes background_ {
+  0% { background-color:  #e41a2f;opacity: 0.2}
+  10% { background-color:   #a6202a; opacity: 0.8}
+  20% { background-color:   #c5382c;opacity: random(0.3, 1)}
+  30% {background-color:   #a6202a;opacity: random(0.5, 1)}
+  40% { background-color:   #7f1a21;opacity: random(0.3, 1)}
+  50% { background-color:   #732124;opacity: random(0.5, 1)}
+  60% { background-color:   #a6202a;opacity: random(0.3, 1)}
+  70% { background-color:   #e42c35;opacity: random(0.5, 1)}
+  80% { background-color:   #9f2d26;opacity: random(0.3, 1)}
+  90% { background-color:   #e42c35;opacity: random(0.3, 1)}
+  100% { background-color:   #7f1a21;opacity: random(0.3, 1)}
 }

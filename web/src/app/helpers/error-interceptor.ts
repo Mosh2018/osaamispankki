@@ -16,7 +16,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       // tslint:disable-next-line:only-arrow-functions
       catchError(err => {
           if (err.status === 401) {
-            this.auth.logout();
+            // this.auth.logout();
             // location.reload();
           }
           return throwError(err.error);

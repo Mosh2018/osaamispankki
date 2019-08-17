@@ -14,12 +14,11 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     if (!this.auth.getJWT() && this.auth.isExpired()) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/log']);
     }
   }
 
   getUserFullName() {
     return this.auth.getUserFullInformation().name;
   }
-
 }

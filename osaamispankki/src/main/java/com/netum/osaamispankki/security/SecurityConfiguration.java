@@ -14,8 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static com.netum.osaamispankki.security.SecurityConstants.H2_URL;
-import static com.netum.osaamispankki.security.SecurityConstants.SIGN_UP_URLS;
+import static com.netum.osaamispankki.security.SecurityConstants.*;
 
 @Configuration
 @EnableWebSecurity
@@ -73,6 +72,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js").permitAll()
                 .antMatchers(SIGN_UP_URLS).permitAll()
+                .antMatchers(PHOTO_URLS).permitAll()
                 .antMatchers(H2_URL).permitAll()
                 .anyRequest().authenticated()
                 .and()

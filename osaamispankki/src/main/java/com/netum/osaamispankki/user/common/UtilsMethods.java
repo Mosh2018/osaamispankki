@@ -1,5 +1,6 @@
 package com.netum.osaamispankki.user.common;
 
+import com.netum.osaamispankki.user.exceptions.OsaamispankkiException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -33,6 +34,10 @@ public class UtilsMethods {
 
     public static boolean _false(Boolean x) {
         return x==false;
+    }
+
+    public static OsaamispankkiException throwException(String field, String mes) {
+        return new OsaamispankkiException(setExceptionMessage(field, mes));
     }
 
     public static int calculatePasswordStrength(String password) {

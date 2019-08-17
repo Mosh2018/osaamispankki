@@ -1,0 +1,31 @@
+<section fxFlex fxLayout="row">
+  <div class="cv">
+    <mat-toolbar fxFlex fxLayout="column" fxLayoutGap="10px">
+      <mat-toolbar-row>
+        <img style="margin-bottom: 30px; margin-top: 10px" routerLink="./" src="../../../assets/images/cv.ico">
+
+      </mat-toolbar-row>
+
+
+      <mat-toolbar-row>
+         <span routerLink="./profile">personal info</span>
+      </mat-toolbar-row>
+
+      <mat-toolbar-row>
+        <span routerLink="./educations">education</span>
+      </mat-toolbar-row>
+
+      <mat-toolbar-row>
+        <span>profile3</span>
+      </mat-toolbar-row>
+
+      <mat-toolbar-row style="bottom: 20px; position: fixed">
+        <span routerLink="/">exit</span>
+      </mat-toolbar-row>
+    </mat-toolbar>
+  </div>
+  <div class="contents">
+    <router-outlet></router-outlet>
+  </div>
+</section>
+
