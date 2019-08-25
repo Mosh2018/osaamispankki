@@ -8,6 +8,9 @@ import {MyCustomMaterialModule} from '../../my-custom-material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {EducationsComponent} from './educations/educations.component';
+import {EducationComponent} from './educations/education/education.component';
+import {DateAdapter, MAT_DATE_FORMATS} from '@angular/material';
+import {APP_DATE_FORMAT, AppDateAdapter} from '../../helpers/dataAdapter';
 
 
 @NgModule({
@@ -15,7 +18,9 @@ import {EducationsComponent} from './educations/educations.component';
     ProfileComponent,
     CvMainComponent,
     CvComponent,
-    EducationsComponent],
+    EducationsComponent,
+    EducationComponent],
+  entryComponents: [EducationComponent],
   imports: [
     CommonModule,
     CvRoutingModule,
@@ -24,6 +29,10 @@ import {EducationsComponent} from './educations/educations.component';
     FlexLayoutModule,
     ReactiveFormsModule,
     FormsModule
+  ],
+  providers: [
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMAT}
   ]
 })
 export class CvModule { }

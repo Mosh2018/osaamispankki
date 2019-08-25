@@ -31,8 +31,7 @@ import { EducationComponent } from './components/cv/educations/education/educati
     PageNotFoundComponent,
     MainPageComponent,
     SignComponent,
-    RegistrationSuccessComponent,
-    EducationComponent
+    RegistrationSuccessComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +58,7 @@ import { EducationComponent } from './components/cv/educations/education/educati
     { provide: ErrorHandler, useClass: GlobalErrorHandler, multi: false },
     UserService
   ],
+  entryComponents: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

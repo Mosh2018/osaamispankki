@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import {HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {AuthenticationService} from '../services/authentication.service';
 
@@ -12,13 +12,12 @@ export class JwtInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const currentUser = this.auth.currentUserValue;
-    if (currentUser) {
+    if (currentUser && !this.auth.isExpired()) {
       req = req.clone({
         setHeaders: {
           Authorization: `Bearer ${currentUser}`
         }
       });
-      console.log('JWT---->', req);
     }
     return next.handle(req);
   }

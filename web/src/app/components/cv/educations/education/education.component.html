@@ -1,11 +1,27 @@
-<h1 mat-dialog-title>Hi {{data.name}}</h1>
-<div mat-dialog-content>
-  <p>What's your favorite animal?</p>
+
+<form fxFlex fxLayout="column" [formGroup]="educationForm">
   <mat-form-field>
-    <input matInput [(ngModel)]="data.animal">
+    <input matInput placeholder="name of school" formControlName="nameOfInstitution">
   </mat-form-field>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
-</div>
+  <mat-form-field>
+    <input matInput placeholder="degree" formControlName="degree">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="location" formControlName="location">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [matDatepicker]="startYearPicker" placeholder="start year" formControlName="startYear">
+    <mat-datepicker-toggle matSuffix [for]="startYearPicker"></mat-datepicker-toggle>
+    <mat-datepicker #startYearPicker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [matDatepicker]="endYearPicker" placeholder="finnish year" formControlName="endYear">
+    <mat-datepicker-toggle matSuffix [for]="endYearPicker"></mat-datepicker-toggle>
+    <mat-datepicker #endYearPicker></mat-datepicker>
+  </mat-form-field>
+  <mat-slide-toggle formControlName="hide">hide my from other users</mat-slide-toggle>
+  <div mat-dialog-actions>
+    <button mat-stroked-button (click)="onNoClick()">cancel</button>
+    <button [disabled]="educationForm.invalid" mat-stroked-button [mat-dialog-close]="data.id" (click)="save()" >save</button>
+  </div>
+</form>

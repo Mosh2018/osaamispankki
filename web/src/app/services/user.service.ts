@@ -28,4 +28,12 @@ export class UserService {
   getCv(item: string) {
     return this.http.get(this.userURL2 + this.CV + item);
   }
+
+  editCV(item: string, data: any) {
+    return this.http.put(this.userURL2 + this.CV + item, data);
+  }
+
+  deleteCV(item: string, id: number) {
+    return this.http.delete(this.userURL2 + this.CV + item + '/' + id);
+  }
 }

@@ -2,18 +2,14 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {CvService} from '../../../services/cv.service';
 import {first} from 'rxjs/operators';
-import {DateAdapter, MAT_DATE_FORMATS} from '@angular/material';
-import {APP_DATE_FORMAT, AppDateAdapter} from '../../../helpers/dataAdapter';
 import {DatePipe} from '@angular/common';
+import {dateFormatChanger, formatDate} from '../../../helpers/utils.methods';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.less'],
-  providers: [
-    {provide: DateAdapter, useClass: AppDateAdapter},
-    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMAT}
-  ]
+  providers: []
 
 })
 export class ProfileComponent implements OnInit {
@@ -42,9 +38,9 @@ export class ProfileComponent implements OnInit {
   }
 
   addProfile() {
-    const test = new DatePipe('en-US')
-      .transform(this.personalInformationForm.controls.birthday.value, 'dd.MM.yyyy');
-    this.personalInformationForm.controls.birthday.setValue(test);
+
+    this.personalInformationForm.controls.birthday.setValue(dateFormatChanger(
+      this.personalInformationForm.controls.birthday.value));
     this.cvService.saveProfile(this.personalInformationForm.value)
       .pipe(first()).subscribe(d => {
       this.initDataResponse(d);
@@ -64,19 +60,9 @@ export class ProfileComponent implements OnInit {
   }
 
   private initDataResponse(data) {
-    console.log(data, "information")
-    const date = this.formatDate(data);
+    const date = formatDate(data.birthday);
 
     this.personalInformationForm.setValue(data);
     this.personalInformationForm.controls.birthday.setValue(date);
-  }
-
-  private formatDate(data: any) {
-    if (data.birthday !== null) {
-      const date = new Date(data.birthday.replace(/(\d{2}).(\d{2}).(\d{4})/, '$2/$1/$3'));
-      new DatePipe('en-US').transform(date, 'dd.MM.yyyy');
-      return date;
-    }
-    return data;
   }
 }

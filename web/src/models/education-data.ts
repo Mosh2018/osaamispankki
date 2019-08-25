@@ -8,3 +8,16 @@ export interface EducationData {
   startYear: Date;
   endYear: Date;
 }
+
+export function initEducationData() {
+  return {
+    userId: 0,
+    hide: false,
+    id: 0,
+    nameOfInstitution: '',
+    degree: '',
+    location: '',
+    startYear: null,
+    endYear: null
+  };
+}
