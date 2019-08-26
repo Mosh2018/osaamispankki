@@ -39,7 +39,12 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return errorResponseService.getErrorResponse(bindingResult);
         }
-        return new ResponseEntity<>(userService.createUser(newUser), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(userService.createUser(newUser), HttpStatus.OK);
+        } catch (Exception e) {
+            throw new OsaamispankkiException(setExceptionMessage("sign_in", "can not create a user"));
+        }
+
     }
 
     @PostMapping("/login")

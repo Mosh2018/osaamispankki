@@ -68,7 +68,7 @@ export class EducationsComponent implements OnInit {
 
   private getEducations() {
     this.cv.getEducations().subscribe((data: EducationData[]) => {
-      this.educations = data;
+      this.educations = data === null ? [] : data;
       console.log(data, 'refresh all data');
     }, error1 => {
 
@@ -78,7 +78,7 @@ export class EducationsComponent implements OnInit {
   delete(id: number) {
     this.cv.delete(id).subscribe( x => {
       if (x ) {
-        this.educations = this.educations.filter(x => x.id !== id);
+        this.educations = this.educations.filter(y => y.id !== id);
       }
 
     }, err => {

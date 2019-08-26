@@ -97,6 +97,10 @@
       <p>PROGRESSING ...</p>
       <mat-progress-bar mode="determinate" [value]="formSettings.progressValue"></mat-progress-bar>
     </ng-container>
+    <ng-container *ngIf="formSettings.reload" style="margin-top: 20px">
+    <button mat-stroked-button color="#FD403C" type="button" (click)="reloadPage()">RELOAD PAGE</button>
+    <span class="triangle-up"></span>
+  </ng-container>
 
   </form>
 </section>

@@ -32,7 +32,8 @@ export class SignComponent {
     company: false,
     progressing: false,
     submit: true,
-    progressValue: 0
+    progressValue: 0,
+    reload: false
   };
 
   errors = null;
@@ -56,6 +57,7 @@ export class SignComponent {
         console.log('erroooooooo',  error1)
         this.errors = error1;
 
+        this.formSettings.reload = true;
         setTimeout(() => {
           // tslint:disable-next-line:forin
           for (const error1Key in error1) {
@@ -89,5 +91,9 @@ export class SignComponent {
       return this.errors[filed];
     }
     return null;
+  }
+
+  reloadPage() {
+    location.reload();
   }
 }
