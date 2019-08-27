@@ -1,43 +1,51 @@
-mat-horizontal-stepper {
-  margin: 50px auto auto 20px;
-  background-color: #FFFAF5;
-  color: #505050;
+.personal {
   font-family: 'Play', sans-serif;
- mat-step-header {
-   font-size: 2em; 
- }
-  ::ng-deep mat-form-field {
+  margin: 50px auto auto 20px;
+
+
+  mat-horizontal-stepper {
+    margin: 50px auto auto 20px;
     background-color: #FFFAF5;
     color: #505050;
     font-family: 'Play', sans-serif;
+    mat-step-header {
+      font-size: 2em;
+    }
+    ::ng-deep mat-form-field {
+      background-color: #FFFAF5;
+      color: #505050;
+      font-family: 'Play', sans-serif;
+      font-size: 1.2em;
+      width: 60%;
+      max-width: 400px;
+    }
+
+    button {
+      background-color: #FFFAF5;
+      color: #505050;
+      font-family: 'Play', sans-serif;
+    }
+  }
+
+  ::ng-deep mat-calendar {
+    background-color: #FFFAF5;
+    color: #505050;
+    font-family: 'Play', sans-serif !important;
+  }
+  ::ng-deep.mat-step-label {
     font-size: 1.2em;
-    width: 60%;
-    max-width: 400px;
   }
 
-  button {
-    background-color: #FFFAF5;
-    color: #505050;
-    font-family: 'Play', sans-serif;
+  ::ng-deep.mat-calendar-body-selected  ,
+  ::ng-deep.mat-step-icon-state-edit {
+    background-color: #7f1a21 !important;
+  }
+  ::ng-deep.mat-step-icon-selected{
+    -webkit-animation-name: background_;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-duration: 5s;
   }
 }
 
-::ng-deep mat-calendar {
-  background-color: #FFFAF5;
-  color: #505050;
-  font-family: 'Play', sans-serif !important;
-}
-::ng-deep.mat-step-label {
-  font-size: 1.2em;
-}
 
-::ng-deep.mat-calendar-body-selected  ,
-::ng-deep.mat-step-icon-state-edit {
-  background-color: #7f1a21 !important;
-}
-::ng-deep.mat-step-icon-selected{
-  -webkit-animation-name: background_;
-  -webkit-animation-iteration-count: infinite;
-  -webkit-animation-duration: 5s;
-}
 

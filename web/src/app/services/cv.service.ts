@@ -35,8 +35,29 @@ export class CvService {
     }));
   }
 
-  delete(id: number) {
+  deleteEducation(id: number) {
     return this.userService.deleteCV('education', id)
+      .pipe(map( x => {
+        return x;
+      }));
+  }
+
+  getExperiences() {
+    return this.userService.getCv('experience')
+      .pipe(map( x => {
+        return x;
+      }));
+  }
+
+  deleteExperience(id: number) {
+    return this.userService.deleteCV('experience', id)
+      .pipe(map( x => {
+        return x;
+      }));
+  }
+
+  saveExperience(data: any) {
+    return this.userService.saveCv(data, 'experience')
       .pipe(map( x => {
         return x;
       }));

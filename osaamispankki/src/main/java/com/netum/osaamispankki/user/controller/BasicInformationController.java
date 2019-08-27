@@ -1,6 +1,7 @@
 package com.netum.osaamispankki.user.controller;
 
 import com.netum.osaamispankki.user.domain.Education;
+import com.netum.osaamispankki.user.domain.Experience;
 import com.netum.osaamispankki.user.exceptions.OsaamispankkiException;
 import com.netum.osaamispankki.user.modals.UserProfile;
 import com.netum.osaamispankki.user.services.BasicInformationService;
@@ -13,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 
 import static com.netum.osaamispankki.user.common.UtilsMethods.setExceptionMessage;
 
@@ -90,6 +90,41 @@ public class BasicInformationController {
         } catch (Exception e) {
             throw new OsaamispankkiException(
                     setExceptionMessage("delete_education", "can't delete education " + e.getMessage()));
+        }
+    }
+
+    @PostMapping("/experience")
+    public ResponseEntity<?> saveExperience(@Valid @RequestBody Experience experience, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return this.errorResponseService.getErrorResponse(bindingResult);
+        }
+        try {
+            return new ResponseEntity<>(this.cvService.save(experience), HttpStatus.OK);
+        } catch (Exception e) {
+            throw new OsaamispankkiException(
+                    setExceptionMessage("adding_experience", "can't add experience " + e.getMessage()));
+        }
+
+    }
+
+    @GetMapping("/experience")
+    public ResponseEntity<?> getExperiences() {
+        try {
+            return new ResponseEntity(this.cvService.getExperiences(), HttpStatus.OK);
+        } catch (Exception e) {
+            throw new OsaamispankkiException(
+                    setExceptionMessage("adding_experience", "can't get experiences " + e.getMessage()));
+        }
+    }
+
+    @DeleteMapping("experience/{id}")
+    public ResponseEntity<?> deleteExperience(@PathVariable Long id) {
+        try {
+            this.cvService.deleteExperience(id);
+            return new ResponseEntity(true, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new OsaamispankkiException(
+                    setExceptionMessage("delete_experience", "can't delete experience " + e.getMessage()));
         }
     }
 }

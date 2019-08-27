@@ -20,7 +20,6 @@ import {GlobalErrorHandler} from './helpers/global-error-handler';
 import {MainPageComponent} from './auth/main-page/main-page.component';
 import {SignComponent} from './auth/sign/sign.component';
 import {RegistrationSuccessComponent} from './auth/registration-success/registration-success.component';
-import { EducationComponent } from './components/cv/educations/education/education.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +30,7 @@ import { EducationComponent } from './components/cv/educations/education/educati
     PageNotFoundComponent,
     MainPageComponent,
     SignComponent,
-    RegistrationSuccessComponent
+    RegistrationSuccessComponent,
   ],
   imports: [
     BrowserModule,

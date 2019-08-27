@@ -6,6 +6,7 @@ import {AuthGuard} from '../../helpers/auth-guard';
 import {CvMainComponent} from './cv-main/cv-main.component';
 import {ProfileComponent} from './profile/profile.component';
 import {EducationsComponent} from './educations/educations.component';
+import {ExperiencesComponent} from './experiences/experiences.component';
 
 
 const cvRouting: Routes = [
@@ -21,6 +22,7 @@ const cvRouting: Routes = [
           {path: '', component: CvMainComponent},
           {path: 'profile', component: ProfileComponent},
           {path: 'educations', component: EducationsComponent},
+          {path: 'experiences', component: ExperiencesComponent},
         ]
       }
     ]

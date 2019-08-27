@@ -11,6 +11,8 @@ import {EducationsComponent} from './educations/educations.component';
 import {EducationComponent} from './educations/education/education.component';
 import {DateAdapter, MAT_DATE_FORMATS} from '@angular/material';
 import {APP_DATE_FORMAT, AppDateAdapter} from '../../helpers/dataAdapter';
+import {ExperiencesComponent} from './experiences/experiences.component';
+import {ExperienceComponent} from './experiences/experience/experience.component';
 
 
 @NgModule({
@@ -19,8 +21,10 @@ import {APP_DATE_FORMAT, AppDateAdapter} from '../../helpers/dataAdapter';
     CvMainComponent,
     CvComponent,
     EducationsComponent,
-    EducationComponent],
-  entryComponents: [EducationComponent],
+    EducationComponent,
+    ExperiencesComponent,
+    ExperienceComponent],
+  entryComponents: [EducationComponent, ExperienceComponent],
   imports: [
     CommonModule,
     CvRoutingModule,

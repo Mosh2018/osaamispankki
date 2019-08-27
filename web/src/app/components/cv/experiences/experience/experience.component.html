@@ -1,0 +1,26 @@
+<form fxFlex fxLayout="column" [formGroup]="experienceForm">
+  <mat-form-field>
+    <input matInput placeholder="company" formControlName="company">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="position" formControlName="position">
+  </mat-form-field>
+  <mat-form-field>
+    <textarea matInput placeholder="description" formControlName="description"></textarea>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [matDatepicker]="startYearPicker" placeholder="start" formControlName="startYear">
+    <mat-datepicker-toggle matSuffix [for]="startYearPicker"></mat-datepicker-toggle>
+    <mat-datepicker #startYearPicker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [matDatepicker]="endYearPicker" placeholder="end" formControlName="endYear">
+    <mat-datepicker-toggle matSuffix [for]="endYearPicker"></mat-datepicker-toggle>
+    <mat-datepicker #endYearPicker></mat-datepicker>
+  </mat-form-field>
+  <mat-slide-toggle formControlName="hide">hide my from other users</mat-slide-toggle>
+  <div mat-dialog-actions>
+    <button mat-stroked-button (click)="onNoClick()">cancel</button>
+    <button [disabled]="experienceForm.invalid" mat-stroked-button [mat-dialog-close]="data.id" (click)="save()" >save</button>
+  </div>
+</form>

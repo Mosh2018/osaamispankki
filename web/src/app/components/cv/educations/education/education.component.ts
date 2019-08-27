@@ -35,7 +35,6 @@ export class EducationComponent {
         this.educationForm.controls[key].setValue(value);
       }
     }
-
   }
 
   onNoClick() {

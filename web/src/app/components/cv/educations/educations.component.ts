@@ -16,7 +16,6 @@ export class EducationsComponent implements OnInit {
   educationData = initEducationData();
   educations: EducationData[] = [];
   displayedColumns: string[] = ['nameOfInstitution', 'degree', 'location', 'startYear', 'endYear', 'edit', 'delete'];
-  deleted = false;
 
   constructor(private auth: AuthenticationService,
               private cv: CvService,
@@ -26,7 +25,6 @@ export class EducationsComponent implements OnInit {
   ngOnInit() {
     this.user = this.auth.getUserFullInformation();
     this.getEducations();
-    console.log(this.user);
   }
 
   openDialog(id: number) {
@@ -66,6 +64,17 @@ export class EducationsComponent implements OnInit {
 
   }
 
+  delete(id: number) {
+    this.cv.deleteEducation(id).subscribe(x => {
+      if (x ) {
+        this.educations = this.educations.filter(y => y.id !== id);
+      }
+
+    }, err => {
+
+    });
+  }
+
   private getEducations() {
     this.cv.getEducations().subscribe((data: EducationData[]) => {
       this.educations = data === null ? [] : data;
@@ -75,14 +84,4 @@ export class EducationsComponent implements OnInit {
     });
   }
 
-  delete(id: number) {
-    this.cv.delete(id).subscribe( x => {
-      if (x ) {
-        this.educations = this.educations.filter(y => y.id !== id);
-      }
-
-    }, err => {
-
-    });
-  }
 }

@@ -7,26 +7,26 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Education extends UserId {
+public class Experience extends UserId {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "Name Of Institution is required ")
-    @Size(min = 3, message = "Name Of Institution is short")
-    private String nameOfInstitution;
-    @NotBlank(message = "degree is required ")
-    @Size(min = 3, message = "degree is short")
-    private String degree;
-    @NotBlank(message = "location is required ")
-    @Size(min = 3, message = "location is short")
-    private String location;
+
+    @NotBlank(message = "company is required")
+    private String company;
+
+    @NotBlank(message = "position is required")
+    private String position;
+
+    @NotBlank(message = "description is required")
+    private String description;
 
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "dd.MM.yyyy")
@@ -35,5 +35,4 @@ public class Education extends UserId {
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "dd.MM.yyyy")
     private Date endYear;
-
 }

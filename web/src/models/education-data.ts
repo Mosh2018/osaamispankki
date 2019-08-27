@@ -21,3 +21,30 @@ export function initEducationData() {
     endYear: null
   };
 }
+
+
+export interface ExperienceData {
+  userId: number;
+  hide: boolean;
+  id: number;
+  company: string;
+  position: string;
+  description: string;
+  startYear: Date;
+  endYear: Date;
+}
+
+
+export function initExperienceData() {
+  return {
+    userId: 0,
+    hide: false,
+    id: 0,
+    company: '',
+    position: '',
+    description: '',
+    startYear: null,
+    endYear: null
+
+  };
+}
