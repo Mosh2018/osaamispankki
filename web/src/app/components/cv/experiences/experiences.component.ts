@@ -4,6 +4,7 @@ import {AuthenticationService} from '../../../services/authentication.service';
 import {CvService} from '../../../services/cv.service';
 import {MatDialog} from '@angular/material';
 import {ExperienceComponent} from './experience/experience.component';
+import {ConfirmDialogComponent} from '../../../stateless/confirm-dialog.component';
 
 @Component({
   selector: 'app-experiences',
@@ -64,23 +65,32 @@ export class ExperiencesComponent implements OnInit {
 
   }
 
+  openConfirmDialog(id: number) {
+    const experience = this.experiences.find(x => x.id === id);
+    const confirmDialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '500px',
+      data: {
+        title: '',
+        message: 'your are going to delete your experience in '  + experience.company + '!',
+        yes: 'DELETE',
+        no: 'CANCEL'
+      }
+    });
+
+    confirmDialogRef.afterClosed().subscribe( confirm => {
+      if (confirm !== null && confirm === 'YES') {
+        // are you sure
+        this.cv.deleteExperience(id).subscribe(x => {
+          if (x) {
+            this.experiences = this.experiences.filter(y => y.id !== id);
+          }});
+      }});
+  }
+
   private getExperiences() {
     this.cv.getExperiences().subscribe((data: ExperienceData[]) => {
       this.experiences = data === null ? [] : data;
       console.log(data, 'refresh all data');
-    }, error1 => {
-
-    });
-  }
-
-  deleteExperience(id: number) {
-    this.cv.deleteExperience(id).subscribe(x => {
-      if (x) {
-        this.experiences = this.experiences.filter(y => y.id !== id);
-      }
-
-    }, err => {
-
     });
   }
 }

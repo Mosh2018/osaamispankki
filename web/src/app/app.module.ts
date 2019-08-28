@@ -20,6 +20,7 @@ import {GlobalErrorHandler} from './helpers/global-error-handler';
 import {MainPageComponent} from './auth/main-page/main-page.component';
 import {SignComponent} from './auth/sign/sign.component';
 import {RegistrationSuccessComponent} from './auth/registration-success/registration-success.component';
+import { ConfirmDialogComponent } from './stateless/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import {RegistrationSuccessComponent} from './auth/registration-success/registra
     MainPageComponent,
     SignComponent,
     RegistrationSuccessComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,7 +59,7 @@ import {RegistrationSuccessComponent} from './auth/registration-success/registra
     { provide: ErrorHandler, useClass: GlobalErrorHandler, multi: false },
     UserService
   ],
-  entryComponents: [],
+  entryComponents: [ConfirmDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

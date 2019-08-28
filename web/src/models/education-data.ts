@@ -47,4 +47,12 @@ export function initExperienceData() {
     endYear: null
 
   };
+
+}
+
+export interface Confirmation {
+  title: string;
+  message: string;
+  yes: string;
+  no: string;
 }

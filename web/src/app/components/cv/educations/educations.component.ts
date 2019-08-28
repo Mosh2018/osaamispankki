@@ -4,6 +4,7 @@ import {MatDialog} from '@angular/material';
 import {EducationData, initEducationData} from '../../../../models/education-data';
 import {EducationComponent} from './education/education.component';
 import {CvService} from '../../../services/cv.service';
+import {ConfirmDialogComponent} from '../../../stateless/confirm-dialog.component';
 
 @Component({
   selector: 'app-educations',
@@ -63,24 +64,32 @@ export class EducationsComponent implements OnInit {
     });
 
   }
-
-  delete(id: number) {
-    this.cv.deleteEducation(id).subscribe(x => {
-      if (x ) {
-        this.educations = this.educations.filter(y => y.id !== id);
+  openConfirmDialog(id: number) {
+    const education = this.educations.find(x => x.id === id);
+    const confirmDialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '500px',
+      data: {
+        title: '',
+        message: 'your are going to delete your education in '  + education.nameOfInstitution + '!',
+        yes: 'DELETE',
+        no: 'CANCEL'
       }
-
-    }, err => {
-
     });
+
+    confirmDialogRef.afterClosed().subscribe( confirm => {
+      if (confirm !== null && confirm === 'YES') {
+        // are you sure
+        this.cv.deleteEducation(id).subscribe(x => {
+          if (x ) {
+            this.educations = this.educations.filter(y => y.id !== id);
+          }});
+      }});
   }
 
   private getEducations() {
     this.cv.getEducations().subscribe((data: EducationData[]) => {
       this.educations = data === null ? [] : data;
       console.log(data, 'refresh all data');
-    }, error1 => {
-
     });
   }
 
