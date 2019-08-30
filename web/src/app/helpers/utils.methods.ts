@@ -20,3 +20,14 @@ export function formatDate(data: any) {
   }
   return data;
 }
+
+export function byteToImage(stream: any) {
+
+  let binary = '';
+  const bytes = new Uint8Array( stream );
+  const len = bytes.byteLength;
+  for (let i = 0; i < len; i++) {
+    binary += String.fromCharCode( bytes[ i ] );
+  }
+  return 'data:image/JPEG;base64' + ',' + window.btoa( binary );
+}

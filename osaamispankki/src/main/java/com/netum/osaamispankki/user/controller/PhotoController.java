@@ -1,5 +1,6 @@
 package com.netum.osaamispankki.user.controller;
 
+import com.netum.osaamispankki.user.common.GenericHelper;
 import com.netum.osaamispankki.user.domain.PhotoFile;
 import com.netum.osaamispankki.user.services.StorePhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.io.IOException;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -24,25 +26,32 @@ public class PhotoController {
 
         try {
             PhotoFile photoFile =   photoService.storeFile(photo);
-            String photoUrl = ServletUriComponentsBuilder
-                    .fromCurrentContextPath()
-                    .path("/downloadPhoto/")
-                    .path(photoFile.getId())
-                    .toUriString();
-
-            return new ResponseEntity<>(photoUrl, HttpStatus.OK);
+            return imageResponse(photoFile);
         } catch (Exception e)  {
-
-
-            throw new Exception(e.getMessage());
+           return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
     }
 
-    @GetMapping("/download_photo/{fileId}")
-    public ResponseEntity<?> downloadPhoto(@PathVariable String fileId)  {
+    @GetMapping("/download_photo")
+    public ResponseEntity<?> downloadPhoto() throws IOException {
 
-        PhotoFile   photoFile = photoService.getPhoto(fileId);
+        PhotoFile photoFile = photoService.getPhoto();
+        if (GenericHelper.notNull(photoFile)) {
+            return imageResponse(photoFile);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+
+    }
+
+    @DeleteMapping("/personal-photo")
+    public ResponseEntity<?> deletePhoto() {
+        return new ResponseEntity<>(this.photoService.deletePhoto(), HttpStatus.OK);
+    }
+
+    private ResponseEntity<ByteArrayResource> imageResponse(PhotoFile photoFile) {
         return ResponseEntity
                 .ok()
                 .contentType(MediaType.parseMediaType(photoFile.getType()))

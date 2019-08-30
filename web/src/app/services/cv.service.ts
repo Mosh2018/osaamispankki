@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {UserService} from './user.service';
 import {map} from 'rxjs/operators';
+import {byteToImage} from '../helpers/utils.methods';
 
 @Injectable({
   providedIn: 'root'
@@ -61,5 +62,28 @@ export class CvService {
       .pipe(map( x => {
         return x;
       }));
+  }
+
+  uploadFile(formatData: FormData, uploadPhoto: string) {
+    return this.userService.uploadFile(formatData, uploadPhoto)
+      .pipe(map( stream => {
+        return byteToImage(stream);
+      }));
+  }
+
+  getPersonalImage() {
+    return this.userService.getImage('download_photo').pipe(
+      map( stream => {
+        return byteToImage(stream);
+      })
+    );
+  }
+
+  deletePersonalPhoto() {
+    return this.userService.deleteImage('personal-photo').pipe(
+      map( x => {
+        return x;
+      })
+    );
   }
 }

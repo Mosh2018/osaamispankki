@@ -9,6 +9,7 @@ export class UserService {
 
   private USER = '/user/';
   private CV = '/basic/';
+  private PHOTO = '/photo/';
 
   constructor(private http: HttpClient) {}
 
@@ -35,5 +36,16 @@ export class UserService {
 
   deleteCV(item: string, id: number) {
     return this.http.delete(this.userURL2 + this.CV + item + '/' + id);
+  }
+  uploadFile(data: any, item: string) {
+    return this.http.post(this.userURL2 + this.PHOTO + item, data, {responseType: 'arraybuffer'});
+  }
+
+  getImage(item: string) {
+    return this.http.get(this.userURL2 + this.PHOTO + item , {responseType: 'arraybuffer'});
+  }
+
+  deleteImage(item: string) {
+    return this.http.delete(this.userURL2 + this.PHOTO + item);
   }
 }

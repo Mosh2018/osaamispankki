@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PhotoFile {
+public class PhotoFile extends UserId{
 
     @Id
     @GeneratedValue(generator = "uuid")
@@ -27,9 +27,18 @@ public class PhotoFile {
     @Column(name = "photo", columnDefinition="BLOB")
     private byte[] photo;
 
-    public PhotoFile(String filename, String type, byte[] photo) {
+    public PhotoFile(String filename, String type, Long userId, byte[] photo) {
         this.filename = filename;
         this.type = type;
         this.photo = photo;
+        setUserId(userId);
+    }
+
+    public PhotoFile(String id, String filename, String contentType, Long userId, byte[] photoBytes) {
+        this.id = id;
+        this.filename = filename;
+        this.type = contentType;
+        setUserId(userId);
+        this.photo = photoBytes;
     }
 }
