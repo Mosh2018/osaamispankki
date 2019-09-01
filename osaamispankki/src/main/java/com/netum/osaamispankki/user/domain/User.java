@@ -76,7 +76,7 @@ public class User implements UserDetails {
             name = "user_company",
             joinColumns = { @JoinColumn(name = "user_id")},
             inverseJoinColumns = { @JoinColumn(name = "conformation_id")})
-        private Set<CompanyConformation> companyConformations = new HashSet<>();
+        private Set<UserAndCompany> userAndCompanies = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "id")

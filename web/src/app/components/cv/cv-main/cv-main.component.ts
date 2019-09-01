@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CvService} from '../../../services/cv.service';
+import {FormBuilder} from '@angular/forms';
 
 @Component({
   selector: 'app-cv-main',
@@ -11,11 +12,26 @@ export class CvMainComponent implements OnInit {
   step = 0;
   url: any;
   noPhotoError = null;
-  constructor(private cv: CvService) { }
+
+  companyForm = this.formBuilder.group({
+    company: [],
+    position: [],
+    employmentType: [],
+    startingTime: [],
+    endingTime: [],
+    salary:[],
+    companyCode: []
+  });
+  companies: string[] = ['netum', 'gofore'];
+  employmentTypes: string[] = ['full time', 'part time'];
+
+  constructor(private cv: CvService,
+              private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.getImage();
-    // get uploded picture
+    // get companies
+    // get company form
   }
 
   initPicture(event: any) {
@@ -29,6 +45,7 @@ export class CvMainComponent implements OnInit {
     this.cv.uploadFile(FormatData, 'upload_photo').subscribe(
       photo => {
         this.noPhotoError = null;
+        this.picture = null;
         this.url = photo;
       });
   }
@@ -51,5 +68,9 @@ export class CvMainComponent implements OnInit {
     this.cv.deletePersonalPhoto().subscribe( (response: any) => {
       this.noPhotoError = response.success;
     });
+  }
+
+  saveEmploymentInformation() {
+    console.log(this.companyForm.value);
   }
 }

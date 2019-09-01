@@ -6,7 +6,7 @@ import com.netum.osaamispankki.security.UserLoginRequest;
 import com.netum.osaamispankki.user.domain.*;
 import com.netum.osaamispankki.user.exceptions.OsaamispankkiException;
 import com.netum.osaamispankki.user.modals.PublicUser;
-import com.netum.osaamispankki.user.repository.CompanyConformationRepository;
+import com.netum.osaamispankki.user.repository.UserAndCompanyRepository;
 import com.netum.osaamispankki.user.repository.UserRepository;
 import com.netum.osaamispankki.user.services.EmailSenderService;
 import com.netum.osaamispankki.user.services.HeadService;
@@ -34,7 +34,7 @@ public class LoginService {
     private CompanyService companyService;
 
     @Autowired
-    private CompanyConformationRepository companyConformationRepository;
+    private UserAndCompanyRepository userAndCompanyRepository;
 
     @Autowired
     private BCryptPasswordEncoder cryptPasswordEncoder;
@@ -125,7 +125,7 @@ public class LoginService {
                     .anyMatch(role ->
                             role.getCompanyId() == company.getId());
             if (_false(hasRoleInThisCompany)) {
-                CompanyConformation conformation = user.getCompanyConformations().stream().findFirst().get();
+                UserAndCompany conformation = user.getUserAndCompanies().stream().findFirst().get();
                 Role role = new Role();
                 role.setRole(COMPANY_WORKER);
                 role.setCompanyId(conformation.getCompanyId());
@@ -138,13 +138,13 @@ public class LoginService {
     private void addCompanyToExistUser(User user) {
         Company company = companyService.getCompany(user.getCompanyName());
         if(notNull(company)) {
-            boolean hasBeenAddedCompany = user.getCompanyConformations()
+            boolean hasBeenAddedCompany = user.getUserAndCompanies()
                     .stream()
                     .anyMatch( companyConformation -> companyConformation.getCompanyId().equals(company.getId()));
             if (!hasBeenAddedCompany) {
-                CompanyConformation companyConformation = companyConformationRepository.findByCompanyId(company.getId());
-                companyConformation.getCompanyUsers().add(user);
-                user.getCompanyConformations().add(companyConformation);
+                UserAndCompany userAndCompany = userAndCompanyRepository.findByCompanyId(company.getId());
+                userAndCompany.getCompanyUsers().add(user);
+                user.getUserAndCompanies().add(userAndCompany);
             }
         }
 

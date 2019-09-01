@@ -16,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class CompanyConformation {
+public class UserAndCompany {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,10 +25,12 @@ public class CompanyConformation {
     @Column(unique = true)
     private Long companyId;
 
+
+
     @ManyToMany(
             fetch = FetchType.LAZY,
             cascade = { CascadeType.MERGE, CascadeType.PERSIST},
-            mappedBy = "companyConformations")
+            mappedBy = "userAndCompanies")
     @JsonIgnore
     private Set<User> companyUsers = new HashSet<>();
 }

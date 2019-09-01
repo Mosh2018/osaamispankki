@@ -4,14 +4,44 @@
   header {
     margin-bottom: 100px;
   }
-  ::ng-deep mat-expansion-panel, mat-expansion-panel-header {
 
+  section {
+    margin-top: 50px;
+  }
+
+  .example-card {
+    margin-top: 100px;
+    max-width: 600px;
+    font-family: 'Play', sans-serif;
+    background-color: #FFFAF5;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    img {
+      max-width: 500px;
+      max-height: 500px;
+    }
+    ::ng-deep mat-card-title, mat-card-subtitle {
+      font-size: 1.5em !important;
+    }
+
+  }
+
+  ::ng-deep mat-expansion-panel, mat-expansion-panel-header {
     width: 100%;
     color: #292729;
     font-size: 1.1em;
     width: 80%;
     font-family: 'Play', sans-serif !important;
     background-color: #FFFAF5 !important;
+  }
+
+  mat-action-row {
+    .mat-icon {
+      color: #7f1a21;
+      font-size: 50px;
+    }
+  }
+  .mat-icon {
+    color: #7f1a21;
   }
 
 
@@ -27,9 +57,32 @@
   }
 
   button {
-    background-color: #FFFAF5;
-    color: #505050;
+    color: #292729;
+    padding: 10px;
+    font-size: 1.3em ;
     font-family: 'Play', sans-serif;
+  }
+
+  mat-form-field {
+    color: #292729;
+    font-size: 1.5em;
+    width: 50%;
+    min-width: 300px;
+    font-family: 'Play', sans-serif;
+  }
+
+  mat-radio-button {
+    margin: 30px 20px;
+    color: rgba(0,0,0,.54);
+    font-size: 1.5em;
+    font-family: 'Play', sans-serif;
+  }
+  
+  ::ng-deep .mat-radio-checked .mat-radio-outer-circle  {
+    border-color: #7f1a21;
+  }
+  ::ng-deep .mat-radio-checked .mat-radio-inner-circle {
+    background-color: #7f1a21;
   }
 
   .upload {

@@ -3,7 +3,7 @@ package com.netum.osaamispankki.user.services;
 import com.netum.osaamispankki.security.JWTRsponseToFrontend;
 import com.netum.osaamispankki.user.domain.*;
 import com.netum.osaamispankki.user.exceptions.OsaamispankkiException;
-import com.netum.osaamispankki.user.repository.CompanyConformationRepository;
+import com.netum.osaamispankki.user.repository.UserAndCompanyRepository;
 import com.netum.osaamispankki.user.repository.UserRepository;
 import com.netum.osaamispankki.user.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class UserService extends HeadService {
     @Autowired private EmailSenderService emailSenderService;
     @Autowired private UserRepository userRepository;
     @Autowired private CompanyService companyService;
-    @Autowired private CompanyConformationRepository companyConformationRepository;
+    @Autowired private UserAndCompanyRepository userAndCompanyRepository;
 
 
     public JWTRsponseToFrontend createUser(User user) {
@@ -32,9 +32,9 @@ public class UserService extends HeadService {
         if (notBlank(user.getCompanyName())) {
             Company company = companyService.getCompany(user.getCompanyName());
             if (!isNull(company)) {
-                CompanyConformation companyConformation = companyConformationRepository.findByCompanyId(company.getId());
-                companyConformation.setCompanyUsers(tSet(user));
-                user.setCompanyConformations(tSet(companyConformation));
+                UserAndCompany userAndCompany = userAndCompanyRepository.findByCompanyId(company.getId());
+                userAndCompany.setCompanyUsers(tSet(user));
+                user.setUserAndCompanies(tSet(userAndCompany));
             }
         }
 
@@ -42,10 +42,10 @@ public class UserService extends HeadService {
         if (notNull(user.getId())) {
             throw new OsaamispankkiException(setExceptionMessage("System_error", "Can not add role to existed user use another function for that"));
         }
-        if (user.getCompanyConformations().isEmpty()) {
+        if (user.getUserAndCompanies().isEmpty()) {
             user.setRoles(tSet(new Role()));
         } else {
-            CompanyConformation conformation = user.getCompanyConformations().stream().findFirst().get();
+            UserAndCompany conformation = user.getUserAndCompanies().stream().findFirst().get();
 
             Role role = new Role();
             role.setRole(COMPANY_WORKER);

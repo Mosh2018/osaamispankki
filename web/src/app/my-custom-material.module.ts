@@ -9,6 +9,7 @@ import {
   MatInputModule,
   MatNativeDateModule,
   MatProgressBarModule,
+  MatRadioModule,
   MatSelectModule,
   MatSlideToggleModule,
   MatStepperModule,
@@ -34,7 +35,8 @@ import {
     MatNativeDateModule,
     MatDialogModule,
     MatSlideToggleModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatRadioModule
   ],
   exports: [
     MatButtonModule,
@@ -52,7 +54,8 @@ import {
     MatNativeDateModule,
     MatDialogModule,
     MatSlideToggleModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatRadioModule
   ]
 })
 export class MyCustomMaterialModule {}

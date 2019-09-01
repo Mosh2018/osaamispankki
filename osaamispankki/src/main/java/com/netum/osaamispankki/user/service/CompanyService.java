@@ -1,11 +1,11 @@
 package com.netum.osaamispankki.user.service;
 
 import com.netum.osaamispankki.user.domain.Company;
-import com.netum.osaamispankki.user.domain.CompanyConformation;
+import com.netum.osaamispankki.user.domain.UserAndCompany;
 import com.netum.osaamispankki.user.domain.User;
 import com.netum.osaamispankki.user.exceptions.OsaamispankkiException;
 import com.netum.osaamispankki.user.modals.CompanyUser;
-import com.netum.osaamispankki.user.repository.CompanyConformationRepository;
+import com.netum.osaamispankki.user.repository.UserAndCompanyRepository;
 import com.netum.osaamispankki.user.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class CompanyService {
     private CompanyRepository companyRepository;
 
     @Autowired
-    private CompanyConformationRepository companyConformationRepository;
+    private UserAndCompanyRepository userAndCompanyRepository;
 
     @Autowired
     private LoginService loginService;
@@ -58,9 +58,9 @@ public class CompanyService {
             }
 
             try {
-                CompanyConformation companyConformation = new CompanyConformation();
-                companyConformation.setCompanyId(company.getId());
-                companyConformationRepository.save(companyConformation);
+                UserAndCompany userAndCompany = new UserAndCompany();
+                userAndCompany.setCompanyId(company.getId());
+                userAndCompanyRepository.save(userAndCompany);
             } catch (Exception e) {
                 throw new OsaamispankkiException(setExceptionMessage("company", "Company has not been registered, " +
                         "connect to admin to resolve the issue"));
@@ -73,9 +73,9 @@ public class CompanyService {
     }
 
     public Set<CompanyUser> getWorkersOfCompany(Long id) {
-        CompanyConformation companyConformation = companyConformationRepository.findByCompanyId(id);
-        if (companyConformation != null) {
-            return companyConformationRepository.findByCompanyId(id).getCompanyUsers().stream().map( x -> {
+        UserAndCompany userAndCompany = userAndCompanyRepository.findByCompanyId(id);
+        if (userAndCompany != null) {
+            return userAndCompanyRepository.findByCompanyId(id).getCompanyUsers().stream().map(x -> {
                 CompanyUser companyUser = new CompanyUser(x.getId(), x.getUsername(),true);
                 return companyUser;
             }).collect(Collectors.toSet());
