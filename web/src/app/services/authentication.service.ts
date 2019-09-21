@@ -9,8 +9,9 @@ import {JwtHelperService} from '@auth0/angular-jwt';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private currentUserSubject: BehaviorSubject<string>;
+  public currentUserSubject: BehaviorSubject<string>;
   public currentUser: Observable<string>;
+  public userValdations: any;
   key = 'currentUser';
   constructor(private userService: UserService,
               private jwtHelper: JwtHelperService) {
@@ -59,5 +60,4 @@ export class AuthenticationService {
   getJWT() {
     return this.jwtHelper.decodeToken(localStorage.getItem(this.key));
   }
-
 }

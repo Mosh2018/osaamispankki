@@ -17,8 +17,7 @@ export class SignComponent {
     phoneNo: ['', Validators.required],
     email: ['', Validators.required],
     password: ['', Validators.required],
-    password2: ['', Validators.required],
-    company: ['']
+    password2: ['', Validators.required]
   });
 
   formSettings = {
@@ -29,7 +28,6 @@ export class SignComponent {
     email: false,
     password: false,
     password2: false,
-    company: false,
     progressing: false,
     submit: true,
     progressValue: 0,

@@ -24,13 +24,4 @@ public class CompanyController {
         return new ResponseEntity(companyService.getCompaniesByName(name), HttpStatus.OK);
     }
 
-    @GetMapping("/getWorkers/{id}")
-    public ResponseEntity<?> getCompanyWorkers(@PathVariable Long id) {
-        return new ResponseEntity(companyService.getWorkersOfCompany(id), HttpStatus.OK);
-    }
-
-    @PostMapping("/addCompanyToUser")
-    public ResponseEntity<?> addCompanyToUser(@RequestBody String companyName) {
-        return new ResponseEntity(companyService.saveNewCompany(companyName), HttpStatus.OK);
-    }
 }

@@ -1,6 +1,6 @@
 package com.netum.osaamispankki.user.service;
 
-import com.netum.osaamispankki.user.repository.UserAndCompanyRepository;
+import com.netum.osaamispankki.user.repository.UserCompanyRepository;
 import com.netum.osaamispankki.user.repository.UserRepository;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -20,6 +20,6 @@ public class LoginServiceTest {
     private CompanyService companyService;
 
     @Mock
-    private UserAndCompanyRepository userAndCompanyRepository;
+    private UserCompanyRepository userCompanyRepository;
 
 }

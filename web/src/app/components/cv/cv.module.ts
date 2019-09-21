@@ -13,6 +13,9 @@ import {DateAdapter, MAT_DATE_FORMATS} from '@angular/material';
 import {APP_DATE_FORMAT, AppDateAdapter} from '../../helpers/dataAdapter';
 import {ExperiencesComponent} from './experiences/experiences.component';
 import {ExperienceComponent} from './experiences/experience/experience.component';
+import {EnumToStringPipe} from '../../pipes/enum-to-string.pipe';
+import { CustomDatePipe } from '../../pipes/custom-date.pipe';
+
 
 
 @NgModule({
@@ -23,16 +26,21 @@ import {ExperienceComponent} from './experiences/experience/experience.component
     EducationsComponent,
     EducationComponent,
     ExperiencesComponent,
-    ExperienceComponent],
+    ExperienceComponent,
+    EnumToStringPipe,
+    CustomDatePipe],
   entryComponents: [EducationComponent, ExperienceComponent],
   imports: [
     CommonModule,
     CvRoutingModule,
     MyCustomMaterialModule,
-    CvRoutingModule,
     FlexLayoutModule,
     ReactiveFormsModule,
     FormsModule
+  ],
+  exports: [
+    EnumToStringPipe,
+    CustomDatePipe
   ],
   providers: [
     {provide: DateAdapter, useClass: AppDateAdapter},

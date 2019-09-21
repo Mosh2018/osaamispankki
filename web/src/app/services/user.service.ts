@@ -10,6 +10,7 @@ export class UserService {
   private USER = '/user/';
   private CV = '/basic/';
   private PHOTO = '/photo/';
+  private COMPANY = '/userAndCompany/';
 
   constructor(private http: HttpClient) {}
 
@@ -47,5 +48,21 @@ export class UserService {
 
   deleteImage(item: string) {
     return this.http.delete(this.userURL2 + this.PHOTO + item);
+  }
+
+  saveCompany(item: string, data: any) {
+    return this.http.post(this.userURL2 + this.COMPANY + item, data);
+  }
+
+  getCompanies(item: string) {
+    return this.http.get(this.userURL2 + this.COMPANY + item);
+  }
+
+  getUserValidations() {
+    return this.http.get(this.userURL2 + this.USER + 'validations');
+  }
+
+  deleteCompany(item: string, id: any) {
+    return this.http.delete(this.userURL2 + this.COMPANY + item + '/' + id);
   }
 }

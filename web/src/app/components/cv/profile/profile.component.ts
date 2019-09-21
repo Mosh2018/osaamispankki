@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {CvService} from '../../../services/cv.service';
 import {first} from 'rxjs/operators';
-import {DatePipe} from '@angular/common';
 import {dateFormatChanger, formatDate} from '../../../helpers/utils.methods';
 
 @Component({

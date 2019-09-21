@@ -59,7 +59,7 @@ export class EducationsComponent implements OnInit {
           }
         );
       } else {
-        console.log('do nothing');
+
       }
     });
 

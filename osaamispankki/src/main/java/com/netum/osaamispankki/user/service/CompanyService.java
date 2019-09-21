@@ -1,11 +1,8 @@
 package com.netum.osaamispankki.user.service;
 
 import com.netum.osaamispankki.user.domain.Company;
-import com.netum.osaamispankki.user.domain.UserAndCompany;
 import com.netum.osaamispankki.user.domain.User;
 import com.netum.osaamispankki.user.exceptions.OsaamispankkiException;
-import com.netum.osaamispankki.user.modals.CompanyUser;
-import com.netum.osaamispankki.user.repository.UserAndCompanyRepository;
 import com.netum.osaamispankki.user.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,12 +10,9 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static com.netum.osaamispankki.user.common.UtilsMethods.isBlank;
 import static com.netum.osaamispankki.user.common.UtilsMethods.setExceptionMessage;
-import static com.netum.osaamispankki.user.exceptions.ExceptionsMessage.COMPANY_ID_NOT_FOUND;
 
 @Service
 public class CompanyService {
@@ -26,8 +20,6 @@ public class CompanyService {
     @Autowired
     private CompanyRepository companyRepository;
 
-    @Autowired
-    private UserAndCompanyRepository userAndCompanyRepository;
 
     @Autowired
     private LoginService loginService;
@@ -57,30 +49,11 @@ public class CompanyService {
                 throw new OsaamispankkiException(setExceptionMessage("company", "Company saving error, try again"));
             }
 
-            try {
-                UserAndCompany userAndCompany = new UserAndCompany();
-                userAndCompany.setCompanyId(company.getId());
-                userAndCompanyRepository.save(userAndCompany);
-            } catch (Exception e) {
-                throw new OsaamispankkiException(setExceptionMessage("company", "Company has not been registered, " +
-                        "connect to admin to resolve the issue"));
-            }
             return company;
 
         } catch (Exception ex) {
             throw new OsaamispankkiException(setExceptionMessage("osaamispankki_error","Some thing goes wrong with Business fetching"));
         }
-    }
-
-    public Set<CompanyUser> getWorkersOfCompany(Long id) {
-        UserAndCompany userAndCompany = userAndCompanyRepository.findByCompanyId(id);
-        if (userAndCompany != null) {
-            return userAndCompanyRepository.findByCompanyId(id).getCompanyUsers().stream().map(x -> {
-                CompanyUser companyUser = new CompanyUser(x.getId(), x.getUsername(),true);
-                return companyUser;
-            }).collect(Collectors.toSet());
-        }
-        throw new OsaamispankkiException(setExceptionMessage(COMPANY_ID_NOT_FOUND.getField(), COMPANY_ID_NOT_FOUND.getMessage()));
     }
 
     public List<Company> getCompaniesByName(String name)  {
@@ -92,10 +65,6 @@ public class CompanyService {
             return null;
         }
         return companyRepository.findByCompanyName(companyName);
-    }
-
-    public User saveNewCompany(String companyName) {
-        return loginService.addCompanyToUser(companyName);
     }
 
     private String getDateFromRestTemplate(Map<String, Object> object, String... keys) {
@@ -116,6 +85,5 @@ public class CompanyService {
         throw new OsaamispankkiException(setExceptionMessage("osaamispankki_error","Some thing goes wrong with Business fetching 3"));
 
     }
-
 
 }

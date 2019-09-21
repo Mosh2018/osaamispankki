@@ -1,6 +1,6 @@
 package com.netum.osaamispankki.user.modals;
 
-public enum Roles {
+public enum Role {
     MASTER,
     LEVEL_1,
     LEVEL_2,

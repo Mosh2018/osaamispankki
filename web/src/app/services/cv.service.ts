@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {UserService} from './user.service';
 import {map} from 'rxjs/operators';
 import {byteToImage} from '../helpers/utils.methods';
+import {AbstractControl} from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -72,15 +73,47 @@ export class CvService {
   }
 
   getPersonalImage() {
-    return this.userService.getImage('download_photo').pipe(
-      map( stream => {
+    return this.userService.getImage('download_photo')
+      .pipe(map( stream => {
         return byteToImage(stream);
       })
     );
   }
 
   deletePersonalPhoto() {
-    return this.userService.deleteImage('personal-photo').pipe(
+    return this.userService.deleteImage('personal-photo')
+      .pipe(map( x => {
+        return x;
+      })
+    );
+  }
+
+  saveCompany(company: any) {
+    return this.userService.saveCompany('company', company)
+      .pipe(map( x => {
+        return x;
+      })
+    );
+  }
+
+  deleteCompany(id: any) {
+    return this.userService.deleteCompany('company', id)
+      .pipe(map( x => {
+        return x;
+      })
+    );
+  }
+
+  getCompanies() {
+    return this.userService.getCompanies('companies')
+      .pipe(map( x => {
+          return x;
+        })
+      );
+  }
+
+  getValidations() {
+    return this.userService.getUserValidations().pipe(
       map( x => {
         return x;
       })

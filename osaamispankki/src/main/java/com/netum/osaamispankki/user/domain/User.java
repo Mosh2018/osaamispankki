@@ -3,10 +3,7 @@ package com.netum.osaamispankki.user.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,8 +13,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
+
+@Data
+@EqualsAndHashCode(exclude = "userCompanies")
 
 @Entity
 @Getter
@@ -66,23 +65,17 @@ public class User implements UserDetails {
 
     private boolean tokenExpired;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Role> roles;
-
-    @ManyToMany(
+    @OneToMany(mappedBy = "user",
             fetch = FetchType.EAGER,
-            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinTable(
-            name = "user_company",
-            joinColumns = { @JoinColumn(name = "user_id")},
-            inverseJoinColumns = { @JoinColumn(name = "conformation_id")})
-        private Set<UserAndCompany> userAndCompanies = new HashSet<>();
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<UserCompany> userCompanies;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "id")
     private TokenConfirmation tokenConfirmation;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL) //todo move it, and create new table with userID
     @JoinColumn(referencedColumnName = "id")
     private HomeAddress homeAddress;
 
@@ -91,9 +84,6 @@ public class User implements UserDetails {
 
     @JsonFormat(pattern = "dd.MM.yyyy")
     private Date update_At;
-
-    @Transient
-    private String companyName;
 
     @PrePersist
     public void onCreated() {

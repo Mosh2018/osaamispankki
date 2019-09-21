@@ -6,6 +6,7 @@ import com.netum.osaamispankki.user.exceptions.OsaamispankkiException;
 import com.netum.osaamispankki.user.services.ErrorResponseService;
 import com.netum.osaamispankki.user.service.LoginService;
 import com.netum.osaamispankki.user.services.UserService;
+import com.netum.osaamispankki.user.validation.FrontendValidations;
 import com.netum.osaamispankki.user.validation.UserValidations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,7 +59,7 @@ public class UserController {
     @GetMapping("/get/{username}")
     public ResponseEntity<?> getUserByUsername(@PathVariable String username) {
         if (isBlank(username)) {
-            throw new OsaamispankkiException(setExceptionMessage("username", "username can not by null"));
+            throw new OsaamispankkiException(setExceptionMessage("username",  "username can not by null"));
         }
 
         return new ResponseEntity<>(loginService.getUser(username), HttpStatus.OK);
@@ -72,5 +73,10 @@ public class UserController {
         }
 
         return new ResponseEntity<>(loginService.confirmUserAccount(confirmId),HttpStatus.OK);
+    }
+
+    @GetMapping("/validations")
+    public ResponseEntity<?> getUserSettings() {
+        return new ResponseEntity<>(new FrontendValidations(), HttpStatus.OK);
     }
 }

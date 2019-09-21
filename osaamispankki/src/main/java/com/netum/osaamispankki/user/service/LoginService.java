@@ -3,41 +3,33 @@ package com.netum.osaamispankki.user.service;
 import com.netum.osaamispankki.security.JWTProvider;
 import com.netum.osaamispankki.security.JWTRsponseToFrontend;
 import com.netum.osaamispankki.security.UserLoginRequest;
-import com.netum.osaamispankki.user.domain.*;
+import com.netum.osaamispankki.user.domain.TokenConfirmation;
+import com.netum.osaamispankki.user.domain.User;
+import com.netum.osaamispankki.user.domain.UserCompany;
 import com.netum.osaamispankki.user.exceptions.OsaamispankkiException;
 import com.netum.osaamispankki.user.modals.PublicUser;
-import com.netum.osaamispankki.user.repository.UserAndCompanyRepository;
 import com.netum.osaamispankki.user.repository.UserRepository;
 import com.netum.osaamispankki.user.services.EmailSenderService;
-import com.netum.osaamispankki.user.services.HeadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static com.netum.osaamispankki.security.SecurityConstants.TOKEN_PREFIX;
-import static com.netum.osaamispankki.user.common.GenericHelper.*;
+import static com.netum.osaamispankki.user.common.GenericHelper.isNull;
 import static com.netum.osaamispankki.user.common.ReadyMadeExceptions.userNotFoundException;
-import static com.netum.osaamispankki.user.common.UtilsMethods.*;
-import static com.netum.osaamispankki.user.modals.Roles.COMPANY_WORKER;
+import static com.netum.osaamispankki.user.common.UtilsMethods.setExceptionMessage;
 
 @Service
 public class LoginService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private CompanyService companyService;
-
-    @Autowired
-    private UserAndCompanyRepository userAndCompanyRepository;
-
-    @Autowired
-    private BCryptPasswordEncoder cryptPasswordEncoder;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -47,9 +39,6 @@ public class LoginService {
 
     @Autowired
     private EmailSenderService emailSenderService;
-
-    @Autowired
-    private HeadService headService;
 
     public User save(User user) {
         return userRepository.save(user);
@@ -108,45 +97,4 @@ public class LoginService {
         }
     }
 
-    protected User addCompanyToUser(String companyName) {
-        User user = headService.getUser();
-        user.setCompanyName(companyName);
-        addCompanyToExistUser(user);
-        addRoleToExistUser(user);
-        return save(user);
-    }
-
-    private void addRoleToExistUser(User user) {
-
-        Company company = companyService.getCompany(user.getCompanyName());
-        if (notNull(company)) {
-            boolean hasRoleInThisCompany = user.getRoles()
-                    .stream()
-                    .anyMatch(role ->
-                            role.getCompanyId() == company.getId());
-            if (_false(hasRoleInThisCompany)) {
-                UserAndCompany conformation = user.getUserAndCompanies().stream().findFirst().get();
-                Role role = new Role();
-                role.setRole(COMPANY_WORKER);
-                role.setCompanyId(conformation.getCompanyId());
-                user.getRoles().add(role);
-            }
-        }
-    }
-
-
-    private void addCompanyToExistUser(User user) {
-        Company company = companyService.getCompany(user.getCompanyName());
-        if(notNull(company)) {
-            boolean hasBeenAddedCompany = user.getUserAndCompanies()
-                    .stream()
-                    .anyMatch( companyConformation -> companyConformation.getCompanyId().equals(company.getId()));
-            if (!hasBeenAddedCompany) {
-                UserAndCompany userAndCompany = userAndCompanyRepository.findByCompanyId(company.getId());
-                userAndCompany.getCompanyUsers().add(user);
-                user.getUserAndCompanies().add(userAndCompany);
-            }
-        }
-
-    }
 }

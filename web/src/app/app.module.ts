@@ -22,6 +22,7 @@ import {SignComponent} from './auth/sign/sign.component';
 import {RegistrationSuccessComponent} from './auth/registration-success/registration-success.component';
 import {ConfirmDialogComponent} from './stateless/confirm-dialog.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,10 +55,13 @@ import {ConfirmDialogComponent} from './stateless/confirm-dialog.component';
     })
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: ErrorHandler, useClass: GlobalErrorHandler, multi: false },
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: ErrorHandler, useClass: GlobalErrorHandler, multi: false},
     UserService
+  ],
+  exports: [
+
   ],
   entryComponents: [ConfirmDialogComponent],
   bootstrap: [AppComponent]

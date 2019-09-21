@@ -21,6 +21,9 @@ public class TokenConfirmation {
 
     private String token;
 
+    @Column(columnDefinition = "tinyint(1) default 0")
+    private boolean used;
+
     @OneToOne(mappedBy = "tokenConfirmation")
     private User user;
 

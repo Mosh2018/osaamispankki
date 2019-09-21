@@ -1,6 +1,5 @@
 package com.netum.osaamispankki.user.services;
 
-import com.netum.osaamispankki.security.JWTRsponseToFrontend;
 import com.netum.osaamispankki.user.domain.TokenConfirmation;
 import com.netum.osaamispankki.user.domain.User;
 import com.netum.osaamispankki.user.exceptions.OsaamispankkiException;
@@ -54,7 +53,13 @@ public class EmailSenderService {
         mailMessage.setText("To confirm your account, please click here : "
                 +"http://localhost:8080/api/user/confirm-account?token="+confirmationToken.getToken());
 
-        sendEmail(mailMessage);
+        try {
+            sendEmail(mailMessage);
+        } catch (Exception e) {
+            repository.delete(confirmationToken);
+            throw new OsaamispankkiException(
+                    setExceptionMessage("user_registration", "can not register user something goes wrong" ));
+        }
 
         return confirmationToken;
     }
@@ -62,10 +67,12 @@ public class EmailSenderService {
 
     public TokenConfirmation confirmUser(String confirmId) {
         TokenConfirmation confirmation = repository.findByToken(confirmId);
-        if (notNull(confirmation)) {
+        if (notNull(confirmation) && !confirmation.isUsed()) {
+            confirmation.setUsed(true);
+            repository.save(confirmation);
             return confirmation;
         }
 
-        throw new OsaamispankkiException(setExceptionMessage("confirmation_id", "can not confirm this account"));
+        throw new OsaamispankkiException(setExceptionMessage("confirmation_id", "can not confirm this account, confirmation has been used"));
     }
 }

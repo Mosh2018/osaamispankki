@@ -78,17 +78,6 @@
       <mat-error *ngIf="errors">{{getError('password2')}}</mat-error>
     </mat-form-field>
     <span *ngIf="formSettings.password2 && this.signUpForm.invalid" class="triangle-up"></span>
-
-    <mat-form-field>
-      <input
-        formControlName="company"
-        matInput
-        placeholder="company"
-        (focusin)="isFocus('company')"
-        type="text">
-    </mat-form-field>
-    <span *ngIf="formSettings.company && this.signUpForm.invalid" class="triangle-up"></span>
-
     <ng-container *ngIf="formSettings.submit && signUpForm.valid">
       <button mat-stroked-button color="#FD403C">REGISTER</button>
       <span class="triangle-up"></span>
