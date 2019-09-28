@@ -1,0 +1,41 @@
+<header fxLayout="row" fxLayoutAlign="start">
+  <div fxFlex="20"></div>
+  <div fxFlex="70" fxLayout="row" fxLayoutAlign="start  stretch">
+    <div>
+      <button mat-button [matMenuTriggerFor]="menu1" >
+        MENU<mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+      <mat-menu #menu1="matMenu">
+        <button mat-menu-item>Item 1.1</button>
+        <button mat-menu-item>Item 1.2</button>
+      </mat-menu>
+    </div>
+    <div>
+      <button mat-button [matMenuTriggerFor]="menu">MENU<mat-icon>keyboard_arrow_down</mat-icon></button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>Item 1.1</button>
+        <button mat-menu-item>Item 1.2</button>
+      </mat-menu>
+    </div>
+    <div>
+      <button mat-button [matMenuTriggerFor]="menu">CONTACT US<mat-icon>keyboard_arrow_down</mat-icon></button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>Item 1.1</button>
+        <button mat-menu-item>Item 1.2</button>
+      </mat-menu>
+    </div>
+  </div>
+
+  <div>
+    <ng-container *ngIf="isLogged(); else notLogged">
+      <button  mat-button (click)="logout()">LOGOUT</button>
+    </ng-container>
+    <ng-template #notLogged>
+      <button  mat-button [matMenuTriggerFor]="menu1">LOGIN<mat-icon>keyboard_arrow_down</mat-icon></button>
+      <mat-menu #menu1="matMenu">
+        <button mat-menu-item (click)="openEmploymentLoginDialog()">Login as employment</button>
+        <button mat-menu-item [routerLink]="['/loginAsCompany']">Login as company</button>
+      </mat-menu>
+    </ng-template>
+  </div>
+</header>
