@@ -1,15 +1,15 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {UserMainPageComponent} from './components/webpage/user/user-main-page/user-main-page.component';
-import {UserGuard} from './allServices/guards/user-guard';
+import {UserModule} from './components/webpage/user/user.module';
 
 
 const routes: Routes = [
-  {path: 'user', component: UserMainPageComponent, canActivate: [UserGuard]}
+  {path: 'user',
+    loadChildren: () => import(`./components/webpage/user/user.module`).then( m => m.UserModule)}
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule, UserModule]
 })
 export class AppRoutingModule { }

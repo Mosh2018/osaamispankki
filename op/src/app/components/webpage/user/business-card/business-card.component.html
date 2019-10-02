@@ -1,0 +1,158 @@
+<div class="m-business">
+  <div class="m-business-card">
+    <span>Business cards</span>
+    <p>Add yourself for employment companies</p>
+  </div>
+  <div>
+    <div>
+      <mat-card class="example-card" fxLayout="row" fxLayoutAlign="space-between start">
+        <mat-card-header fxFlex="25">
+          <ng-container *ngIf="noPhotoError; else noErrorHeader">
+            <img mat-card-image src="../../../../assets/images/img_avatar3.png">
+          </ng-container>
+          <ng-template #noErrorHeader>
+            <img mat-card-image src="{{photoUrl}}">
+          </ng-template>
+
+        </mat-card-header>
+        <mat-card-header fxFlex="70">
+          <mat-card-content>
+            <mat-card-title>Mohamid Shaker</mat-card-title>
+            <mat-card-subtitle>01004131</mat-card-subtitle>
+            <mat-card-subtitle>jokainen@hotmail.com</mat-card-subtitle>
+            <mat-card-subtitle>jokainen@hotmail.com</mat-card-subtitle>
+            <mat-card-subtitle>jokainen@hotmail.com</mat-card-subtitle>
+            <mat-card-subtitle>jokainen@hotmail.com</mat-card-subtitle>
+            <mat-card-subtitle>jokainen@hotmail.com</mat-card-subtitle>
+            <mat-card-subtitle>jokainen@hotmail.com</mat-card-subtitle>
+          </mat-card-content>
+
+        </mat-card-header>
+      </mat-card>
+    </div>
+
+  </div>
+  <div>
+
+
+    <mat-vertical-stepper #stepper>
+
+      <mat-step>
+        <ng-template matStepLabel>Fill employments information</ng-template>
+        <div
+          *ngIf="companiesForms !== null && setting !== undefined && companiesForms.length < setting.max_COMPANIES">
+          <button mat-raised-button color="primary" (click)="addCompany()">Add company</button>
+        </div>
+
+        <div *ngIf="companiesForms !== null && companiesForms.length > 0">
+          <form *ngFor="let companyForm of companiesForms; let i = index" [formGroup]="companyForm">
+            <mat-accordion>
+              <mat-expansion-panel [expanded]="companyStep === i" (opened)="setInnerStep(i)" hideToggle>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <ng-container *ngIf="companyForm.controls.company === undefined; else companyName">
+                      add a company
+                    </ng-container>
+                    <ng-template #companyName>
+                      <span>{{companyForm.controls.company.value}}</span>
+                    </ng-template>
+                  </mat-panel-title>
+                  <mat-panel-description fxLayout="row" fxLayoutAlign="space-between center">
+                      <span>
+
+                      </span>
+                    <span>
+                        <mat-icon>account_circle</mat-icon>
+                      </span>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <div fxLayout="column" fxLayoutAlign="center start">
+                  <mat-form-field>
+                    <mat-label>Company</mat-label>
+                    <mat-select formControlName="company">
+                      <mat-option>none</mat-option>
+                      <mat-option *ngFor="let company of companies" [value]="company">{{company}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput placeholder="position" formControlName="position" required>
+                  </mat-form-field>
+                  <mat-radio-group formControlName="employmentType">
+                    <mat-radio-button
+                      *ngFor="let type of employmentTypes"
+                      [value]="type">{{type| enumToString}}
+                    </mat-radio-button>
+
+                  </mat-radio-group>
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="startingTimePicker" placeholder="employment starting time"
+                           formControlName="startingTime" required>
+                    <mat-datepicker-toggle matSuffix [for]="startingTimePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startingTimePicker></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="endingTimePicker" placeholder="employment ending time"
+                           formControlName="endingTime">
+                    <mat-datepicker-toggle matSuffix [for]="endingTimePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endingTimePicker></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput placeholder="salary" type="number" formControlName="salary">
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput placeholder="company code" type="password" formControlName="companyCode" required>
+                  </mat-form-field>
+
+                </div>
+                <mat-action-row fxLayout="row" fxLayoutAlign="space-between center" class="m-adding-company">
+                  <button mat-icon-button (click)="deleteCompany(i)">
+                    <mat-icon>delete_forever</mat-icon>
+                  </button>
+                  <button mat-raised-button color="primary"
+                          [disabled]="false" (click)="saveEmploymentInformation(i)">Save company
+                  </button>
+                </mat-action-row>
+
+              </mat-expansion-panel>
+            </mat-accordion>
+
+          </form>
+        </div>
+        <button mat-raised-button color="primary" matStepperNext>Next</button>
+
+      </mat-step>
+      <mat-step >
+          <ng-template matStepLabel>Upload a personal image</ng-template>
+
+          <input class="m-upload" value="picture" type="file" (change)="initPicture($event)">
+          <mat-action-row fxLayout="row" fxLayoutAlign="space-between center">
+            <ng-container *ngIf="noPhotoError; else noError">
+              <p>no personal photo</p>
+            </ng-container>
+            <ng-template #noError>
+
+                <button mat-icon-button (click)="deleteImage()">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+            </ng-template>
+            <button mat-raised-button color="primary" [disabled]="!picture" (click)="uploadPhoto()">Upload</button>
+          </mat-action-row>
+
+          <div>
+            <button mat-raised-button color="primary" matStepperNext>Next</button>
+          </div>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        You are now done.
+        <div>
+         <!-- <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="stepper.reset()">Reset</button>-->
+        </div>
+      </mat-step>
+    </mat-vertical-stepper>
+
+
+  </div>
+</div>

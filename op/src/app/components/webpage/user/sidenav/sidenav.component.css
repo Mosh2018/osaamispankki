@@ -1,0 +1,13 @@
+.mat-list-item {
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-weight: lighter;
+  cursor: pointer;
+}
+
+.mat-list-item:hover, .active{
+  color: #DE7824;
+  font-family: 'Poppins', sans-serif;
+}
+
+

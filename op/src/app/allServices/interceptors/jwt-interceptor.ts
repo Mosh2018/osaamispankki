@@ -15,7 +15,6 @@ export class JwtInterceptor implements HttpInterceptor {
     if (currentUser && !this.jwtService.isExpired()) {
       req = req.clone({
         setHeaders: {
-          'Content-Type': 'application/json; charset=utf-8',
           Authorization: `Bearer ${currentUser}`
         }
       });

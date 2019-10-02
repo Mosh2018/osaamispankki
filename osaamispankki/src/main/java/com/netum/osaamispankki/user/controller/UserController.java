@@ -20,7 +20,7 @@ import static com.netum.osaamispankki.user.common.UtilsMethods.isBlank;
 import static com.netum.osaamispankki.user.common.UtilsMethods.setExceptionMessage;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4204"})
 @RequestMapping("/api/user")
 public class UserController {
 

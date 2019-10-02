@@ -1,0 +1,58 @@
+.m-business-card {
+  color: #242441;
+  font-family: 'Poppins', sans-serif;
+}
+
+.m-business-card span {
+  font-size: 2em;
+  font-weight: bold;
+  border-bottom: 3px solid #DE7824;
+  margin-bottom: 30px;
+  padding-right: 10px;
+}
+
+.m-business-card p {
+  font-size: 1.2em;
+
+}
+
+mat-vertical-stepper {
+  width: 50%;
+  min-width: 500px;
+}
+mat-form-field {
+  width: 100%;
+  color: #242441 !important;
+  font-size: 1.3em;
+  font-family: 'Poppins', sans-serif;
+}
+
+mat-option, mat-select {
+  color: #242441;
+  min-width: 300px;
+  font-family: 'Poppins', sans-serif;
+}
+
+input {
+  color: #242441 !important;
+}
+
+form {
+  margin: 20px 0;
+}
+::ng-deep mat-step-header{
+  color: #242441;
+  font-family: 'Poppins', sans-serif;
+}
+::ng-deep .mat-step-label {
+  color: #242441;
+  font-size: 1.5em ;
+  font-family: 'Poppins', sans-serif;
+}
+.mat-step-label-active, .mat-step-label-selected {
+  color: #242441;
+  font-size: 1.5em;
+  font-family: 'Poppins', sans-serif;
+}
+
+

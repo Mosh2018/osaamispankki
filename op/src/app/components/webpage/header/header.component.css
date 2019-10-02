@@ -1,5 +1,5 @@
 header {
-  height: 88px;
+  height: 100px;
   background-color: #242441;
   color: white;
 }
@@ -30,3 +30,12 @@ header button.active {
   color: #DE7824;
 }
 
+.picture img {
+  margin-bottom: -25px;
+  margin-left: -35px;
+}
+
+.picture p {
+  margin-bottom: 0px;
+  margin-left: -35px;
+}

@@ -1,0 +1,5 @@
+<mat-list *ngFor="let el of sidenavElement; let i = index">
+  <mat-list-item routerLink="{{el.link}}" (click)="activate(el.name)" [class.active]="activeLink === el.name"> {{el.name}}
+    <mat-icon *ngIf="activeLink === el.name">keyboard_arrow_left</mat-icon>
+  </mat-list-item>
+</mat-list>

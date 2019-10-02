@@ -9,10 +9,10 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import { MainComponent } from './components/main/main.component';
-import { HeaderComponent } from './components/webpage/header/header.component';
-import { UserLoginComponent } from './components/login/user-login/user-login.component';
-import { CompanyLoginComponent } from './components/login/company-login/company-login.component';
+import {MainComponent} from './components/main/main.component';
+import {HeaderComponent} from './components/webpage/header/header.component';
+import {UserLoginComponent} from './components/login/user-login/user-login.component';
+import {CompanyLoginComponent} from './components/login/company-login/company-login.component';
 import {environment} from '../environments/environment';
 import {X_URL} from './allServices/utils/global';
 import {JwtInterceptor} from './allServices/interceptors/jwt-interceptor';
@@ -20,7 +20,7 @@ import {ErrorInterceptor} from './allServices/interceptors/error-interceptor';
 import {LoginService} from './allServices/services/login.service';
 import {AuthenticationService} from './allServices/services/authentication.service';
 import {JwtService} from './allServices/services/jwt.service';
-import { UserMainPageComponent } from './components/webpage/user/user-main-page/user-main-page.component';
+import {EndpointService} from './allServices/services/endpoint.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,6 @@ import { UserMainPageComponent } from './components/webpage/user/user-main-page/
     HeaderComponent,
     UserLoginComponent,
     CompanyLoginComponent,
-    UserMainPageComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +58,10 @@ import { UserMainPageComponent } from './components/webpage/user/user-main-page/
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     LoginService,
     AuthenticationService,
-    JwtService
+    JwtService,
+    EndpointService
+  ],
+  exports: [
   ],
   bootstrap: [AppComponent]
 })
