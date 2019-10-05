@@ -1,9 +1,9 @@
-.m-business-card {
+.m-business-title {
   color: #242441;
   font-family: 'Poppins', sans-serif;
 }
 
-.m-business-card span {
+.m-business-title span {
   font-size: 2em;
   font-weight: bold;
   border-bottom: 3px solid #DE7824;
@@ -11,7 +11,7 @@
   padding-right: 10px;
 }
 
-.m-business-card p {
+.m-business-title p {
   font-size: 1.2em;
 
 }

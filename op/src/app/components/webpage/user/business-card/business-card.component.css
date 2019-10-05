@@ -1,20 +1,69 @@
-.m-business-card {
+.m-business-title {
   color: #242441;
   font-family: 'Poppins', sans-serif;
 }
 
-.m-business-card span {
+.m-business-title span {
   font-size: 2em;
   font-weight: bold;
   border-bottom: 3px solid #DE7824;
-  margin-bottom: 30px;
   padding-right: 10px;
 }
 
-.m-business-card p {
+.m-business-title p {
   font-size: 1.2em;
 
 }
+
+.m-cards {
+  margin: 10px 10px 10px 0;
+  float: left;
+}
+
+::ng-deep mat-card {
+  padding: 0px !important;
+  width: 500px;
+  background-color: #242441 !important;
+  box-shadow: 0 19px 38px #242441, 0 15px 12px #64648c !important;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+::ng-deep mat-card-title {
+  color: #DE7824;
+  font-weight: bold !important;
+  font-size: 1.3em !important;
+}
+
+::ng-deep  mat-card-subtitle {
+  color: white !important;
+  font-size: 1em !important;
+}
+
+::ng-deep  mat-card-content {
+  width: 100%;
+  color: white !important;
+  font-size: 0.8em !important;
+  margin-left: 16px;
+}
+
+::ng-deep  mat-card-header {
+
+}
+
+::ng-deep  mat-card-actions {
+  padding: 0px !important;
+  margin: 0px !important;
+  color: white !important;
+}
+
+img {
+  margin-top: 10px;
+  width: 130px;
+  height: 170px;
+  border: 1px solid #DE7824;
+  border-radius: 5px;
+}
+
 mat-vertical-stepper {
   width: 50%;
   min-width: 500px;
@@ -34,10 +83,6 @@ mat-option, mat-select {
 
 input {
   color: #242441 !important;
-}
-img {
-  width: 200px;
-  height: 250px;
 }
 
 form {

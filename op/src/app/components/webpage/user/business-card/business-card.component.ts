@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserAndCompanyService} from '../services/user-and-company.service';
 import {first} from 'rxjs/operators';
 import {dateFormatChanger, formatDate} from '../../../../allServices/utils/global';
+import {PersonalService} from '../services/personal.service';
 
 @Component({
   selector: 'app-business-card',
@@ -16,17 +17,19 @@ export class BusinessCardComponent implements OnInit {
   employmentTypes: string[] = ['FULL_TIME', 'PART_TIME'];
   setting: any;
   companyStep = null;
-
+  personalData: any;
   noPhotoError = null;
   photoUrl: any;
   picture: any = null;
   constructor(private formBuilder: FormBuilder,
+              private  personalService: PersonalService,
               private cv: UserAndCompanyService) { }
 
   ngOnInit() {
     this.getSettingsFromBackend();
     this.getImage();
     this.getCompaniesForm();
+    this.getPersonalInformation();
   }
 
   initPicture(event: any) {
@@ -147,4 +150,12 @@ export class BusinessCardComponent implements OnInit {
   }
 
 
+  private getPersonalInformation() {
+    this.personalService.getPersonalInformation().subscribe(data => {
+        this.personalData = data;
+      }, error1 => {
+
+      }
+    );
+  }
 }
