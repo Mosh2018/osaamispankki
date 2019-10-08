@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {UserAndCompanyService} from '../services/user-and-company.service';
 import {first} from 'rxjs/operators';
-import {dateFormatChanger, formatDate} from '../../../../allServices/utils/global';
 import {PersonalService} from '../services/personal.service';
+import {initPersonalInfo, PersonalInfo} from '../../../../allServices/modules/personal-info';
 
 @Component({
   selector: 'app-business-card',
@@ -17,7 +17,7 @@ export class BusinessCardComponent implements OnInit {
   employmentTypes: string[] = ['FULL_TIME', 'PART_TIME'];
   setting: any;
   companyStep = null;
-  personalData: any;
+  personalData = initPersonalInfo();
   noPhotoError = null;
   photoUrl: any;
   picture: any = null;
@@ -67,19 +67,9 @@ export class BusinessCardComponent implements OnInit {
   }
 
   saveEmploymentInformation(index: number) {
-    this.companiesForms[index].controls.startingTime.setValue(dateFormatChanger(
-      this.companiesForms[index].controls.startingTime.value));
-
-    this.companiesForms[index].controls.endingTime.setValue(dateFormatChanger(
-      this.companiesForms[index].controls.endingTime.value));
-
     this.cv.saveCompany(this.companiesForms[index].value)
       .pipe(first())
       .subscribe((data: any) => {
-        const start = formatDate(data.startingTime);
-        data.startingTime = start;
-        const end = formatDate(data.endingTime);
-        data.endingTime = end;
         this.companiesForms[index].setValue(data);
       }, error1 => {
         console.log('Error in saving company', index, error1);
@@ -136,10 +126,6 @@ export class BusinessCardComponent implements OnInit {
       if (data !== null) {
         for (let i = 0; i < data.length; i++) {
           this.companiesForms.push(this.initCompanyForm());
-          const start = formatDate(data[i].startingTime);
-          data[i].startingTime = start;
-          const end = formatDate(data[i].endingTime);
-          data[i].endingTime = end;
           this.companiesForms[i].setValue(data[i]);
         }
       } else {
@@ -151,7 +137,7 @@ export class BusinessCardComponent implements OnInit {
 
 
   private getPersonalInformation() {
-    this.personalService.getPersonalInformation().subscribe(data => {
+    this.personalService.getPersonalInformation().subscribe((data: PersonalInfo) => {
         this.personalData = data;
       }, error1 => {
 

@@ -32,16 +32,3 @@ export function byteToImage(stream: any) {
   }
   return 'data:image/JPEG;base64' + ',' + window.btoa( binary );
 }
-
-export function formatDate(data: any) {
-  if (data !== null && data !== undefined && data !== null) {
-    const date = new Date(data.replace(/(\d{2}).(\d{2}).(\d{4})/, '$2/$1/$3'));
-    new DatePipe('en-US').transform(date, 'dd.MM.yyyy');
-    return date;
-  }
-  return data;
-}
-
-export function dateFormatChanger(date: any) {
-  return new DatePipe('en-US').transform(date, 'dd.MM.yyyy');
-}

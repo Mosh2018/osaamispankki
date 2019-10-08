@@ -66,7 +66,7 @@ img {
 
 mat-vertical-stepper {
   width: 50%;
-  min-width: 500px;
+  min-width: 600px;
 }
 mat-form-field {
   width: 100%;

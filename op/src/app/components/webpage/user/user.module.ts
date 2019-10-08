@@ -14,6 +14,9 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {UserAndCompanyService} from './services/user-and-company.service';
 import {EnumToStringPipe} from '../../../allServices/pipes/enum-to-string.pipe';
 import {FlexModule} from '@angular/flex-layout';
+import {DatePickerComponent} from '../../../allServices/common/date-picker/date-picker.component';
+import {APP_DATE_FORMAT, AppDateAdapter} from '../../../allServices/common/date-picker/dataAdapter';
+import {DateAdapter, MAT_DATE_FORMATS} from '@angular/material';
 
 
 @NgModule({
@@ -25,7 +28,8 @@ import {FlexModule} from '@angular/flex-layout';
     PersonalComponent,
     EducationComponent,
     ExperienceComponent,
-    EnumToStringPipe
+    EnumToStringPipe,
+    DatePickerComponent,
     ],
   imports: [
     CommonModule,
@@ -35,10 +39,13 @@ import {FlexModule} from '@angular/flex-layout';
     FlexModule,
   ],
   exports: [
-    EnumToStringPipe
+    EnumToStringPipe,
+    DatePickerComponent
   ],
   providers: [
-    UserAndCompanyService
+    UserAndCompanyService,
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMAT}
   ]
 })
 export class UserModule { }

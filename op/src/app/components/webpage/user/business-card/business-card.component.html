@@ -83,20 +83,15 @@
                       *ngFor="let type of employmentTypes"
                       [value]="type">{{type| enumToString}}
                     </mat-radio-button>
-
                   </mat-radio-group>
-                  <mat-form-field>
-                    <input matInput [matDatepicker]="startingTimePicker" placeholder="employment starting time"
-                           formControlName="startingTime" required>
-                    <mat-datepicker-toggle matSuffix [for]="startingTimePicker"></mat-datepicker-toggle>
-                    <mat-datepicker #startingTimePicker></mat-datepicker>
-                  </mat-form-field>
-                  <mat-form-field>
-                    <input matInput [matDatepicker]="endingTimePicker" placeholder="employment ending time"
-                           formControlName="endingTime">
-                    <mat-datepicker-toggle matSuffix [for]="endingTimePicker"></mat-datepicker-toggle>
-                    <mat-datepicker #endingTimePicker></mat-datepicker>
-                  </mat-form-field>
+                  <app-date-picker
+                    formControlName="startingTime"
+                    [placeholder]="'employment starting time'"></app-date-picker>
+
+                  <app-date-picker
+                    formControlName="endingTime"
+                    [placeholder]="'employment ending time'"></app-date-picker>
+
                   <mat-form-field>
                     <input matInput placeholder="salary" type="number" formControlName="salary">
                   </mat-form-field>

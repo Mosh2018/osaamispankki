@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
 import {PersonalService} from '../services/personal.service';
 import {first} from 'rxjs/operators';
-import {dateFormatChanger, formatDate} from '../../../../allServices/utils/global';
 
 @Component({
   selector: 'app-personal',
@@ -31,13 +30,10 @@ export class PersonalComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.errors);
     this.getPersonalInformation();
   }
 
   addProfile() {
-    this.personalInformationForm.controls.birthday.setValue(dateFormatChanger(
-      this.personalInformationForm.controls.birthday.value));
     this.personalService.savePersonalInformation(this.personalInformationForm.value)
       .pipe(first()).subscribe(d => {
       this.initDataResponse(d);
@@ -57,10 +53,7 @@ export class PersonalComponent implements OnInit {
   }
 
   private initDataResponse(data) {
-    const date = formatDate(data.birthday);
-
     this.personalInformationForm.setValue(data);
-    this.personalInformationForm.controls.birthday.setValue(date);
   }
 
 }
