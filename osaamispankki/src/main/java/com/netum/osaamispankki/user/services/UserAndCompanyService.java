@@ -11,8 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import static com.netum.osaamispankki.user.common.GenericHelper.isNull;
+import static com.netum.osaamispankki.user.common.GenericHelper.notNull;
 import static com.netum.osaamispankki.user.common.UtilsMethods.setExceptionMessage;
 
 @Service
@@ -50,28 +54,40 @@ public class UserAndCompanyService extends HeadService {
             throw new OsaamispankkiException(setExceptionMessage("company", "Can't add more than one full time contract"));
         }
 
-        if (userCompanies.stream().anyMatch(x -> x.getCompany().equals(userCompany.getCompany()))) {
-            throw new OsaamispankkiException(setExceptionMessage("company", "Company is exist"));
+
+        if (notNull(userCompany.getId())) {
+            Map<Long, String> companiesMap = userCompanies.stream()
+                    .collect(Collectors.toMap(UserCompany::getId, UserCompany::getCompany));
+
+            if (!companiesMap.get(userCompany.getId()).equals(userCompany.getCompany())) {
+                if (userCompanies.stream().anyMatch(x -> x.getCompany().equals(userCompany.getCompany()))) {
+                    throw new OsaamispankkiException(setExceptionMessage("company", "Company is exist"));
+                }
+            }
+
+        } else {
+            if (userCompanies.stream().anyMatch(x -> x.getCompany().equals(userCompany.getCompany()))) {
+                throw new OsaamispankkiException(setExceptionMessage("company", "Company is exist"));
+            }
         }
 
-        if (userCompanies.size() < BEValidations().getMAX_COMPANIES()) {
+        if (userCompanies.size() >= BEValidations().getMAX_COMPANIES() && isNull(userCompany.getId())) {
+            throw new OsaamispankkiException(setExceptionMessage("company", "Can't add company they are already 3 companies"));
+        } else {
             User user = getUser();
             userCompany.setUser(user);
             UserCompany savedUserCompany = userCompanyRepository.save(userCompany);
             userCompanies.add(savedUserCompany);
             user.setUserCompanies(userCompanies);
             userRepository.save(user);
-
             return savedUserCompany;
-        } else {
-            throw new OsaamispankkiException(setExceptionMessage("company", "Can't add company they are already 3 companies"));
         }
 
     }
 
     public boolean deleteCompany(Long id) {
         UserCompany company = this.userCompanyRepository.findById(id).get();
-        if (GenericHelper.notNull(company) && userSafe(company.getUser().getId())) {
+        if (notNull(company) && userSafe(company.getUser().getId())) {
             try {
                 userCompanyRepository.deleteById(company.getId());
                 return this.userCompanyRepository.existsById(id) == false;

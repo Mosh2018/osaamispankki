@@ -9,3 +9,24 @@ body, html{
 .mat-raised-button {
    font-family: 'Poppins', sans-serif;
  }
+
+button {
+  font-family: 'Poppins', sans-serif;
+}
+
+.m-cv-title {
+  color: #242441;
+  font-family: 'Poppins', sans-serif;
+  padding-bottom: 30px;
+}
+
+.m-cv-title span {
+  font-size: 2em;
+  font-weight: bold;
+  border-bottom: 3px solid #DE7824;
+  padding-right: 10px;
+}
+
+.m-cv-title p {
+  font-size: 1.2em;
+}

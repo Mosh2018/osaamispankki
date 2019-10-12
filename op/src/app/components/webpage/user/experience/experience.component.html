@@ -1,1 +1,18 @@
-<p>experience works!</p>
+<form fxFlex fxLayout="column" [formGroup]="experienceForm">
+  <mat-form-field>
+    <input matInput placeholder="company" formControlName="company">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="position" formControlName="position">
+  </mat-form-field>
+  <mat-form-field>
+    <textarea matInput placeholder="description" formControlName="description"></textarea>
+  </mat-form-field>
+  <app-date-picker formControlName="startYear" [placeholder]="'start'"></app-date-picker>
+  <app-date-picker formControlName="endYear" [placeholder]="'end'"></app-date-picker>
+  <mat-slide-toggle formControlName="hide">hide my from other users</mat-slide-toggle>
+  <div mat-dialog-actions>
+    <button mat-stroked-button (click)="onNoClick()">cancel</button>
+    <button [disabled]="experienceForm.invalid" mat-stroked-button [mat-dialog-close]="data.id" (click)="save()" >save</button>
+  </div>
+</form>

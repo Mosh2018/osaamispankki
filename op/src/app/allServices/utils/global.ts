@@ -22,6 +22,11 @@ export const X_URL = {
   LOGOUT: '/api/user/logout',
 };
 
+export const API_CONSTANTS = {
+  EDUCATION: 'education',
+  EXPERIENCE: 'experience'
+};
+
 export function byteToImage(stream: any) {
 
   let binary = '';

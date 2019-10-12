@@ -1,1 +1,23 @@
-<p>education works!</p>
+<form fxFlex fxLayout="column" [formGroup]="educationForm">
+  <mat-form-field>
+    <input matInput placeholder="Name of school" formControlName="nameOfInstitution">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Degree" formControlName="degree">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Location" formControlName="location">
+  </mat-form-field>
+  <app-date-picker [placeholder]="'Start year'" formControlName="startYear"></app-date-picker>
+  <app-date-picker [placeholder]="'Finnish year'" formControlName="endYear"></app-date-picker>
+  <mat-slide-toggle formControlName="hide">hide my from other users</mat-slide-toggle>
+  <div mat-dialog-actions>
+    <button mat-stroked-button color="primary" (click)="onNoClick()">Cancel</button>
+    <button
+      mat-stroked-button
+      color="primary"
+      [disabled]="educationForm.invalid"
+      [mat-dialog-close]="data.id"
+      (click)="save()" >Save</button>
+  </div>
+</form>
