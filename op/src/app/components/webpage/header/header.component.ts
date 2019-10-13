@@ -50,6 +50,6 @@ export class HeaderComponent implements OnInit {
   isLogged() { return this.jwtService.currentUser && !this.jwtService.isExpired();}
 
   logout() {
-
+    this.jwtService.logout();
   }
 }

@@ -18,6 +18,6 @@ export class LoginService {
     return this.http.post(environment.url + X_URL.REGISTER, data);
   }
   logout() {
-    return this.http.get(environment.url + X_URL.LOGOUT); // add and implement to backend
+    return this.http.get(environment.url + X_URL.LOGOUT);
   }
 }

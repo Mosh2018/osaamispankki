@@ -72,8 +72,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js").permitAll()
                 .antMatchers(SIGN_UP_URLS).permitAll()
-                .antMatchers(PHOTO_URLS).permitAll()
-                .antMatchers(H2_URL).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

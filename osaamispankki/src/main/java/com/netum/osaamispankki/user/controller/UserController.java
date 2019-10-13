@@ -56,6 +56,11 @@ public class UserController {
         return new ResponseEntity<>(loginService.loginJwt(loginRequest), HttpStatus.OK);
     }
 
+    @GetMapping("/logout")
+    public ResponseEntity<?> logout() {
+        return new ResponseEntity<>(loginService.logout(), HttpStatus.OK);
+    }
+
     @GetMapping("/get/{username}")
     public ResponseEntity<?> getUserByUsername(@PathVariable String username) {
         if (isBlank(username)) {

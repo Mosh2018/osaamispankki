@@ -1,5 +1,6 @@
 package com.netum.osaamispankki.user.service;
 
+import com.google.gson.internal.$Gson$Types;
 import com.netum.osaamispankki.security.JWTProvider;
 import com.netum.osaamispankki.security.JWTRsponseToFrontend;
 import com.netum.osaamispankki.security.UserLoginRequest;
@@ -97,4 +98,12 @@ public class LoginService {
         }
     }
 
+    public boolean logout() {
+        try {
+            SecurityContextHolder.getContext().setAuthentication(null);
+        } catch (Exception e){
+            throw new OsaamispankkiException(setExceptionMessage("Logout", e.getMessage()));
+        }
+        return true;
+    }
 }

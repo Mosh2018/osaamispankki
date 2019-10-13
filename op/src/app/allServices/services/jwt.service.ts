@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {LoginService} from './login.service';
 import {localStorageKey} from '../utils/global';
+import {AuthenticationService} from './authentication.service';
+import {LoginService} from './login.service';
 
 @Injectable({
   providedIn: 'root'
@@ -32,5 +33,10 @@ export class JwtService {
 
   getJWT() {
     return this.jwtHelper.decodeToken(localStorage.getItem(localStorageKey()));
+  }
+
+  logout() {
+    localStorage.removeItem(localStorageKey());
+    this.loginService.logout().subscribe( data => console.log(data));
   }
 }
