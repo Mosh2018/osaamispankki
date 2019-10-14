@@ -17,10 +17,14 @@ import {environment} from '../environments/environment';
 import {X_URL} from './allServices/utils/global';
 import {JwtInterceptor} from './allServices/interceptors/jwt-interceptor';
 import {ErrorInterceptor} from './allServices/interceptors/error-interceptor';
-import {LoginService} from './allServices/services/login.service';
 import {AuthenticationService} from './allServices/services/authentication.service';
 import {JwtService} from './allServices/services/jwt.service';
 import {EndpointService} from './allServices/services/endpoint.service';
+import {UserRegisterComponent} from './components/login/user-register/user-register.component';
+import {InputComponent} from './allServices/common/input/input.component';
+import { SuccessComponent } from './components/login/success/success.component';
+import {DialogService} from './allServices/services/dialog.service';
+import { MainPageComponent } from './components/webpage/main-page/main-page.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +33,10 @@ import {EndpointService} from './allServices/services/endpoint.service';
     HeaderComponent,
     UserLoginComponent,
     CompanyLoginComponent,
+    UserRegisterComponent,
+    InputComponent,
+    SuccessComponent,
+    MainPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,14 +60,14 @@ import {EndpointService} from './allServices/services/endpoint.service';
       }
     })
   ],
-  entryComponents: [UserLoginComponent],
+  entryComponents: [UserLoginComponent, UserRegisterComponent],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-    LoginService,
     AuthenticationService,
     JwtService,
-    EndpointService
+    EndpointService,
+    DialogService
   ],
   exports: [
   ],

@@ -1,7 +1,7 @@
 <section fxLayoutAlign="center center">
   <div class="w-login2" fxLayout="column" fxLayoutAlign="space-between center">
-    <div>
-      <span>Login to CV</span>
+    <div class="m-cv-title">
+      <span>Login to Osaamispankki</span>
     </div>
 
     <form fxLayout="column"
@@ -12,7 +12,7 @@
           <input
             matInput
             formControlName="username"
-            placeholder="username"
+            placeholder="Username"
             type="text">
           <mat-error *ngIf="errors">{{getError('username')}}</mat-error>
         </mat-form-field>
@@ -20,7 +20,7 @@
           <input
             matInput
             formControlName="password"
-            placeholder="Enter your password"
+            placeholder="Password"
             [type]="hide ? 'password' : 'text'">
           <button mat-icon-button type="button" matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -28,7 +28,7 @@
           <mat-error *ngIf="errors">{{getError('password')}}</mat-error>
         </mat-form-field>
 
-      <div><button mat-raised-button color="primary" type="submit">Login</button></div>
+      <div><button mat-raised-button color="warn" type="submit">Login</button></div>
     </form>
 
   </div>

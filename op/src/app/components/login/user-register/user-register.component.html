@@ -1,0 +1,77 @@
+<section fxLayoutAlign="center center">
+  <div class="w-login2" fxLayout="column" fxLayoutAlign="space-between center">
+    <div class="m-cv-title m-space-between">
+      <span>Register as Employment</span>
+    </div>
+
+    <form fxLayout="column"
+          fxLayoutAlign="center center"
+          [formGroup]="signUpForm"
+          (ngSubmit)="register()">
+      <mat-form-field>
+        <input
+          formControlName="username"
+          matInput
+          placeholder="username"
+          type="text">
+        <mat-error *ngIf="errors">{{getError('username')}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          formControlName="firstName"
+          matInput
+          placeholder="first name"
+          type="text">
+        <mat-error *ngIf="errors">{{getError('firstName')}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          formControlName="surname"
+          matInput
+          placeholder="last name"
+          type="text">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          formControlName="email"
+          matInput
+          placeholder="email"
+          type="email">
+        <mat-error *ngIf="errors">{{getError('email')}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          formControlName="phoneNo"
+          matInput
+          placeholder="phone number"
+          type="tel" required>
+        <mat-error *ngIf="errors">{{getError('phoneNo')}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          formControlName="password"
+          matInput
+          placeholder="password"
+          type="password" required>
+        <mat-error *ngIf="errors">{{getError('password')}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          formControlName="password2"
+          matInput
+          placeholder="confirm password"
+          type="password" required>
+        <mat-error *ngIf="errors">{{getError('password2')}}</mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="warn">Register</button>
+    </form>
+  </div>
+
+</section>

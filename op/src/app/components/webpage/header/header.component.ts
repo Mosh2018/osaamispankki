@@ -5,6 +5,7 @@ import {UserLoginComponent} from '../../login/user-login/user-login.component';
 import {JwtService} from '../../../allServices/services/jwt.service';
 import {Router} from '@angular/router';
 import {isTrue, valid} from '../../../allServices/utils/useful-functions';
+import {UserRegisterComponent} from '../../login/user-register/user-register.component';
 
 @Component({
   selector: 'app-header',
@@ -43,13 +44,34 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  openEmploymentRegisterDialog() {
+    const employmentDialog = this.dialog.open(UserRegisterComponent, {
+      width: (this.screenSize.width / 0.8) + 'px',
+      height: (this.screenSize.height / 0.5) + 'px',
+      maxWidth: '1000px',
+      maxHeight: '800px',
+      minWidth: '500px',
+      minHeight: '500px',
+      data: {}
+    });
+
+    employmentDialog.afterClosed().subscribe(result => {
+      if (valid(result) && result.valid) {
+        this.router.navigate(['/success']).then(r => {
+          console.log(r);
+        });
+      }
+    });
+  }
+
   isHidden(el) {
     console.log(document.getElementById(el))
     return document.getElementById(el).hidden;
   }
-  isLogged() { return this.jwtService.currentUser && !this.jwtService.isExpired();}
+  get logged() { return this.jwtService.getJWT() && !this.jwtService.isExpired(); }
 
   logout() {
     this.jwtService.logout();
+    this.router.navigate(['/main']);
   }
 }

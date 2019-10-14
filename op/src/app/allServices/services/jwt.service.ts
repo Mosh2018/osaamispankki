@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {localStorageKey} from '../utils/global';
-import {AuthenticationService} from './authentication.service';
-import {LoginService} from './login.service';
+import {EndpointService} from './endpoint.service';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ import {LoginService} from './login.service';
 export class JwtService {
   public currentUserSubject: BehaviorSubject<string>;
   public currentUser: Observable<string>;
-  constructor(private loginService: LoginService,
+  constructor(private endpoint: EndpointService,
               private jwtHelper: JwtHelperService) {
     this.currentUserSubject = new BehaviorSubject<string>(localStorage.getItem(localStorageKey()));
     this.currentUser = this.currentUserSubject.asObservable();
@@ -37,6 +37,6 @@ export class JwtService {
 
   logout() {
     localStorage.removeItem(localStorageKey());
-    this.loginService.logout().subscribe( data => console.log(data));
+    return this.endpoint.logout().pipe(map(x => x));
   }
 }

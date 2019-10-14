@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {environment} from '../../../environments/environment';
+import {X_URL} from '../utils/global';
 
 @Injectable({
   providedIn: 'root'
@@ -15,14 +17,14 @@ export class EndpointService {
 
   constructor(private http: HttpClient) {}
 
-  // login
   login(data: any) {
-
-    return this.http.post(this.userURL2 + this.USER + 'login', data);
+    return this.http.post(environment.url + X_URL.LOGIN, data);
   }
-
   signUp(data: any) {
-    return this.http.post(this.userURL2 + this.USER + 'add_new_user', data);
+    return this.http.post(environment.url + X_URL.REGISTER, data);
+  }
+  logout() {
+    return this.http.get(environment.url + X_URL.LOGOUT);
   }
 
   // personal information
