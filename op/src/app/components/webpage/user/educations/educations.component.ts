@@ -3,7 +3,7 @@ import {Education, initEducation} from '../../../../allServices/modules/educatio
 import {EducationAndExperienceService} from '../services/education-and-experience.service';
 import {JwtService} from '../../../../allServices/services/jwt.service';
 import {MatDialog} from '@angular/material';
-import {ConfirmDialogComponent} from '../../../../allServices/common/confirm-dialog/confirm-dialog.component';
+import {ConfirmDialogComponent} from '../../../../allServices/shared/confirm-dialog/confirm-dialog.component';
 import {EducationComponent} from '../education/education.component';
 import {API_CONSTANTS} from '../../../../allServices/utils/global';
 

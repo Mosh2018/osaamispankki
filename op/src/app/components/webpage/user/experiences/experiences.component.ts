@@ -5,7 +5,7 @@ import {EducationAndExperienceService} from '../services/education-and-experienc
 import {JwtService} from '../../../../allServices/services/jwt.service';
 import {API_CONSTANTS} from '../../../../allServices/utils/global';
 import {ExperienceComponent} from '../experience/experience.component';
-import {ConfirmDialogComponent} from '../../../../allServices/common/confirm-dialog/confirm-dialog.component';
+import {ConfirmDialogComponent} from '../../../../allServices/shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-experiences',

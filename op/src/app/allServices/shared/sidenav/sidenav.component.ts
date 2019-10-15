@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {notEmpty, valid} from '../../utils/useful-functions';
 
 @Component({
   selector: 'app-sidenav',
@@ -7,16 +8,17 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./sidenav.component.css']
 })
 export class SidenavComponent implements OnInit {
-  activeLink = 'Business cards';
-  sidenavElement = [
-    {name: 'Business cards', path: 'business_card', link: '/user/business_card'},
-    {name: 'Personal', path: 'personal', link: '/user/personal'},
-    {name: 'Education', path: 'education', link: '/user/education'},
-    {name: 'Experience', path: 'experience', link: '/user/experience'}];
+  activeLink = '';
+  @Input()
+  sidenavElement = [];
+
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.activeLink = this.route.snapshot.children[0].routeConfig.path;
+    if (!notEmpty(this.activeLink)) {
+      this.activeLink = this.sidenavElement[0].path;
+    }
   }
 
   activate(name: string): void {

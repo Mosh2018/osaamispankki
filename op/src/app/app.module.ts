@@ -1,14 +1,9 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {JwtModule} from '@auth0/angular-jwt';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MaterialModule} from './material.module';
-import {FlexLayoutModule} from '@angular/flex-layout';
 import {MainComponent} from './components/main/main.component';
 import {HeaderComponent} from './components/webpage/header/header.component';
 import {UserLoginComponent} from './components/login/user-login/user-login.component';
@@ -21,10 +16,12 @@ import {AuthenticationService} from './allServices/services/authentication.servi
 import {JwtService} from './allServices/services/jwt.service';
 import {EndpointService} from './allServices/services/endpoint.service';
 import {UserRegisterComponent} from './components/login/user-register/user-register.component';
-import {InputComponent} from './allServices/common/input/input.component';
 import {SuccessComponent} from './components/login/success/success.component';
 import {DialogService} from './allServices/services/dialog.service';
 import {MainPageComponent} from './components/webpage/main-page/main-page.component';
+import {SharedModule} from './shared.module';
+import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -34,19 +31,17 @@ import {MainPageComponent} from './components/webpage/main-page/main-page.compon
     UserLoginComponent,
     CompanyLoginComponent,
     UserRegisterComponent,
-    InputComponent,
     SuccessComponent,
     MainPageComponent,
   ],
   imports: [
+    // Backbones modules
     BrowserModule,
     HttpClientModule,
-    ReactiveFormsModule,
-    FormsModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule,
-    FlexLayoutModule,
+    // Other modules
+    AppRoutingModule,
+    SharedModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {

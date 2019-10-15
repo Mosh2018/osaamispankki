@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./company.component.css']
 })
 export class CompanyComponent implements OnInit {
+  sidenavElement = [
+    {name: 'Employees', path: 'employees', link: '/company/employees'}];
 
   constructor() { }
 

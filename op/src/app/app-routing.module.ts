@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {UserModule} from './components/webpage/user/user.module';
 import {SuccessComponent} from './components/login/success/success.component';
 import {MainPageComponent} from './components/webpage/main-page/main-page.component';
+import {CompanyModule} from './components/webpage/company/company.module';
 
 
 const routes: Routes = [
@@ -16,6 +17,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule, UserModule]
+  exports: [RouterModule, UserModule, CompanyModule]
 })
 export class AppRoutingModule { }
