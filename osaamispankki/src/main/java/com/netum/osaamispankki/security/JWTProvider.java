@@ -1,13 +1,14 @@
 package com.netum.osaamispankki.security;
 
 import com.netum.osaamispankki.user.domain.User;
+import com.netum.osaamispankki.user.domain.UserCompany;
+import com.netum.osaamispankki.user.modals.CompanyRole;
 import io.jsonwebtoken.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.netum.osaamispankki.security.SecurityConstants.EXPIRATION_TIME;
 import static com.netum.osaamispankki.security.SecurityConstants.SECRET;
@@ -30,6 +31,7 @@ public class JWTProvider {
         claims.put("id", userId);
         claims.put("username", user.getUsername());
         claims.put("name", userFullName);
+        claims.put("roles", getCompanyRoles(user.getUserCompanies()));
 
 
         String jwt = Jwts
@@ -64,5 +66,11 @@ public class JWTProvider {
         Claims  claims = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
         String idAsString = claims.get("id").toString();
         return Long.parseLong(idAsString);
+    }
+
+    private List<CompanyRole> getCompanyRoles(Set<UserCompany> userCompanies) {
+        return userCompanies.stream()
+                .filter( x -> notNull(x.getRole()))
+                .map( y -> new CompanyRole(y.getCompany(), y.getRole())).collect(Collectors.toList());
     }
 }

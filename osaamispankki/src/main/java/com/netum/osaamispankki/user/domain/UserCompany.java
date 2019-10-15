@@ -55,7 +55,7 @@ public class UserCompany {
     @Column(columnDefinition = "tinyint(1) default 0")
     private Boolean admittedCompanyRole = false;
 
-    @Column(columnDefinition = "tinyint(1) default 0")
-    private Boolean admittedCompany = false;
+    @Column()
+    private String admittedCompany;
 
 }

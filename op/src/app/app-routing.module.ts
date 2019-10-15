@@ -9,7 +9,9 @@ const routes: Routes = [
   {path: 'main', component: MainPageComponent},
   {path: 'success', component: SuccessComponent},
   {path: 'user',
-    loadChildren: () => import(`./components/webpage/user/user.module`).then( m => m.UserModule)}
+    loadChildren: () => import(`./components/webpage/user/user.module`).then( m => m.UserModule)},
+  { path: 'company',
+    loadChildren: () => import('./components/webpage/company/company.module').then(m => m.CompanyModule) }
 ];
 
 @NgModule({

@@ -22,9 +22,9 @@ import {JwtService} from './allServices/services/jwt.service';
 import {EndpointService} from './allServices/services/endpoint.service';
 import {UserRegisterComponent} from './components/login/user-register/user-register.component';
 import {InputComponent} from './allServices/common/input/input.component';
-import { SuccessComponent } from './components/login/success/success.component';
+import {SuccessComponent} from './components/login/success/success.component';
 import {DialogService} from './allServices/services/dialog.service';
-import { MainPageComponent } from './components/webpage/main-page/main-page.component';
+import {MainPageComponent} from './components/webpage/main-page/main-page.component';
 
 @NgModule({
   declarations: [

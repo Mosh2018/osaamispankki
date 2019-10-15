@@ -10,36 +10,9 @@ import {screenSize} from '../../../allServices/utils/global';
   templateUrl: './success.component.html',
   styleUrls: ['./success.component.css']
 })
-export class SuccessComponent implements OnInit {
-
-  screenSize = {width: 500, height: 500};
-  constructor(private dialog: DialogService,
-              private router: Router) { }
-
-  ngOnInit() {
-    this.screenSize = screenSize();
-  }
-
+export class SuccessComponent {
+  constructor(private dialogService: DialogService) { }
   openEmploymentLoginDialog() {
-    this.dialog.openDialog({
-      component: UserLoginComponent,
-      data: {},
-      width: (this.screenSize.width / 0.8) + 'px',
-      height: (this.screenSize.height / 0.8) + 'px',
-      maxWidth: '1000px',
-      maxHeight: '800px',
-      minWidth: '500px',
-      minHeight: '500px',
-    }).subscribe(result => {
-      if (valid(result) && result.valid) {
-        this.router.navigate(['/user']).then(r => {
-          console.log(r);
-        });
-      }
-    });
-  }
-
-  gotoMainPage() {
-    this.router.navigateByUrl('/');
+   this.dialogService.openEmploymentLogin();
   }
 }

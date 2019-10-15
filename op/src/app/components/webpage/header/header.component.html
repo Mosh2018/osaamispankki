@@ -37,9 +37,8 @@
       <button  mat-button [matMenuTriggerFor]="menu1">LOGIN<mat-icon>keyboard_arrow_down</mat-icon></button>
       <mat-menu #menu1="matMenu">
         <button mat-menu-item (click)="openEmploymentLoginDialog()">Login as employment</button>
-        <button mat-menu-item (click)="openEmploymentLoginDialog()">Login as company</button>
         <button mat-menu-item (click)="openEmploymentRegisterDialog()">Register as employment</button>
-        <button mat-menu-item (click)="openEmploymentLoginDialog()">Register as company</button>
+        <button mat-menu-item (click)="openCompanyLoginDialog()">Register as company</button>
       </mat-menu>
     </ng-template>
   </div>
