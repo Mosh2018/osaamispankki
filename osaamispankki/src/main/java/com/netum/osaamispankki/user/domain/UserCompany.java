@@ -47,7 +47,7 @@ public class UserCompany {
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "varchar(255) default 'GUEST'")
-    private Role role = Role.GUEST;
+    private Role role = Role.ROLE_GUEST;
 
     @NotBlank(message = "company code is required")
     private String companyCode;

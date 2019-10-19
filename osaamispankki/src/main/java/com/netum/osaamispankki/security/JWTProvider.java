@@ -71,6 +71,6 @@ public class JWTProvider {
     private List<CompanyRole> getCompanyRoles(Set<UserCompany> userCompanies) {
         return userCompanies.stream()
                 .filter( x -> notNull(x.getRole()))
-                .map( y -> new CompanyRole(y.getCompany(), y.getRole())).collect(Collectors.toList());
+                .map( y -> new CompanyRole(y.getCompany(), y.getId(), y.getRole())).collect(Collectors.toList());
     }
 }

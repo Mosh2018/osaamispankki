@@ -12,6 +12,7 @@ export class CompanyGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (this.jwtService.currentUserValue !== null && !this.jwtService.isExpired()) {
+      console.log(this.jwtService.getUserFullInformation())
       // todo can check is not logged as company
       return true;
     }

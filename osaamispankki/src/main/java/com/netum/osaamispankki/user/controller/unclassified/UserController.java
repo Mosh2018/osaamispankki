@@ -1,4 +1,4 @@
-package com.netum.osaamispankki.user.controller;
+package com.netum.osaamispankki.user.controller.unclassified;
 
 import com.netum.osaamispankki.security.UserLoginRequest;
 import com.netum.osaamispankki.user.domain.User;

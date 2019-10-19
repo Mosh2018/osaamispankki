@@ -96,7 +96,7 @@ public class CompanyService extends HeadService {
         UserCompany userCompany = new UserCompany();
         userCompany.setCompany(company.getCompanyName());
         userCompany.setEmploymentType(EmploymentType.FULL_TIME);
-        userCompany.setRole(Role.COMPANY_ADMIN);
+        userCompany.setRole(Role.ROLE_COMPANY_ADMIN);
         userCompany.setAdmittedCompanyRole(true);
         userCompany.setCompanyCode(generateUUIDString());
         userCompany.setPosition("add your position in company");

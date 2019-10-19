@@ -91,7 +91,7 @@ public class UserAndCompanyService extends HeadService {
 
         if (notNull(company) && userSafe(company.getUser().getId())) {
             try {
-                if (company.getRole().equals(Role.COMPANY_ADMIN)) {
+                if (company.getRole().equals(Role.ROLE_COMPANY_ADMIN)) {
                     throw new OsaamispankkiException(setExceptionMessage("company", "company can not delete, you are company admin"));
                 }
                 userCompanyRepository.deleteById(company.getId());

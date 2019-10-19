@@ -7,6 +7,7 @@ import {EmployeesComponent} from './employees/employees.component';
 import {SharedModule} from '../../../shared.module';
 import { CompanyInfoComponent } from './company-info/company-info.component';
 import {RegisterService} from './services/register.service';
+import {CompanyAdminService} from './services/company-admin.service';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import {RegisterService} from './services/register.service';
   ],
   providers: [
     RegisterService,
+    CompanyAdminService,
   ]
 })
 export class CompanyModule { }

@@ -1,5 +1,6 @@
 package com.netum.osaamispankki.security;
 
+import com.netum.osaamispankki.user.modals.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -72,6 +73,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js").permitAll()
                 .antMatchers(SIGN_UP_URLS).permitAll()
+                .antMatchers(COMPANY_ADMIN_URLS).hasRole("COMPANY_ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

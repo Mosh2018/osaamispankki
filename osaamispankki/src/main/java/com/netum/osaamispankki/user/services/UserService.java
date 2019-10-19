@@ -26,8 +26,8 @@ public class UserService extends HeadService {
 
         try {
             /* send a email conformation */
-            tokenConfirmation = emailSenderService.sendConfirmationEmail(userRepository.save(user));
-            user.setTokenConfirmation(tokenConfirmation);
+             tokenConfirmation = emailSenderService.sendConfirmationEmail(userRepository.save(user));
+             user.setTokenConfirmation(tokenConfirmation);
 
             userRepository.save(user);
         } catch (Exception e) {
