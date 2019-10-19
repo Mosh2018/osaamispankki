@@ -58,7 +58,7 @@ public class EmailSenderService {
         } catch (Exception e) {
             repository.delete(confirmationToken);
             throw new OsaamispankkiException(
-                    setExceptionMessage("user_registration", "can not register user something goes wrong" ));
+                    setExceptionMessage("user_registration", "can not send email to user" ));
         }
 
         return confirmationToken;

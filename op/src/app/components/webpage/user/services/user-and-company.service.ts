@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {EndpointService} from '../../../../allServices/services/endpoint.service';
+import {EndpointUserService} from '../../../../allServices/services/endpoint-user.service';
 import {map} from 'rxjs/operators';
 import {byteToImage} from '../../../../allServices/utils/global';
 
@@ -8,7 +8,7 @@ import {byteToImage} from '../../../../allServices/utils/global';
 })
 export class UserAndCompanyService {
 
-  constructor(private endpoint: EndpointService) { }
+  constructor(private endpoint: EndpointUserService) { }
 
 
   uploadFile(formatData: FormData, uploadPhoto: string) {

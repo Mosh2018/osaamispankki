@@ -1,12 +1,10 @@
 package com.netum.osaamispankki.user.service;
 
-import com.google.gson.internal.$Gson$Types;
 import com.netum.osaamispankki.security.JWTProvider;
 import com.netum.osaamispankki.security.JWTRsponseToFrontend;
 import com.netum.osaamispankki.security.UserLoginRequest;
 import com.netum.osaamispankki.user.domain.TokenConfirmation;
 import com.netum.osaamispankki.user.domain.User;
-import com.netum.osaamispankki.user.domain.UserCompany;
 import com.netum.osaamispankki.user.exceptions.OsaamispankkiException;
 import com.netum.osaamispankki.user.modals.PublicUser;
 import com.netum.osaamispankki.user.repository.UserRepository;
@@ -17,9 +15,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import static com.netum.osaamispankki.security.SecurityConstants.TOKEN_PREFIX;
 import static com.netum.osaamispankki.user.common.GenericHelper.isNull;

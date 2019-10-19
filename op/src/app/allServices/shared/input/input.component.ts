@@ -13,6 +13,12 @@ import {ControlValueAccessor} from '@angular/forms';
   `,
   styles: [`
 
+      mat-form-field {
+          width: 100%;
+          color: #242441 !important;
+          font-size: 1em;
+          font-family: 'Poppins', sans-serif;
+      }
   `]
 })
 export class InputComponent implements ControlValueAccessor {

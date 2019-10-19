@@ -14,7 +14,7 @@ import {JwtInterceptor} from './allServices/interceptors/jwt-interceptor';
 import {ErrorInterceptor} from './allServices/interceptors/error-interceptor';
 import {AuthenticationService} from './allServices/services/authentication.service';
 import {JwtService} from './allServices/services/jwt.service';
-import {EndpointService} from './allServices/services/endpoint.service';
+import {EndpointUserService} from './allServices/services/endpoint-user.service';
 import {UserRegisterComponent} from './components/login/user-register/user-register.component';
 import {SuccessComponent} from './components/login/success/success.component';
 import {DialogService} from './allServices/services/dialog.service';
@@ -22,6 +22,7 @@ import {MainPageComponent} from './components/webpage/main-page/main-page.compon
 import {SharedModule} from './shared.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {EndpointCompanyService} from './allServices/services/endpoint-company.service';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     AuthenticationService,
     JwtService,
-    EndpointService,
+    EndpointUserService,
+    EndpointCompanyService,
     DialogService
   ],
   exports: [

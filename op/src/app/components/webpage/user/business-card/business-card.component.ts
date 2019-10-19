@@ -13,7 +13,7 @@ import {initPersonalInfo, PersonalInfo} from '../../../../allServices/modules/pe
 export class BusinessCardComponent implements OnInit {
 
   companiesForms: FormGroup[] = [];
-  companies: string[] = ['netum', 'gofore', 'reactor'];
+  companies: string[] = ['Netum Oy', 'gofore', 'reactor'];
   employmentTypes: string[] = ['FULL_TIME', 'PART_TIME'];
   setting: any;
   companyStep = null;

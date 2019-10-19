@@ -7,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CompanyComponent implements OnInit {
   sidenavElement = [
-    {name: 'Employees', path: 'employees', link: '/company/employees'}];
+    {name: 'Information', path: 'information', link: '/company/information'},
+    {name: 'Employees', path: 'employees', link: '/company/employees'},
+  ];
 
   constructor() { }
 

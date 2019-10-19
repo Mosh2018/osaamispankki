@@ -1,0 +1,43 @@
+button {
+  padding: 5px 20px;
+}
+mat-form-field, mat-slide-toggle {
+  color: #242441 !important;
+  width: 100%;
+  max-width: 300px;
+  font-size: 1.3em;
+  font-family: 'Poppins', sans-serif;
+}
+
+.m-input-field {
+  width: 1000px;
+  margin: 10px 0;
+}
+.m-yTunnus {
+  margin-right: 30px;
+}
+
+.m-company-info {
+  padding: 20px;
+}
+mat-divider {
+  margin-bottom: 20px;
+}
+mat-list-item span {
+  color: #242441 !important;
+  font-size: 1.3em;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+  padding: 20px 20px 20px 0;
+
+}
+
+mat-list-item .m-company-title {
+  width: 200px;
+  min-width: 200px;
+}
+
+mat-list-item .m-company-content {
+  font-weight: normal;
+}
+

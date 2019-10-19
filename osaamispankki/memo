@@ -1,0 +1,10 @@
+
+    (1)USER REGISTER AS COMPANY
+        - user register as company from login dropdown
+        - user login to system
+        - user navigate to company side
+        - user write y-tunnus and register, for finnish companies user register company by y-tunnus
+            and get the system get information from https://avoindata.prh.fi
+        - system add register the user as company admin
+        - system add for user undeletable company on user side
+

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {EndpointService} from '../../../../allServices/services/endpoint.service';
+import {EndpointUserService} from '../../../../allServices/services/endpoint-user.service';
 import {map} from 'rxjs/operators';
 
 @Injectable({
@@ -7,7 +7,7 @@ import {map} from 'rxjs/operators';
 })
 export class EducationAndExperienceService {
 
-  constructor(private endpoint: EndpointService) { }
+  constructor(private endpoint: EndpointUserService) { }
 
   save(str: string, data: any) {
     return this.endpoint.saveCv(data, str)

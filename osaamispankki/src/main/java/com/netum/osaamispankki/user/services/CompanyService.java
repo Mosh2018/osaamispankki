@@ -1,34 +1,37 @@
-package com.netum.osaamispankki.user.service;
+package com.netum.osaamispankki.user.services;
 
 import com.netum.osaamispankki.user.domain.Company;
 import com.netum.osaamispankki.user.domain.User;
+import com.netum.osaamispankki.user.domain.UserCompany;
 import com.netum.osaamispankki.user.exceptions.OsaamispankkiException;
+import com.netum.osaamispankki.user.modals.EmploymentType;
+import com.netum.osaamispankki.user.modals.Role;
 import com.netum.osaamispankki.user.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import static com.netum.osaamispankki.user.common.UtilsMethods.isBlank;
-import static com.netum.osaamispankki.user.common.UtilsMethods.setExceptionMessage;
+import static com.netum.osaamispankki.user.common.UtilsMethods.*;
 
 @Service
-public class CompanyService {
+public class CompanyService extends HeadService {
 
     @Autowired
     private CompanyRepository companyRepository;
-
-
     @Autowired
-    private LoginService loginService;
+    private UserAndCompanyService userAndCompanyService;
 
     public Company getCompanyDataFromExternalSource(String businessId) {
         Boolean isExist = companyRepository.existsByBusinessId(businessId);
         if (isExist) {
             return companyRepository.findByBusinessId(businessId);
         }
+        Company company = null;
+
         try {
             RestTemplate restTemplate = new RestTemplate();
             Map<String, Object> mapOfObjects = (Map<String, Object>)
@@ -40,20 +43,33 @@ public class CompanyService {
             String businessLine = getDateFromRestTemplate(object, "businessLines", "name");
             String code = getDateFromRestTemplate(object, "businessLines", "code");
             String companyForms = getDateFromRestTemplate(object, "companyForms", "name");
+            Date registrationDate = stringToDateConverter("yyyy-MM-dd", getDateFromRestTemplate(object, "registrationDate"));
 
-            User user = loginService.getUser();
-            Company company = new Company(null, businessId, name, businessLine, code, companyForms, user.getUsername(), null, null);
-            try {
-                company = companyRepository.save(company);
-            } catch (Exception e ) {
-                throw new OsaamispankkiException(setExceptionMessage("company", "Company saving error, try again"));
-            }
-
-            return company;
+            User user = getUser();
+            company = new Company(
+                    null,
+                    businessId,
+                    name,
+                    businessLine,
+                    code,
+                    companyForms,
+                    user.getFirstName() + " " + user.getSurname(),
+                    user.getId(),
+                    registrationDate,
+                    null,
+                    null);
 
         } catch (Exception ex) {
             throw new OsaamispankkiException(setExceptionMessage("osaamispankki_error","Some thing goes wrong with Business fetching"));
         }
+        try {
+            company = companyRepository.save(company);
+            userAndCompanyService.addOrSaveCompany(initAdminCompanyUser(company));
+        } catch (Exception e ) {
+            throw new OsaamispankkiException(setExceptionMessage("company", "Company saving error, try again"));
+        }
+
+        return company;
     }
 
     public List<Company> getCompaniesByName(String name)  {
@@ -65,6 +81,26 @@ public class CompanyService {
             return null;
         }
         return companyRepository.findByCompanyName(companyName);
+    }
+
+    public Company getCompanyByLoggedUser() {
+        try {
+            return companyRepository.findByCreatedBy(getUser().getId());
+        } catch (Exception e) {
+            throw new OsaamispankkiException(setExceptionMessage("company", "No company"));
+        }
+
+    }
+
+    private UserCompany initAdminCompanyUser(Company company) {
+        UserCompany userCompany = new UserCompany();
+        userCompany.setCompany(company.getCompanyName());
+        userCompany.setEmploymentType(EmploymentType.FULL_TIME);
+        userCompany.setRole(Role.COMPANY_ADMIN);
+        userCompany.setAdmittedCompanyRole(true);
+        userCompany.setCompanyCode(generateUUIDString());
+        userCompany.setPosition("add your position in company");
+        return userCompany;
     }
 
     private String getDateFromRestTemplate(Map<String, Object> object, String... keys) {
@@ -85,5 +121,6 @@ public class CompanyService {
         throw new OsaamispankkiException(setExceptionMessage("osaamispankki_error","Some thing goes wrong with Business fetching 3"));
 
     }
+
 
 }

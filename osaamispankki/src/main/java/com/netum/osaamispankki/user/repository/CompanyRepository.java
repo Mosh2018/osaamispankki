@@ -9,6 +9,7 @@ import java.util.List;
 @Repository
 public interface CompanyRepository extends CrudRepository<Company, Long> {
     Company findByBusinessId(String x);
+    Company findByCreatedBy(Long id);
     Boolean existsByBusinessId(String businessId);
     Boolean existsByCompanyName(String name);
     Company findByCompanyName(String name);

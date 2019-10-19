@@ -6,14 +6,14 @@ import {X_URL} from '../utils/global';
 @Injectable({
   providedIn: 'root'
 })
-export class EndpointService {
+export class EndpointUserService {
 
-  private userURL2 =  'http://localhost:8080/api';
+  private userURL2 =  environment.url;
 
-  private USER = '/user/';
-  private CV = '/basic/';
-  private PHOTO = '/photo/';
-  private COMPANY = '/userAndCompany/';
+  private USER = '/api/user/';
+  private CV = '/api/basic/';
+  private PHOTO = '/api/photo/';
+  private COMPANY = '/api/userAndCompany/';
 
   constructor(private http: HttpClient) {}
 

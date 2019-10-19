@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {localStorageKey} from '../utils/global';
-import {EndpointService} from './endpoint.service';
+import {EndpointUserService} from './endpoint-user.service';
 import {map} from 'rxjs/operators';
 
 @Injectable({
@@ -11,7 +11,7 @@ import {map} from 'rxjs/operators';
 export class JwtService {
   public currentUserSubject: BehaviorSubject<string>;
   public currentUser: Observable<string>;
-  constructor(private endpoint: EndpointService,
+  constructor(private endpoint: EndpointUserService,
               private jwtHelper: JwtHelperService) {
     this.currentUserSubject = new BehaviorSubject<string>(localStorage.getItem(localStorageKey()));
     this.currentUser = this.currentUserSubject.asObservable();

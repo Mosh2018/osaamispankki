@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -35,7 +36,13 @@ public class Company {
 
     private String companyForm;
 
-    private String createdBy;
+    private String createdByPerson;
+
+    @Column(unique = true)
+    private Long createdBy;
+
+    @JsonFormat(pattern = "dd.MM.yyyy")
+    private Date registrationDate;
 
     @JsonFormat(pattern = "dd.MM.yyyy")
     private Date created_At;

@@ -4,8 +4,12 @@ import com.netum.osaamispankki.user.exceptions.OsaamispankkiException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class UtilsMethods {
 
@@ -68,5 +72,17 @@ public class UtilsMethods {
             iPasswordScore += 2;
 
         return iPasswordScore;
+    }
+
+    public static Date stringToDateConverter(String format, String dateAsString) {
+        try {
+            return  new SimpleDateFormat(format).parse(dateAsString);
+        } catch (ParseException e) {
+            return null;
+        }
+    }
+
+    public static String generateUUIDString() {
+        return UUID.randomUUID().toString();
     }
 }

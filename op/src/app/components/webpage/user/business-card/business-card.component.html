@@ -100,12 +100,13 @@
                   </mat-form-field>
 
                 </div>
-                <mat-action-row fxLayout="row" fxLayoutAlign="space-between center" class="m-adding-company">
+                <mat-action-row fxLayout="row" fxLayoutAlign="space-between center" class="m-adding-company"
+                                *ngIf="">
                   <button mat-icon-button (click)="deleteCompany(i)">
                     <mat-icon>delete_forever</mat-icon>
                   </button>
                   <button mat-raised-button color="primary"
-                          [disabled]="false" (click)="saveEmploymentInformation(i)">Save company
+                          [disabled]="false" (click)="saveEmploymentInformation(i)">Save changes
                   </button>
                 </mat-action-row>
 

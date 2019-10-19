@@ -2,14 +2,14 @@ import {Injectable} from '@angular/core';
 import {JwtResponse, localStorageKey} from '../utils/global';
 import {map} from 'rxjs/operators';
 import {JwtService} from './jwt.service';
-import {EndpointService} from './endpoint.service';
+import {EndpointUserService} from './endpoint-user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  constructor(private endpoint: EndpointService,
+  constructor(private endpoint: EndpointUserService,
               private jwtServer: JwtService) {
   }
 

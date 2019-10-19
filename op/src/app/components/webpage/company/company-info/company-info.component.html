@@ -1,0 +1,72 @@
+<div style="width: 100%">
+  <div class="m-cv-title">
+    <span>Company Information</span>
+  </div>
+  <ng-container *ngIf="yTunnusInputEnable; else companyHasData" >
+    <div class="m-yTunnus">
+      <mat-form-field>
+        <input matInput type="text" placeholder="Company Code" [(ngModel)]="yTunnus">
+        <button mat-button *ngIf="yTunnus" matSuffix mat-icon-button aria-label="Clear" (click)="yTunnus=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <div>
+      <button mat-raised-button color="warn" (click)="addCompany()">Add Company</button>
+    </div>
+  </ng-container>
+  <ng-template #companyHasData>
+    <div class="m-company-info">
+      <mat-list>
+        <mat-list-item>
+          <span class="m-company-title">Company name </span>
+          <span>:</span>
+          <span class="m-company-content">{{companyInfo.companyName}}</span>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+
+        <mat-list-item>
+          <span class="m-company-title">Business line</span>
+          <span>:</span>
+          <span class="m-company-content">{{companyInfo.businessLine}}</span>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+
+        <mat-list-item>
+          <span class="m-company-title">Company form</span>
+          <span>:</span>
+          <span class="m-company-content">{{companyInfo.companyForm}}</span></mat-list-item>
+        <mat-divider></mat-divider>
+
+        <mat-list-item>
+          <span class="m-company-title">Business id: </span>
+          <span>:</span>
+          <span class="m-company-content">{{companyInfo.businessId}}</span></mat-list-item>
+        <mat-divider></mat-divider>
+
+        <mat-list-item>
+          <span class="m-company-title">Registration date</span>
+          <span>:</span>
+          <span class="m-company-content">{{companyInfo.registrationDate}}</span></mat-list-item>
+        <mat-divider></mat-divider>
+
+        <mat-list-item>
+          <span class="m-company-title">Created by</span>
+          <span>:</span>
+          <span class="m-company-content">{{companyInfo.createdByPerson}}</span></mat-list-item>
+        <mat-divider></mat-divider>
+
+        <mat-list-item>
+          <span class="m-company-title">Creation date</span>
+          <span>:</span>
+          <span class="m-company-content">{{companyInfo.created_At}}</span></mat-list-item>
+        <mat-divider></mat-divider>
+
+
+      </mat-list>
+    </div>
+  </ng-template>
+
+</div>
+
+

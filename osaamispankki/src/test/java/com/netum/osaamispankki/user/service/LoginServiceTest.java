@@ -2,6 +2,7 @@ package com.netum.osaamispankki.user.service;
 
 import com.netum.osaamispankki.user.repository.UserCompanyRepository;
 import com.netum.osaamispankki.user.repository.UserRepository;
+import com.netum.osaamispankki.user.services.CompanyService;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;

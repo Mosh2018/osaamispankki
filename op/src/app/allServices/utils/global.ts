@@ -1,4 +1,5 @@
 import {DatePipe} from '@angular/common';
+import {map} from 'rxjs/operators';
 
 export function screenSize() {
   return {
@@ -36,4 +37,10 @@ export function byteToImage(stream: any) {
     binary += String.fromCharCode( bytes[ i ] );
   }
   return 'data:image/JPEG;base64' + ',' + window.btoa( binary );
+}
+
+export function p(y: any) {
+  return y.pipe(map( x => {
+    return x;
+  }));
 }

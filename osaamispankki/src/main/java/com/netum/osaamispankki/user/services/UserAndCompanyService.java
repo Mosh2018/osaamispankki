@@ -5,6 +5,7 @@ import com.netum.osaamispankki.user.domain.User;
 import com.netum.osaamispankki.user.domain.UserCompany;
 import com.netum.osaamispankki.user.exceptions.OsaamispankkiException;
 import com.netum.osaamispankki.user.modals.EmploymentType;
+import com.netum.osaamispankki.user.modals.Role;
 import com.netum.osaamispankki.user.repository.UserCompanyRepository;
 import com.netum.osaamispankki.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,12 +88,16 @@ public class UserAndCompanyService extends HeadService {
 
     public boolean deleteCompany(Long id) {
         UserCompany company = this.userCompanyRepository.findById(id).get();
+
         if (notNull(company) && userSafe(company.getUser().getId())) {
             try {
+                if (company.getRole().equals(Role.COMPANY_ADMIN)) {
+                    throw new OsaamispankkiException(setExceptionMessage("company", "company can not delete, you are company admin"));
+                }
                 userCompanyRepository.deleteById(company.getId());
                 return this.userCompanyRepository.existsById(id) == false;
             } catch (Exception e) {
-                return false;
+                throw new OsaamispankkiException(setExceptionMessage("company", e.getMessage()));
             }
 
         } else {

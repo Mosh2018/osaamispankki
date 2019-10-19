@@ -9,10 +9,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {InputComponent} from './allServices/shared/input/input.component';
 import {RouterModule} from '@angular/router';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientModule} from '@angular/common/http';
 import {CommonModule} from '@angular/common';
-import {BrowserModule} from '@angular/platform-browser';
+import {DateAdapter, MAT_DATE_FORMATS} from '@angular/material';
+import {APP_DATE_FORMAT, AppDateAdapter} from './allServices/shared/date-picker/dataAdapter';
 
 
 @NgModule({
@@ -44,6 +43,11 @@ import {BrowserModule} from '@angular/platform-browser';
     RouterModule,
     MaterialModule,
     FlexLayoutModule,
+    InputComponent,
   ],
+  providers: [
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMAT}
+  ]
 })
 export class SharedModule { }
