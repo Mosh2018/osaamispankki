@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.netum.osaamispankki.user.common.GenericHelper.successResponse;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("api/company")
@@ -29,6 +31,11 @@ public class CompanyController {
     @GetMapping("/createdPerson")
     public ResponseEntity<?> getCompanyByPerson() {
         return new ResponseEntity(filterApiResponse(companyService.getCompanyByLoggedUser()), HttpStatus.OK);
+    }
+
+    @GetMapping("/companies")
+    public ResponseEntity<?> getAllCompanies(){
+        return successResponse(companyService.allCompanies());
     }
 
     private Company filterApiResponse(Company company) {

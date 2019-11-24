@@ -19,7 +19,7 @@
           <mat-card-header fxFlex="70" fxLayout="column">
             <mat-card-title>{{personalData.firstName}} {{personalData.surname}}</mat-card-title>
             <mat-card-subtitle>{{company.controls.position.value}}</mat-card-subtitle>
-            <mat-card-subtitle>{{company.controls.company.value}}</mat-card-subtitle>
+            <mat-card-subtitle>{{company.controls.company_name.value}}</mat-card-subtitle>
             <mat-card-content>
               <p>{{personalData.phoneNo}}</p>
             </mat-card-content>
@@ -50,11 +50,11 @@
               <mat-expansion-panel [expanded]="companyStep === i" (opened)="setInnerStep(i)" hideToggle>
                 <mat-expansion-panel-header>
                   <mat-panel-title>
-                    <ng-container *ngIf="companyForm.controls.company === undefined; else companyName">
+                    <ng-container *ngIf="companyForm.controls.company_name === undefined; else companyName">
                       add a company
                     </ng-container>
                     <ng-template #companyName>
-                      <span>{{companyForm.controls.company.value}}</span>
+                      <span>{{companyForm.controls.company_name.value}}</span>
                     </ng-template>
                   </mat-panel-title>
                   <mat-panel-description fxLayout="row" fxLayoutAlign="space-between center">
@@ -70,9 +70,9 @@
                 <div fxLayout="column" fxLayoutAlign="center start">
                   <mat-form-field>
                     <mat-label>Company</mat-label>
-                    <mat-select formControlName="company">
+                    <mat-select formControlName="company_name">
                       <mat-option>none</mat-option>
-                      <mat-option *ngFor="let company of companies" [value]="company">{{company}}</mat-option>
+                      <mat-option *ngFor="let company of companies" [value]="company.name">{{company.name}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                   <mat-form-field>
@@ -96,12 +96,11 @@
                     <input matInput placeholder="salary" type="number" formControlName="salary">
                   </mat-form-field>
                   <mat-form-field>
-                    <input matInput placeholder="company code" type="password" formControlName="companyCode" required>
+                    <input matInput placeholder="company code" type="password" formControlName="companyCode">
                   </mat-form-field>
 
                 </div>
-                <mat-action-row fxLayout="row" fxLayoutAlign="space-between center" class="m-adding-company"
-                                *ngIf="">
+                <mat-action-row fxLayout="row" fxLayoutAlign="space-between center" class="m-adding-company">
                   <button mat-icon-button (click)="deleteCompany(i)">
                     <mat-icon>delete_forever</mat-icon>
                   </button>

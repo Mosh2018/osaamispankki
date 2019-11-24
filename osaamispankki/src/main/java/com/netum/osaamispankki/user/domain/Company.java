@@ -11,6 +11,7 @@ import org.hibernate.validator.constraints.UniqueElements;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -43,6 +44,15 @@ public class Company {
 
     @JsonFormat(pattern = "dd.MM.yyyy")
     private Date registrationDate;
+
+    @NotBlank(message = "company code is required")
+    private String companyCode;
+
+    @OneToMany(mappedBy = "company",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<UserCompany> userCompanies;
 
     @JsonFormat(pattern = "dd.MM.yyyy")
     private Date created_At;

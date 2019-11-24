@@ -4,6 +4,7 @@ import com.netum.osaamispankki.user.domain.Company;
 import com.netum.osaamispankki.user.domain.User;
 import com.netum.osaamispankki.user.domain.UserCompany;
 import com.netum.osaamispankki.user.exceptions.OsaamispankkiException;
+import com.netum.osaamispankki.user.modals.CompanyCode;
 import com.netum.osaamispankki.user.modals.EmploymentType;
 import com.netum.osaamispankki.user.modals.Role;
 import com.netum.osaamispankki.user.repository.CompanyRepository;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +58,8 @@ public class CompanyService extends HeadService {
                     user.getFirstName() + " " + user.getSurname(),
                     user.getId(),
                     registrationDate,
+                    generateUUIDString(),
+                    null,
                     null,
                     null);
 
@@ -76,7 +80,7 @@ public class CompanyService extends HeadService {
         return companyRepository.findAllByCompanyNameContaining(name);
     }
 
-    public Company getCompany(String companyName) {
+    public Company getCompanyByCompanyCode(String companyName) {
         if(isBlank(companyName)) {
             return null;
         }
@@ -94,11 +98,11 @@ public class CompanyService extends HeadService {
 
     private UserCompany initAdminCompanyUser(Company company) {
         UserCompany userCompany = new UserCompany();
-        userCompany.setCompany(company.getCompanyName());
+        userCompany.setCompany_name(company.getCompanyName());
         userCompany.setEmploymentType(EmploymentType.FULL_TIME);
         userCompany.setRole(Role.ROLE_COMPANY_ADMIN);
+        userCompany.setCompany(company);
         userCompany.setAdmittedCompanyRole(true);
-        userCompany.setCompanyCode(generateUUIDString());
         userCompany.setPosition("add your position in company");
         return userCompany;
     }
@@ -122,5 +126,16 @@ public class CompanyService extends HeadService {
 
     }
 
-
+    public List<CompanyCode> allCompanies() {
+        List<CompanyCode> companyCodes = new ArrayList<>();
+        try {
+            Iterable<Company> companies = companyRepository.findAll();
+            for (Company company : companies) {
+                companyCodes.add(new CompanyCode(company.getId(), company.getCompanyName()));
+            }
+        } catch (Exception e) {
+            throw new OsaamispankkiException(setExceptionMessage("companies", "can not find companies"));
+        }
+        return companyCodes;
+    }
 }

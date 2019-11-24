@@ -3,6 +3,7 @@ package com.netum.osaamispankki.user.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.netum.osaamispankki.user.common.GenericHelper;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,6 +14,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -100,7 +102,10 @@ public class User implements UserDetails {
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return userCompanies.stream().map(x -> {
+        if (GenericHelper.isNull(getUserCompanies())) {
+            return Collections.EMPTY_LIST;
+        }
+        return getUserCompanies().stream().map(x -> {
             return new SimpleGrantedAuthority(x.getRole().toString());
         }).collect(Collectors.toList());
     }

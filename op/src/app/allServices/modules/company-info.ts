@@ -10,6 +10,7 @@ export interface CompanyInfo {
   created_At: Date;
   id: number;
   update_At: Date;
+  companyCode: string;
 }
 
 export function initCompanyInfo() {
@@ -24,6 +25,12 @@ export function initCompanyInfo() {
     createdBy: 0,
     created_At: null,
     id: 0,
-    update_At: null
+    update_At: null,
+    companyCode: '',
   };
+}
+
+export interface Company {
+  id: string;
+  name: string;
 }

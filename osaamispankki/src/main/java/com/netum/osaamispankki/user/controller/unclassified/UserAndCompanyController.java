@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.util.Set;
+
 import static com.netum.osaamispankki.user.common.UtilsMethods.setExceptionMessage;
 
 @RestController
@@ -29,7 +31,8 @@ public class UserAndCompanyController {
 
     @GetMapping("/companies")
     public ResponseEntity<?> getUserCompanies() {
-        return new ResponseEntity<>(userAndCompanyService.getUserCompanies(), HttpStatus.OK);
+        Set<UserCompany> companies = deleteCompanyCodeFromResponse(userAndCompanyService.getUserCompanies());
+        return new ResponseEntity<>(companies, HttpStatus.OK);
     }
 
     @PostMapping("/company")
@@ -37,7 +40,7 @@ public class UserAndCompanyController {
         if ( result.hasErrors()) {
             return errorResponseService.getErrorResponse(result);
         }
-        UserCompany company = userAndCompanyService.addOrSaveCompany(userCompany);
+        UserCompany company = deleteCompanyCodeFromResponse(userAndCompanyService.addOrSaveCompany(userCompany));
         return new ResponseEntity<>(company, HttpStatus.OK);
     }
 
@@ -49,7 +52,16 @@ public class UserAndCompanyController {
         return new ResponseEntity<>(this.userAndCompanyService.deleteCompany(id), HttpStatus.OK);
     }
 
-    // save one company by id
-    // delete one company by id
-    // delete all user companies
+    private Set<UserCompany> deleteCompanyCodeFromResponse(Set<UserCompany> userCompanies) {
+
+        for (UserCompany usercompany :userCompanies) {
+            deleteCompanyCodeFromResponse(usercompany);
+
+        }
+        return userCompanies;
+    }
+    private UserCompany deleteCompanyCodeFromResponse(UserCompany userCompany){
+      userCompany.setCompanyCode(null);
+      return userCompany;
+    }
 }

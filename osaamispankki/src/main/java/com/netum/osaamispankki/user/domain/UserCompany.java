@@ -26,7 +26,7 @@ public class UserCompany {
     private Long id;
 
     @NotBlank(message = "company is required")
-    private String company;
+    private String company_name;
 
     @NotBlank(message = "position is required")
     private String position;
@@ -45,11 +45,15 @@ public class UserCompany {
     @JsonIgnore
     private User user;
 
+    @ManyToOne()
+    @JoinColumn
+    @JsonIgnore
+    private Company company;
+
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "varchar(255) default 'GUEST'")
     private Role role = Role.ROLE_GUEST;
 
-    @NotBlank(message = "company code is required")
     private String companyCode;
 
     @Column(columnDefinition = "tinyint(1) default 0")

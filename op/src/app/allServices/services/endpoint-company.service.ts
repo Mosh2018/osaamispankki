@@ -25,4 +25,8 @@ export class EndpointCompanyService {
     return this.http.get(this.serverUrl + this.COMPANY_ADMIN + 'employees');
   }
 
+  getRegisteredCompanies() {
+    return this.http.get(this.serverUrl + this.COMPANY + 'companies');
+  }
+
 }

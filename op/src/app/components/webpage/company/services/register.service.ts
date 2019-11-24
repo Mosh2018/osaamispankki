@@ -19,4 +19,8 @@ export class RegisterService {
   getRegisteredCompany() {
     return p(this.endpoint.registeredCompany());
   }
+
+  getRegisteredCompanies() {
+    return p(this.endpoint.getRegisteredCompanies());
+  }
 }

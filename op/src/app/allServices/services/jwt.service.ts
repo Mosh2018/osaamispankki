@@ -35,8 +35,9 @@ export class JwtService {
     return this.jwtHelper.decodeToken(localStorage.getItem(localStorageKey()));
   }
 
-  logout() {
+  logout() {// todo fix logout
     localStorage.removeItem(localStorageKey());
+    localStorage.clear();
     return this.endpoint.logout().pipe(map(x => x));
   }
 }

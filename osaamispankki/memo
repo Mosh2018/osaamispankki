@@ -8,3 +8,11 @@
         - system add register the user as company admin
         - system add for user undeletable company on user side
 
+    (2)USER ADD HIMSELF TO COMPANY
+        - user add company
+        - user most has a company code, can get it from company admin or from company manager
+        - user add company and company code
+        - Admin/manager get notification/message
+        - admin/manager confirm or deny it
+        - on confirmation company id will add to user_ company
+        - by user_company can get all users

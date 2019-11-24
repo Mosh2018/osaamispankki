@@ -11,7 +11,7 @@ public class SecurityConstants {
     public static final String SECRET = "SecurityKeyToGenerateTokens";
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String HEADER_OF_JWT = "authorization";
-    public static final Long EXPIRATION_TIME = 30_000_000L;
+    public static final Long EXPIRATION_TIME = 300_000_000L;
 
 
 }

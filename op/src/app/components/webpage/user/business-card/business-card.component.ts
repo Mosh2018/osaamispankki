@@ -4,6 +4,8 @@ import {UserAndCompanyService} from '../services/user-and-company.service';
 import {first} from 'rxjs/operators';
 import {PersonalService} from '../services/personal.service';
 import {initPersonalInfo, PersonalInfo} from '../../../../allServices/modules/personal-info';
+import {RegisterService} from '../../company/services/register.service';
+import {Company} from '../../../../allServices/modules/company-info';
 
 @Component({
   selector: 'app-business-card',
@@ -13,7 +15,7 @@ import {initPersonalInfo, PersonalInfo} from '../../../../allServices/modules/pe
 export class BusinessCardComponent implements OnInit {
 
   companiesForms: FormGroup[] = [];
-  companies: string[] = ['Netum Oy', 'gofore', 'reactor'];
+  companies: Company[] = [];
   employmentTypes: string[] = ['FULL_TIME', 'PART_TIME'];
   setting: any;
   companyStep = null;
@@ -22,7 +24,8 @@ export class BusinessCardComponent implements OnInit {
   photoUrl: any;
   picture: any = null;
   constructor(private formBuilder: FormBuilder,
-              private  personalService: PersonalService,
+              private personalService: PersonalService,
+              private registered: RegisterService,
               private cv: UserAndCompanyService) { }
 
   ngOnInit() {
@@ -30,6 +33,7 @@ export class BusinessCardComponent implements OnInit {
     this.getImage();
     this.getCompaniesForm();
     this.getPersonalInformation();
+    this.getAllRegisteredCompanies();
   }
 
   initPicture(event: any) {
@@ -85,7 +89,6 @@ export class BusinessCardComponent implements OnInit {
 
   deleteCompany(i: number) {
     const id = this.companiesForms[i].controls.id.value;
-    console.log(id, 'ID');
     if ( id !== null) {
       this.cv.deleteCompany(id).subscribe( x => {
         if (x) {
@@ -107,7 +110,7 @@ export class BusinessCardComponent implements OnInit {
   private initCompanyForm() {
     return this.formBuilder.group({
       id: [],
-      company: [''],
+      company_name: [''],
       position: [],
       employmentType: [],
       startingTime: [],
@@ -143,5 +146,12 @@ export class BusinessCardComponent implements OnInit {
 
       }
     );
+  }
+
+  private getAllRegisteredCompanies() {
+    this.registered.getRegisteredCompanies().subscribe( data => {
+      this.companies = data;
+    });
+
   }
 }
