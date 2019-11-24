@@ -11,6 +11,8 @@ const routes: Routes = [
   {path: 'success', component: SuccessComponent},
   {path: 'user',
     loadChildren: () => import(`./components/webpage/user/user.module`).then( m => m.UserModule)},
+  {path: 'master-admin-master',
+    loadChildren: () => import(`./components/webpage/master/master.module`).then( m => m.MasterModule)},
   { path: 'company',
     loadChildren: () => import('./components/webpage/company/company.module').then(m => m.CompanyModule) }
 ];
