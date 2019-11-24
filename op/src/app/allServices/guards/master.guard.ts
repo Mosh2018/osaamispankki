@@ -5,14 +5,12 @@ import {JwtService} from '../services/jwt.service';
 @Injectable({
   providedIn: 'root'
 })
-export class CompanyGuard implements CanActivate {
-
+export class MasterGuard implements CanActivate {
   constructor(private jwtService: JwtService) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (this.jwtService.currentUserValue !== null && !this.jwtService.isExpired()) {
-      console.log(this.jwtService.getUserFullInformation())
-      // todo can check is not logged as company
+      console.log(this.jwtService.getUserFullInformation(), 'Full information of user');
       return true;
     }
     return false;
