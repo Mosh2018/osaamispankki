@@ -1,6 +1,7 @@
 package com.netum.osaamispankki.user.services;
 
 import com.netum.osaamispankki.user.domain.ActivationCode;
+import com.netum.osaamispankki.user.domain.Company;
 import com.netum.osaamispankki.user.repository.ActivationCodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +15,11 @@ public class MasterService extends HeadService {
     @Autowired
     private ActivationCodeRepository activationCodeRepository;
 
-    public String generateAnActivationCode() {
-        String activationCode = UUID.randomUUID().toString();
+    public ActivationCode generateAnActivationCode() {
         ActivationCode activationCodeEntity = new ActivationCode();
-        activationCodeEntity.setActivationCode(activationCode);
-        this.activationCodeRepository.save(activationCodeEntity);
-        return activationCode;
+        activationCodeEntity.setActivationCode(UUID.randomUUID().toString());
+        activationCodeEntity = this.activationCodeRepository.save(activationCodeEntity);
+        return activationCodeEntity;
     }
 
     public List<ActivationCode> getAllActivationCodes() {

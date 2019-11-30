@@ -40,7 +40,7 @@ export class DialogService {
     }).subscribe(result => {
       if (valid(result) && result.valid) {
         this.router.navigate(['/user']).then(r => {
-          console.log(r);
+          console.log(result, 'login result');
         });
       }
     });

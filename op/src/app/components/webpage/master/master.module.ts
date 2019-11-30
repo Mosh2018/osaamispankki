@@ -11,6 +11,7 @@ import {SharedModule} from '../../../shared.module';
     CommonModule,
     MasterRoutingModule,
     SharedModule
-  ]
+  ],
+  entryComponents: [MasterComponent],
 })
 export class MasterModule { }

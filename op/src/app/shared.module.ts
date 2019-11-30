@@ -45,6 +45,7 @@ import {APP_DATE_FORMAT, AppDateAdapter} from './allServices/shared/date-picker/
     FlexLayoutModule,
     InputComponent,
   ],
+  entryComponents: [ConfirmDialogComponent],
   providers: [
     {provide: DateAdapter, useClass: AppDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMAT}

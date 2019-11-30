@@ -3,6 +3,7 @@ package com.netum.osaamispankki.user.controller.master;
 import com.netum.osaamispankki.user.services.MasterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ public class masterController {
     private MasterService masterService;
 
     @GetMapping("/generate")
+    @PreAuthorize("hasAuthority('ROLE_MASTER')")
     public ResponseEntity<?> generateActivationCode() {
         return ResponseEntity.ok(this.masterService.generateAnActivationCode());
     }

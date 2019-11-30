@@ -1,5 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {Confirm} from '../../modules/common';
 
 export interface Confirmation {
   title: string;
@@ -43,10 +44,10 @@ export class ConfirmDialogComponent {
 
 
   onNoClick() {
-    this.dialogRef.close('NO');
+    this.dialogRef.close(Confirm.NO);
   }
 
   onYesClick() {
-      this.dialogRef.close('YES');
+      this.dialogRef.close(Confirm.YES);
   }
 }

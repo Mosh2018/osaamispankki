@@ -22,7 +22,7 @@ export class AuthenticationService {
           localStorage.setItem(localStorageKey(), response.jwt);
           this.jwtServer.currentUserSubject.next(response.jwt);
         }
-        return response;
+        return this.jwtServer.getUserFullInformation();
       }));
   }
 

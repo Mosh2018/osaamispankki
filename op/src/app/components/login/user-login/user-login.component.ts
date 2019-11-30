@@ -28,8 +28,9 @@ export class UserLoginComponent implements OnInit {
     this.auth.login(this.loginForm.value)
       .pipe(first())
       .subscribe(
-        () => {
-          this.onNoClick(true);
+        (x: any) => {
+          console.log(x, 'Dilog login')
+          this.onNoClick(x.username === this.loginForm.controls.username);
         },
         error1 => {
           this.errors = error1;

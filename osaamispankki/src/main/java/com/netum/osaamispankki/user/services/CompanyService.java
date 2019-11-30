@@ -61,6 +61,7 @@ public class CompanyService extends HeadService {
                     generateUUIDString(),
                     null,
                     null,
+                    null,
                     null);
 
         } catch (Exception ex) {

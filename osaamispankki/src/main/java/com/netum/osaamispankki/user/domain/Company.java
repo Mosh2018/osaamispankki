@@ -54,6 +54,8 @@ public class Company {
             orphanRemoval = true)
     private Set<UserCompany> userCompanies;
 
+    private String activationCode;
+
     @JsonFormat(pattern = "dd.MM.yyyy")
     private Date created_At;
 

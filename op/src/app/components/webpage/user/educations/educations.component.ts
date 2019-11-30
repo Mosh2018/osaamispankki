@@ -6,6 +6,7 @@ import {MatDialog} from '@angular/material';
 import {ConfirmDialogComponent} from '../../../../allServices/shared/confirm-dialog/confirm-dialog.component';
 import {EducationComponent} from '../education/education.component';
 import {API_CONSTANTS} from '../../../../allServices/utils/global';
+import {Confirm} from '../../../../allServices/modules/common';
 
 @Component({
   selector: 'app-education',
@@ -77,7 +78,7 @@ export class EducationsComponent implements OnInit {
     });
 
     confirmDialogRef.afterClosed().subscribe( confirm => {
-      if (confirm !== null && confirm === 'YES') {
+      if (confirm !== null && confirm === Confirm.YES) {
         // are you sure
         this.service.delete(API_CONSTANTS.EDUCATION, id).subscribe(x => {
           if (x ) {
