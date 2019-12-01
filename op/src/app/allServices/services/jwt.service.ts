@@ -35,6 +35,18 @@ export class JwtService {
     return this.jwtHelper.decodeToken(localStorage.getItem(localStorageKey()));
   }
 
+  get masterRole() {
+    return true;
+  }
+
+  get userRole() {
+    return true;
+  }
+
+  get companyRole() {
+    return true;
+  }
+
   logout() {// todo fix logout
     localStorage.removeItem(localStorageKey());
     localStorage.clear();

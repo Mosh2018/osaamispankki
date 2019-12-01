@@ -69,7 +69,6 @@ public class UserAndCompanyService extends HeadService {
         } else {
             User user = getUser();
             userCompany.setUser(user);
-            userCompany.setRole(ROLE_GUEST);
             // get companyBy CompanyCode
             UserCompany savedUserCompany = userCompanyRepository.save(userCompany);
             userCompanies.add(savedUserCompany);

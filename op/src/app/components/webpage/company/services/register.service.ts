@@ -10,8 +10,8 @@ export class RegisterService {
 
   constructor(private endpoint: EndpointCompanyService) { }
 
-  register(yTunnus: string) {
-    return this.endpoint.registerCompany(yTunnus).pipe(map( x => {
+  register(yTunnus: string, activationCode: string) {
+    return this.endpoint.registerCompany(yTunnus, activationCode).pipe(map( x => {
       return x;
       }));
   }

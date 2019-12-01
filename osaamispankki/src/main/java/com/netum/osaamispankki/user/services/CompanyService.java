@@ -1,5 +1,6 @@
 package com.netum.osaamispankki.user.services;
 
+import com.netum.osaamispankki.user.domain.ActivationCode;
 import com.netum.osaamispankki.user.domain.Company;
 import com.netum.osaamispankki.user.domain.User;
 import com.netum.osaamispankki.user.domain.UserCompany;
@@ -7,6 +8,7 @@ import com.netum.osaamispankki.user.exceptions.OsaamispankkiException;
 import com.netum.osaamispankki.user.modals.CompanyCode;
 import com.netum.osaamispankki.user.modals.EmploymentType;
 import com.netum.osaamispankki.user.modals.Role;
+import com.netum.osaamispankki.user.repository.ActivationCodeRepository;
 import com.netum.osaamispankki.user.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import static com.netum.osaamispankki.user.common.GenericHelper.isNull;
+import static com.netum.osaamispankki.user.common.GenericHelper.notNull;
 import static com.netum.osaamispankki.user.common.UtilsMethods.*;
 
 @Service
@@ -25,9 +29,11 @@ public class CompanyService extends HeadService {
     @Autowired
     private CompanyRepository companyRepository;
     @Autowired
+    private ActivationCodeRepository activationCodeRepository;
+    @Autowired
     private UserAndCompanyService userAndCompanyService;
 
-    public Company getCompanyDataFromExternalSource(String businessId) {
+    public Company getCompanyDataFromExternalSource(String businessId, String activationCode) {
         Boolean isExist = companyRepository.existsByBusinessId(businessId);
         if (isExist) {
             return companyRepository.findByBusinessId(businessId);
@@ -65,18 +71,19 @@ public class CompanyService extends HeadService {
                     null);
 
         } catch (Exception ex) {
-            throw new OsaamispankkiException(setExceptionMessage("osaamispankki_error","Some thing goes wrong with Business fetching"));
+            throw new OsaamispankkiException(setExceptionMessage("company_activation","Some thing goes wrong with Business fetching"));
         }
         try {
             company = companyRepository.save(company);
             userAndCompanyService.addOrSaveCompany(initAdminCompanyUser(company));
+            activationCodeRepository.save(setActivationCode(activationCode, company));
+
         } catch (Exception e ) {
-            throw new OsaamispankkiException(setExceptionMessage("company", "Company saving error, try again"));
+            throw new OsaamispankkiException(setExceptionMessage("company_activation", "Company saving error, try again"));
         }
 
         return company;
     }
-
     public List<Company> getCompaniesByName(String name)  {
         return companyRepository.findAllByCompanyNameContaining(name);
     }
@@ -97,6 +104,12 @@ public class CompanyService extends HeadService {
 
     }
 
+    public boolean validActivationCode(String activationCode) {
+        ActivationCode activationCodeEntity = this.activationCodeRepository.findByActivationCode(activationCode);
+
+        return isNull(activationCodeEntity) ? false : !activationCodeEntity.getUsed();
+    }
+
     private UserCompany initAdminCompanyUser(Company company) {
         UserCompany userCompany = new UserCompany();
         userCompany.setCompany_name(company.getCompanyName());
@@ -106,6 +119,14 @@ public class CompanyService extends HeadService {
         userCompany.setAdmittedCompanyRole(true);
         userCompany.setPosition("add your position in company");
         return userCompany;
+    }
+
+    private ActivationCode setActivationCode(String activationCode, Company company) {
+        ActivationCode activationCodeEntity = activationCodeRepository.findByActivationCode(activationCode);
+        activationCodeEntity.setUsed(true);
+        activationCodeEntity.setCompany_id(company.getId());
+        activationCodeEntity.setCompany_name(company.getCompanyName());
+        return activationCodeEntity;
     }
 
     private String getDateFromRestTemplate(Map<String, Object> object, String... keys) {

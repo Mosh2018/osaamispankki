@@ -3,16 +3,31 @@
     <span>Company Information</span>
   </div>
   <ng-container *ngIf="yTunnusInputEnable; else companyHasData" >
-    <div class="m-yTunnus">
+    <div class="m-yTunnus" fxLayout="column" fxLayoutAlign="center stretch" >
       <mat-form-field>
         <input matInput type="text" placeholder="Company Code" [(ngModel)]="yTunnus">
-        <button mat-button *ngIf="yTunnus" matSuffix mat-icon-button aria-label="Clear" (click)="yTunnus=''">
+        <button mat-button *ngIf="yTunnus"
+                matSuffix mat-icon-button aria-label="Clear" (click)="yTunnus=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="text" placeholder="Activation code" [(ngModel)]="activationCode">
+        <button mat-button *ngIf="activationCode"
+                matSuffix mat-icon-button aria-label="Clear" (click)="activationCode=''">
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>
     </div>
     <div>
-      <button mat-raised-button color="warn" (click)="addCompany()">Add Company</button>
+      <button mat-raised-button color="warn" (click)="addCompany()"
+              *ngIf="yTunnus && activationCode && activationCode.length > 20 && yTunnus.length > 5">Add Company</button>
+    </div>
+    <div *ngIf="error">
+      <mat-error>
+        {{error}}
+      </mat-error>
     </div>
   </ng-container>
   <ng-template #companyHasData>

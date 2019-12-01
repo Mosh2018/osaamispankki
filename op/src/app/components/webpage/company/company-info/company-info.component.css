@@ -4,7 +4,7 @@ button {
 mat-form-field, mat-slide-toggle {
   color: #242441 !important;
   width: 100%;
-  max-width: 300px;
+  max-width: 600px;
   font-size: 1.3em;
   font-family: 'Poppins', sans-serif;
 }

@@ -20,10 +20,10 @@ public class ActivationCode {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Long company_id;
-
+    private String company_name;
     private Boolean used = false;
+
     @NotBlank
     private String activationCode;
 

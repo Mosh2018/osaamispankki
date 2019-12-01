@@ -12,8 +12,8 @@ export class EndpointCompanyService {
   private COMPANY_ADMIN = '/endpoint/company/';
   constructor(private http: HttpClient) { }
 
-  registerCompany(yTunnus: string ) {
-    return this.http.get(this.serverUrl + this.COMPANY + yTunnus);
+  registerCompany(yTunnus: string, activationCode) {
+    return this.http.get(this.serverUrl + this.COMPANY + yTunnus + '/code/' + activationCode);
   }
 
   registeredCompany() {

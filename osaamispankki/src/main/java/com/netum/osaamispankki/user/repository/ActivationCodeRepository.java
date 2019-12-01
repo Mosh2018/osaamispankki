@@ -9,6 +9,7 @@ import java.util.List;
 @Repository
 public interface ActivationCodeRepository extends CrudRepository<ActivationCode, Long> {
 
+    ActivationCode findByActivationCode(String code);
     List<ActivationCode> findAllByUsed(boolean used);
     List<ActivationCode> findAll();
 }

@@ -14,6 +14,8 @@ export class CompanyInfoComponent implements OnInit {
   errors = null;
   companyInfo = initCompanyInfo();
   yTunnusInputEnable = true;
+  activationCode: string;
+  error = null;
   constructor(private service: RegisterService) { }
 
   ngOnInit() {
@@ -21,9 +23,13 @@ export class CompanyInfoComponent implements OnInit {
   }
 
   addCompany() {
-    this.service.register(this.yTunnus).subscribe( (x: CompanyInfo) => {
+    this.service.register(this.yTunnus, this.activationCode).subscribe( (x: CompanyInfo) => {
       this.companyInfo = x;
       this.yTunnusInputEnable = m_null(x.code);
+    }, (error1: any) => {
+      this.error = error1.company_activation;
+      console.log(this.error);
+
     });
   }
 

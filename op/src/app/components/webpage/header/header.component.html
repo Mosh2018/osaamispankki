@@ -4,13 +4,13 @@
     <div><p>Osaamispankki</p></div>
   </div>
   <div fxFlex="75" fxLayout="row" fxLayoutAlign="start  stretch">
-    <div>
-      <button mat-button [matMenuTriggerFor]="menu1" >
-        MENU<mat-icon>keyboard_arrow_down</mat-icon>
+    <div *ngIf="logged">
+      <button mat-button [matMenuTriggerFor]="menu1">ROLE<mat-icon>keyboard_arrow_down</mat-icon>
       </button>
       <mat-menu #menu1="matMenu">
-        <button mat-menu-item>Item 1.1</button>
-        <button mat-menu-item>Item 1.2</button>
+        <button mat-menu-item [routerLink]="['/user']">User</button>
+        <button mat-menu-item [routerLink]="['/company']">Company</button>
+        <button mat-menu-item [routerLink]="['/master-admin-master']">Master</button>
       </mat-menu>
     </div>
     <div>

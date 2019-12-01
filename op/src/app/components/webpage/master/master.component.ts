@@ -25,7 +25,7 @@ export class MasterComponent implements OnInit {
     {id: 'activationCode', name: 'Activation code'},
     {id: 'created_At', name: 'Created'},
     {id: 'used', name: 'Used'},
-    {id: 'company_id', name: 'Company name'}];
+    {id: 'company_name', name: 'Company name'}];
 
   setting = {
     all_codes: false,

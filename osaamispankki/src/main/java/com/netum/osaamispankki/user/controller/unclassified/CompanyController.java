@@ -2,13 +2,16 @@ package com.netum.osaamispankki.user.controller.unclassified;
 
 import com.netum.osaamispankki.user.common.GenericHelper;
 import com.netum.osaamispankki.user.domain.Company;
+import com.netum.osaamispankki.user.exceptions.OsaamispankkiException;
 import com.netum.osaamispankki.user.services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.netum.osaamispankki.user.common.GenericHelper.notNull;
 import static com.netum.osaamispankki.user.common.GenericHelper.successResponse;
+import static com.netum.osaamispankki.user.common.UtilsMethods.setExceptionMessage;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -18,9 +21,13 @@ public class CompanyController {
     @Autowired
     private CompanyService companyService;
 
-    @GetMapping("/{businessId}")
-    public ResponseEntity<?> fillCompanyInformation(@PathVariable String businessId) {
-        return new ResponseEntity<>(filterApiResponse(companyService.getCompanyDataFromExternalSource(businessId)), HttpStatus.OK);
+    @GetMapping("/{businessId}/code/{activationCode}")
+    public ResponseEntity<?> fillCompanyInformation(@PathVariable String businessId, @PathVariable String activationCode) {
+        if( notNull(activationCode) && companyService.validActivationCode(activationCode)) {
+            return new ResponseEntity<>(filterApiResponse(companyService.getCompanyDataFromExternalSource(businessId, activationCode)), HttpStatus.OK);
+        }
+        throw new OsaamispankkiException(
+                setExceptionMessage("company_activation", "Invalid activation code"));
     }
 
     @GetMapping("/byCompanyName/{name}")
