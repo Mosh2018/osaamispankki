@@ -1,7 +1,15 @@
 <div class="m-master">
   <mat-button-toggle-group>
     <mat-button-toggle (click)="opeDialogForCodeGenerate()">Generate Activation Codes</mat-button-toggle>
-    <mat-button-toggle>Italic</mat-button-toggle>
+    <mat-button-toggle (click)="getAllCodes()">Show all codes</mat-button-toggle>
     <mat-button-toggle>Underline</mat-button-toggle>
   </mat-button-toggle-group>
+
+  <div class="m-master-codes-table" *ngIf="setting.all_codes">
+    <ng-container *ngIf="codesData">
+      <app-table [dataSource]="codesData" [displayedColumns]="displayedColumns"></app-table>
+    </ng-container>
+
+  </div>
 </div>
+

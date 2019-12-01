@@ -1,8 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import {EndpointMasterService} from './endpoint-master.service';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatTableDataSource} from '@angular/material';
 import {ConfirmDialogComponent} from '../../../allServices/shared/confirm-dialog/confirm-dialog.component';
 import {Confirm} from '../../../allServices/modules/common';
+
+
+interface ActivationCode {
+  id: number;
+  used: boolean;
+  activationCode: string;
+  created_At: string;
+  update_At: string;
+}
 
 @Component({
   selector: 'app-master',
@@ -10,6 +19,17 @@ import {Confirm} from '../../../allServices/modules/common';
   styleUrls: ['./master.component.css']
 })
 export class MasterComponent implements OnInit {
+
+  codesData: MatTableDataSource<ActivationCode>;
+  displayedColumns = [
+    {id: 'activationCode', name: 'Activation code'},
+    {id: 'created_At', name: 'Created'},
+    {id: 'used', name: 'Used'},
+    {id: 'company_id', name: 'Company name'}];
+
+  setting = {
+    all_codes: false,
+  };
 
   constructor(private endpoint: EndpointMasterService,
               private confirmDialog: MatDialog) { }
@@ -35,14 +55,29 @@ export class MasterComponent implements OnInit {
     });
 
   }
-
-
-
-
+  getAllCodes() {
+    this.switchToComponent('all_codes');
+    this.endpoint.getAllCodes().subscribe( data => {
+      this.codesData = new MatTableDataSource<ActivationCode>(data);
+    });
+  }
 
   private generateActivateCode() {
     this.endpoint.codeGenerator().subscribe( code => {
       console.log('code', code);
     });
   }
+
+
+  switchToComponent(str: string) {
+    for (const settingKey in this.setting) {
+      if (settingKey === str) {
+        this.setting[settingKey] = true;
+      } else {
+        this.setting[settingKey] = false;
+      }
+    }
+  }
+
+
 }

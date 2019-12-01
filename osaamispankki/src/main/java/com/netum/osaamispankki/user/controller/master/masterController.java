@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
+@PreAuthorize("hasAuthority('ROLE_MASTER')")
 @RequestMapping("/api/master-admin-master")
 public class masterController {
 
@@ -18,9 +19,13 @@ public class masterController {
     private MasterService masterService;
 
     @GetMapping("/generate")
-    @PreAuthorize("hasAuthority('ROLE_MASTER')")
     public ResponseEntity<?> generateActivationCode() {
         return ResponseEntity.ok(this.masterService.generateAnActivationCode());
+    }
+
+    @GetMapping("/allActivatedCodes")
+    public ResponseEntity<?> getAllCodes() {
+        return ResponseEntity.ok(this.masterService.getAllActivationCodes());
     }
 
     @GetMapping("/usedActivatedCodes")

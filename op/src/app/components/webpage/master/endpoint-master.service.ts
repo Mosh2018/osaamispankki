@@ -16,6 +16,10 @@ export class EndpointMasterService {
     return p(this.http.get(this.serverUrl + this.MASTER + '/generate'));
   }
 
+  getAllCodes() {
+    return p(this.http.get(this.serverUrl + this.MASTER + '/allActivatedCodes'));
+  }
+
   getUsed() {
     return p(this.http.get(this.serverUrl + this.MASTER + '/usedActivatedCodes'));
   }

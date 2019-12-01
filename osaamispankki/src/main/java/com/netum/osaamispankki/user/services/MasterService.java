@@ -1,7 +1,6 @@
 package com.netum.osaamispankki.user.services;
 
 import com.netum.osaamispankki.user.domain.ActivationCode;
-import com.netum.osaamispankki.user.domain.Company;
 import com.netum.osaamispankki.user.repository.ActivationCodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +11,7 @@ import java.util.UUID;
 
 @Service
 public class MasterService extends HeadService {
+
     @Autowired
     private ActivationCodeRepository activationCodeRepository;
 
@@ -23,26 +23,14 @@ public class MasterService extends HeadService {
     }
 
     public List<ActivationCode> getAllActivationCodes() {
-        Iterable<ActivationCode> activationCodes = this.activationCodeRepository.findAll();
-        return activationCodesAsList(activationCodes);
+        return this.activationCodeRepository.findAll();
     }
 
     public List<ActivationCode> getUsedCodes() {
-        Iterable<ActivationCode> activationCodes = this.activationCodeRepository.findAllByUsed(true);
-        return activationCodesAsList(activationCodes);
+        return this.activationCodeRepository.findAllByUsed(true);
     }
 
     public List<ActivationCode> getNotUsedCodes() {
-        Iterable<ActivationCode> activationCodes = this.activationCodeRepository.findAllByUsed(false);
-        return activationCodesAsList(activationCodes);
-    }
-
-
-    public List<ActivationCode> activationCodesAsList(Iterable<ActivationCode> activationCodes) {
-        List<ActivationCode> activationCodeList = new ArrayList<>();
-        while (activationCodes.iterator().hasNext()) {
-            activationCodeList.add(activationCodes.iterator().next());
-        }
-        return activationCodeList;
+        return this.activationCodeRepository.findAllByUsed(false);
     }
 }

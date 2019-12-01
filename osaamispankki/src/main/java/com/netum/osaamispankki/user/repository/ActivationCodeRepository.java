@@ -4,8 +4,11 @@ import com.netum.osaamispankki.user.domain.ActivationCode;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ActivationCodeRepository extends CrudRepository<ActivationCode, Long> {
 
-    Iterable<ActivationCode> findAllByUsed(boolean used);
+    List<ActivationCode> findAllByUsed(boolean used);
+    List<ActivationCode> findAll();
 }

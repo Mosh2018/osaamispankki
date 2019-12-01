@@ -12,6 +12,7 @@ import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {DateAdapter, MAT_DATE_FORMATS} from '@angular/material';
 import {APP_DATE_FORMAT, AppDateAdapter} from './allServices/shared/date-picker/dataAdapter';
+import {TableComponent} from './allServices/shared/table/table.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import {APP_DATE_FORMAT, AppDateAdapter} from './allServices/shared/date-picker/
     EnumToStringPipe,
     DatePickerComponent,
     ConfirmDialogComponent,
+    TableComponent,
   ],
   imports: [
     FormsModule,
@@ -44,8 +46,9 @@ import {APP_DATE_FORMAT, AppDateAdapter} from './allServices/shared/date-picker/
     MaterialModule,
     FlexLayoutModule,
     InputComponent,
+    TableComponent,
   ],
-  entryComponents: [ConfirmDialogComponent],
+  entryComponents: [ConfirmDialogComponent, TableComponent],
   providers: [
     {provide: DateAdapter, useClass: AppDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMAT}
